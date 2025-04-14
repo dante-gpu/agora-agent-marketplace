@@ -63,7 +63,7 @@ Agora Marketplace is a modular, intelligent AI agent interface that enables user
 ### 4.2 Setup
 
 ```bash
-git clone https://github.com/your-org/agora-marketplace.git
+git clone https://github.com/dante-gpu/agora-marketplace.git
 cd agora-marketplace
 npm install
 
