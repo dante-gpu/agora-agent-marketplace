@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Image, FileText, Code, Download } from 'lucide-react';
+import { Send, FileText, Code, Download } from 'lucide-react';
 import { format } from 'date-fns';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import { useChatStore, Message } from '../store/chatStore';
@@ -21,7 +21,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ agentId, agentName }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    fetchMessages(agentId);
+    fetchMessages();
   }, [agentId, fetchMessages]);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ agentId, agentName }) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    await sendMessage(agentId, input, isMarkdown);
+    await sendMessage(input.trim(), isMarkdown, agentId);
     setInput('');
   };
 
@@ -40,15 +40,12 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ agentId, agentName }) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Handle file upload
     const reader = new FileReader();
     reader.onload = async (event) => {
       const content = event.target?.result as string;
       if (file.type.startsWith('image/')) {
-        // Handle image upload
         console.log('Image upload:', content);
       } else {
-        // Handle text file content
         setInput(content);
         setIsMarkdown(file.name.endsWith('.md'));
       }
@@ -66,7 +63,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ agentId, agentName }) => {
       .map((msg) => {
         const timestamp = format(new Date(msg.created_at), 'yyyy-MM-dd HH:mm:ss');
         const sender = msg.is_bot ? agentName : 'You';
-        return `[${timestamp}] ${sender}:\n${msg.content}\n`;
+        return `[${timestamp}] ${sender}:
+${msg.content}
+`;
       })
       .join('\n');
 
@@ -83,7 +82,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ agentId, agentName }) => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-20rem)] bg-gray-900 rounded-xl overflow-hidden">
-      {/* Chat Header */}
       <div className="p-4 border-b border-gray-800 flex items-center justify-between">
         <h3 className="font-medium">Chat with {agentName}</h3>
         <div className="flex items-center gap-2">
@@ -97,7 +95,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ agentId, agentName }) => {
         </div>
       </div>
 
-      {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message: Message) => (
           <div
@@ -130,7 +127,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ agentId, agentName }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Form */}
       <form onSubmit={handleSubmit} className="p-4 border-t border-gray-800">
         <div className="flex items-end gap-2">
           <div className="flex-1">
