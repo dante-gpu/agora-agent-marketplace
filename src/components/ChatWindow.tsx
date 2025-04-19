@@ -63,9 +63,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ agentId, agentName }) => {
       .map((msg) => {
         const timestamp = format(new Date(msg.created_at), 'yyyy-MM-dd HH:mm:ss');
         const sender = msg.is_bot ? agentName : 'You';
-        return `[${timestamp}] ${sender}:
-${msg.content}
-`;
+        return `[${timestamp}] ${sender}:\n${msg.content}\n`;
       })
       .join('\n');
 
@@ -108,13 +106,20 @@ ${msg.content}
                   : 'bg-[#e1ffa6] text-black'
               }`}
             >
-              {message.is_markdown ? (
+              {message.content.startsWith('data:image') || message.content.startsWith('blob:') ? (
+                <img
+                  src={message.content}
+                  alt="Generated AI"
+                  className="rounded-lg max-w-full max-h-[400px] object-contain"
+                />
+              ) : message.is_markdown ? (
                 <div className="prose prose-invert max-w-none">
                   <MarkdownPreview source={message.content} />
                 </div>
               ) : (
                 <p className="break-words whitespace-pre-wrap">{message.content}</p>
               )}
+
               <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
                 <span>{format(new Date(message.created_at), 'HH:mm')}</span>
                 {message.is_markdown && (

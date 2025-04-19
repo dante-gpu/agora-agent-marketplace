@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
+    port: 5174,
     proxy: {
       '/api': {
         target: 'http://localhost:8787',
@@ -11,5 +12,16 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
+  },
+  optimizeDeps: {
+    exclude: [],
+  },
+  ssr: {
+    noExternal: [
+      '@solana/wallet-adapter-wallets',
+      '@solana/wallet-adapter-walletconnect',
+      '@walletconnect/client',
+      '@walletconnect/web3-provider',
+    ],
   },
 });

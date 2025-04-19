@@ -1,9 +1,8 @@
-// store/chatStore.ts
-
 import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
 import { generateResponse } from '../lib/chatbot';
 import { generateImage } from '../lib/huggingface';
+import { queryLLM } from '../lib/llm';
 
 export interface Message {
   id: string;
@@ -33,9 +32,12 @@ export const useChatStore = create<ChatState>((set) => ({
       console.log('[sendMessage]', { content, isMarkdown, agentId });
 
       const {
-        data: { user },
+        data: { user: supaUser },
       } = await supabase.auth.getUser();
-      if (!user) throw new Error('User not authenticated');
+
+      const user = supaUser?.id
+        ? { id: supaUser.id }
+        : { id: '00000000-0000-0000-0000-000000000000' };
 
       const { data: userMessage, error: userError } = await supabase
         .from('chat_messages')
@@ -67,10 +69,18 @@ export const useChatStore = create<ChatState>((set) => ({
 
         if (agentError || !agentData) throw new Error('Agent not found');
 
-        if (agentData.slug === 'agent') {
-          console.log('[HUGGINGFACE] agent match: agent');
+        if (agentData.slug === 'agent' || agentData.slug === 'image-generator') {
+          console.log('[HUGGINGFACE] agent match: image-generator');
           const imageUrl = await generateImage(content);
           botResponse = `![Generated Image](${imageUrl})`;
+          botMarkdown = true;
+        } else if (
+          agentData.slug.startsWith('gpt-') ||
+          agentData.slug.startsWith('claude-') ||
+          agentData.slug.startsWith('gemini-') ||
+          agentData.slug === 'stablelm-2'
+        ) {
+          botResponse = await queryLLM(agentData.slug, content);
           botMarkdown = true;
         } else {
           botResponse = await generateResponse(content);

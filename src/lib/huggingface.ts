@@ -7,7 +7,7 @@ export async function generateImage(prompt: string): Promise<string> {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ inputs: prompt }),
     });
 
     console.log('[HUGGINGFACE] response.ok:', response.ok);
