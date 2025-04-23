@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
-import { generateResponse } from '../lib/chatbot';
 import { generateImage } from '../lib/huggingface';
 import { queryLLM } from '../lib/llm';
 
@@ -78,15 +77,17 @@ export const useChatStore = create<ChatState>((set) => ({
           agentData.slug.startsWith('gpt-') ||
           agentData.slug.startsWith('claude-') ||
           agentData.slug.startsWith('gemini-') ||
-          agentData.slug === 'stablelm-2'
+          agentData.slug === 'stablelm-2' ||
+          agentData.slug === 'app-creators' 
+
         ) {
           botResponse = await queryLLM(agentData.slug, content);
           botMarkdown = true;
         } else {
-          botResponse = await generateResponse(content);
+          botResponse = 'No valid agent configuration found.';
         }
       } else {
-        botResponse = await generateResponse(content);
+        botResponse = 'No agent specified.';
       }
 
       const { data: botMessage, error: botError } = await supabase

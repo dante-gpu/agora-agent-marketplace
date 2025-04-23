@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 /** IMAGE - Stability.ai */
 app.post('/api/hf-image', async (req, res) => {
   const prompt = req.body.inputs;
-  console.log('[proxy] Received prompt:', prompt);
+  console.log('[proxy] Received image prompt:', prompt);
 
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
 
@@ -48,20 +48,29 @@ app.post('/api/hf-image', async (req, res) => {
   }
 });
 
-/** TEXT - Gemini */
+/** TEXT - Gemini (with systemPrompt support for App-Creators) */
 app.post('/api/gemini', async (req, res) => {
-  const prompt = req.body.prompt;
+  const { prompt, systemPrompt } = req.body;
   console.log('[proxy] Gemini prompt received:', prompt);
 
   if (!prompt) {
     return res.status(400).json({ error: 'No prompt provided' });
   }
 
+  const parts = [];
+
+  // If systemPrompt is provided, prepend it
+  if (systemPrompt) {
+    parts.push({ text: `[SYSTEM]: ${systemPrompt}` });
+  }
+
+  parts.push({ text: prompt });
+
   try {
     const response = await axios.post(
       'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro-001:generateContent',
       {
-        contents: [{ parts: [{ text: prompt }] }],
+        contents: [{ parts }],
       },
       {
         headers: {

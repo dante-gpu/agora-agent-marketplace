@@ -13,9 +13,6 @@ export default defineConfig({
       },
     },
   },
-  optimizeDeps: {
-    exclude: [],
-  },
   ssr: {
     noExternal: [
       '@solana/wallet-adapter-wallets',
