@@ -10,6 +10,7 @@
     "server": "node server.js"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^0.2.13",
     "@huggingface/inference": "^2.6.4",
     "@solana-mobile/wallet-adapter-mobile": "^2.1.5",
     "@solana/wallet-adapter-base": "^0.9.23",
@@ -20,7 +21,10 @@
     "@supabase/supabase-js": "^2.39.7",
     "@uiw/react-markdown-preview": "^5.0.7",
     "abort-controller": "^3.0.0",
-    "axios": "^1.8.4",
+    "abso": "^1.0.0",
+    "abso-ai": "^0.0.9",
+    "ai": "^4.3.11",
+    "axios": "^1.9.0",
     "body-parser": "^2.2.0",
     "combined-stream": "^1.0.8",
     "cors": "^2.8.5",

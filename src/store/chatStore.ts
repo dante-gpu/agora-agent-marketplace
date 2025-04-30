@@ -15,7 +15,11 @@ interface ChatState {
   messages: Message[];
   loading: boolean;
   error: string | null;
-  sendMessage: (content: string, isMarkdown?: boolean, agentId?: string) => Promise<void>;
+  sendMessage: (
+    content: string,
+    isMarkdown?: boolean,
+    agentId?: string
+  ) => Promise<void>;
   fetchMessages: (agentId?: string) => Promise<void>;
   clearMessages: () => Promise<void>;
 }
@@ -68,7 +72,10 @@ export const useChatStore = create<ChatState>((set) => ({
 
         if (agentError || !agentData) throw new Error('Agent not found');
 
-        if (agentData.slug === 'agent' || agentData.slug === 'image-generator') {
+        if (
+          agentData.slug === 'agent' ||
+          agentData.slug === 'image-generator'
+        ) {
           console.log('[HUGGINGFACE] agent match: image-generator');
           const imageUrl = await generateImage(content);
           botResponse = `![Generated Image](${imageUrl})`;
@@ -78,8 +85,9 @@ export const useChatStore = create<ChatState>((set) => ({
           agentData.slug.startsWith('claude-') ||
           agentData.slug.startsWith('gemini-') ||
           agentData.slug === 'stablelm-2' ||
-          agentData.slug === 'app-creators' 
-
+          agentData.slug === 'app-creators' ||
+          agentData.slug === 'deepseek-v3-fw' ||
+          agentData.slug === 'grok-2'
         ) {
           botResponse = await queryLLM(agentData.slug, content);
           botMarkdown = true;
@@ -104,7 +112,9 @@ export const useChatStore = create<ChatState>((set) => ({
 
       if (botError) throw botError;
 
-      set((state) => ({ messages: [...state.messages, userMessage, botMessage] }));
+      set((state) => ({
+        messages: [...state.messages, userMessage, botMessage],
+      }));
     } catch (error) {
       console.error('[ChatStore Error]', error);
       set({ error: (error as Error).message });
@@ -144,7 +154,10 @@ export const useChatStore = create<ChatState>((set) => ({
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase.from('chat_messages').delete().eq('user_id', user.id);
+      const { error } = await supabase
+        .from('chat_messages')
+        .delete()
+        .eq('user_id', user.id);
 
       if (error) throw error;
       set({ messages: [] });

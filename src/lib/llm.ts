@@ -2,56 +2,41 @@ import axios from 'axios';
 import { GEMINI_API_KEY } from './env';
 
 export async function queryLLM(slug: string, prompt: string): Promise<string> {
-  if (slug === 'gpt-4o' || slug === 'gpt_4_0') {
-    return await queryOpenAI(prompt, 'gpt-4o');
+  switch (slug) {
+    case 'gpt-4o':
+    case 'gpt_4_0':
+      return await queryOpenAI(prompt, 'gpt-4o');
+    case 'gpt_3_5_turbo':
+      return await queryOpenAI(prompt, 'gpt-3.5-turbo');
+    case 'gemini-1-5-pro':
+      return await queryGemini(prompt);
+    case 'app-creators':
+      return await queryGeminiWithSystemPrompt(prompt);
+    case 'stablelm-2':
+      return await queryStability(prompt);
+    case 'gemini-2-0-flash':
+      return await queryGemini(prompt);
+    case 'deepseek-v3-fw':
+      return await queryDeepseek(prompt);
+    case 'grok-2':
+      return await queryGrok(prompt);
+    default:
+      throw new Error(`No handler for slug: ${slug}`);
   }
-
-  if (slug === 'gpt_3_5_turbo') {
-    return await queryOpenAI(prompt, 'gpt-3.5-turbo');
-  }
-
-  if (slug === 'gemini-1-5-pro') {
-    return await queryGemini(prompt);
-  }
-
-  if (slug === 'app-creators') {
-    return await queryGeminiWithSystemPrompt(prompt);
-  }
-
-  if (slug === 'stablelm-2') {
-    return await queryStability(prompt);
-  }
-
-  if (slug === 'gemini-2-0-flash') {
-    return await queryGemini(prompt); 
-  }
-
-  throw new Error(`No handler for slug: ${slug}`);
 }
 
 async function queryOpenAI(prompt: string, model: string): Promise<string> {
   try {
     const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
-    console.log('🔑 OPENAI_API_KEY:', OPENAI_API_KEY);
-
-    const response = await axios.post(
+    const res = await axios.post(
       'https://api.openai.com/v1/chat/completions',
-      {
-        model,
-        messages: [{ role: 'user', content: prompt }],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }
+      { model, messages: [{ role: 'user', content: prompt }] },
+      { headers: { Authorization: `Bearer ${OPENAI_API_KEY}`, 'Content-Type': 'application/json' } }
     );
-
-    return response.data.choices[0].message.content;
+    return res.data.choices?.[0]?.message?.content ?? 'OpenAI returned no content.';
   } catch (err: any) {
     console.error('[OpenAI Error]', err.response?.data || err.message);
-    throw new Error('OpenAI response failed');
+    return 'OpenAI response failed.';
   }
 }
 
@@ -59,65 +44,94 @@ export async function queryGemini(
   prompt: string,
   model: string = 'models/gemini-1.5-pro-001'
 ): Promise<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${GEMINI_API_KEY}`;
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-    }),
-  });
-
-  const data = await response.json();
-
-  if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-    return data.candidates[0].content.parts[0].text;
+  try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${GEMINI_API_KEY}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+    });
+    const data = await response.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text ?? 'Gemini returned no content.';
+  } catch (err: any) {
+    console.error('[Gemini Error]', err);
+    return 'Failed to get response from Gemini.';
   }
-
-  console.error('[Gemini Error]', data);
-  throw new Error('Failed to get response from Gemini');
 }
-
 
 async function queryGeminiWithSystemPrompt(prompt: string): Promise<string> {
   try {
-    const response = await axios.post(
-      'http://localhost:8787/api/gemini',
+    const res = await axios.post(
+      '/api/gemini',
       {
         prompt,
         systemPrompt:
-          'You are a senior full-stack web developer with 10+ years of experience. Always respond with direct, concise, and technical answers. Use code examples whenever possible. Do not ask the user for clarification—make assumptions and proceed with the most logical solution. Your primary stack includes Next.js, React, TypeScript, Node.js, and modern CI/CD workflows. Keep answers output-oriented and developer-ready.',
+          'You are a senior full-stack web developer with 10+ years of experience. Always respond with direct, concise, and technical answers. Use code examples whenever possible.',
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+      { headers: { 'Content-Type': 'application/json' } }
     );
-    return response.data.result;
-  } catch (err: unknown) {
-    const error = err as any;
-    console.error('[Gemini (App-Creators) Error]', error.response?.data || error.message);
-    throw new Error('Gemini response for App-Creators failed');
+    return res.data.result ?? 'Gemini App-Creators returned no content.';
+  } catch (err: any) {
+    console.error('[Gemini (App-Creators) Error]', err.response?.data || err.message);
+    return 'Gemini App-Creators response failed.';
   }
 }
 
 async function queryStability(prompt: string): Promise<string> {
   try {
-    const response = await axios.post(
-      'http://localhost:8787/api/stability',
-      { prompt },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+    await axios.post(
+      '/api/hf-image',
+      { inputs: prompt },
+      { headers: { 'Content-Type': 'application/json' }, responseType: 'arraybuffer' }
     );
-    return response.data.result;
-  } catch (err: unknown) {
-    const error = err as any;
-    console.error('[Stability Error]', error.response?.data || error.message);
-    throw new Error('Stability response failed');
+    return 'Image generated.';
+  } catch (err: any) {
+    console.error('[Stability Error]', err.response?.data || err.message);
+    return 'Stability response failed.';
+  }
+}
+
+async function queryDeepseek(prompt: string): Promise<string> {
+  try {
+    const res = await axios.post(
+      '/api/deepseek',
+      { prompt },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+    const data = res.data;
+    if (data.error) {
+      const code = data.detail?.error?.code;
+      if (code === 'invalid_request_error') {
+        console.warn('[Deepseek insufficient balance], falling back to Gemini');
+        return await queryGemini(prompt);
+      }
+      return data.error;
+    }
+    if (data.result) {
+      return data.result;
+    }
+    return 'Deepseek returned no content.';
+  } catch (err: any) {
+    console.error('[Deepseek Error]', err.response?.data || err.message);
+    if (err.response?.status === 402) {
+      console.warn('[Deepseek 402], falling back to Gemini');
+      return await queryGemini(prompt);
+    }
+    return 'Deepseek request failed.';
+  }
+}
+
+async function queryGrok(prompt: string): Promise<string> {
+  try {
+    const GROK2_API_KEY = import.meta.env.VITE_GROK2_API_KEY;
+    const res = await axios.post(
+      '/api/grok2',
+      { prompt },
+      { headers: { Authorization: `Bearer ${GROK2_API_KEY}`, 'Content-Type': 'application/json' } }
+    );
+    return res.data.result ?? 'Grok-2 returned no content.';
+  } catch (err: any) {
+    console.error('[Grok-2 Error]', err.response?.data || err.message);
+    return 'Grok-2 request failed.';
   }
 }
