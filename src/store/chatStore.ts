@@ -21,7 +21,7 @@ interface ChatState {
     agentId?: string
   ) => Promise<void>;
   fetchMessages: (agentId?: string) => Promise<void>;
-  clearMessages: () => Promise<void>;
+  clearMessages: (agentId?: string) => Promise<void>;
 }
 
 export const useChatStore = create<ChatState>((set) => ({
@@ -42,6 +42,7 @@ export const useChatStore = create<ChatState>((set) => ({
         ? { id: supaUser.id }
         : { id: '00000000-0000-0000-0000-000000000000' };
 
+      // Save user message
       const { data: userMessage, error: userError } = await supabase
         .from('chat_messages')
         .insert({
@@ -56,6 +57,7 @@ export const useChatStore = create<ChatState>((set) => ({
 
       if (userError) throw userError;
 
+      // Determine bot response
       let botResponse: string;
       let botMarkdown = isMarkdown;
 
@@ -66,30 +68,26 @@ export const useChatStore = create<ChatState>((set) => ({
           .eq('id', agentId)
           .single();
 
-        console.log('[agentId]', agentId);
-        console.log('[agentData]', agentData);
-        console.log('[agentError]', agentError);
-
         if (agentError || !agentData) throw new Error('Agent not found');
 
-        if (
-          agentData.slug === 'agent' ||
-          agentData.slug === 'image-generator'
-        ) {
+        const slug = agentData.slug;
+        if (slug === 'agent' || slug === 'image-generator') {
           console.log('[HUGGINGFACE] agent match: image-generator');
           const imageUrl = await generateImage(content);
           botResponse = `![Generated Image](${imageUrl})`;
           botMarkdown = true;
         } else if (
-          agentData.slug.startsWith('gpt-') ||
-          agentData.slug.startsWith('claude-') ||
-          agentData.slug.startsWith('gemini-') ||
-          agentData.slug === 'stablelm-2' ||
-          agentData.slug === 'app-creators' ||
-          agentData.slug === 'deepseek-v3-fw' ||
-          agentData.slug === 'grok-2'
+          slug === 'tokenomics-analys-agent' ||
+          slug === 'audit-analys-agent' ||
+          slug.startsWith('gpt-') ||
+          slug.startsWith('claude-') ||
+          slug.startsWith('gemini-') ||
+          slug === 'stablelm-2' ||
+          slug === 'app-creators' ||
+          slug === 'deepseek-v3-fw' ||
+          slug === 'grok-2'
         ) {
-          botResponse = await queryLLM(agentData.slug, content);
+          botResponse = await queryLLM(slug, content);
           botMarkdown = true;
         } else {
           botResponse = 'No valid agent configuration found.';
@@ -98,6 +96,7 @@ export const useChatStore = create<ChatState>((set) => ({
         botResponse = 'No agent specified.';
       }
 
+      // Save bot message
       const { data: botMessage, error: botError } = await supabase
         .from('chat_messages')
         .insert({
@@ -112,6 +111,7 @@ export const useChatStore = create<ChatState>((set) => ({
 
       if (botError) throw botError;
 
+      // Update store
       set((state) => ({
         messages: [...state.messages, userMessage, botMessage],
       }));
@@ -131,13 +131,18 @@ export const useChatStore = create<ChatState>((set) => ({
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
+      let query = supabase
         .from('chat_messages')
         .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: true });
+        .eq('user_id', user.id);
 
+      if (agentId) {
+        query = query.eq('agent_id', agentId);
+      }
+
+      const { data, error } = await query.order('created_at', { ascending: true });
       if (error) throw error;
+
       set({ messages: data || [] });
     } catch (error) {
       set({ error: (error as Error).message });
@@ -146,7 +151,7 @@ export const useChatStore = create<ChatState>((set) => ({
     }
   },
 
-  clearMessages: async () => {
+  clearMessages: async (agentId?: string) => {
     try {
       set({ loading: true, error: null });
       const {
@@ -154,12 +159,17 @@ export const useChatStore = create<ChatState>((set) => ({
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase
+      let del = supabase
         .from('chat_messages')
         .delete()
         .eq('user_id', user.id);
+      if (agentId) {
+        del = del.eq('agent_id', agentId);
+      }
 
+      const { error } = await del;
       if (error) throw error;
+
       set({ messages: [] });
     } catch (error) {
       set({ error: (error as Error).message });

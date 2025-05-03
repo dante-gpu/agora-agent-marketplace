@@ -1,25 +1,41 @@
 import axios from 'axios';
 import { GEMINI_API_KEY } from './env';
 
+const API_BASE = 'http://localhost:8787';
+
 export async function queryLLM(slug: string, prompt: string): Promise<string> {
   switch (slug) {
     case 'gpt-4o':
     case 'gpt_4_0':
       return await queryOpenAI(prompt, 'gpt-4o');
+
     case 'gpt_3_5_turbo':
       return await queryOpenAI(prompt, 'gpt-3.5-turbo');
+
     case 'gemini-1-5-pro':
       return await queryGemini(prompt);
+
     case 'app-creators':
       return await queryGeminiWithSystemPrompt(prompt);
+
     case 'stablelm-2':
       return await queryStability(prompt);
+
     case 'gemini-2-0-flash':
       return await queryGemini(prompt);
+
     case 'deepseek-v3-fw':
       return await queryDeepseek(prompt);
+
     case 'grok-2':
       return await queryGrok(prompt);
+
+    case 'tokenomics-analys-agent':
+      return await queryTokenomics(prompt);
+
+    case 'audit-analys-agent':
+      return await queryAudit(prompt);
+
     default:
       throw new Error(`No handler for slug: ${slug}`);
   }
@@ -31,7 +47,12 @@ async function queryOpenAI(prompt: string, model: string): Promise<string> {
     const res = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       { model, messages: [{ role: 'user', content: prompt }] },
-      { headers: { Authorization: `Bearer ${OPENAI_API_KEY}`, 'Content-Type': 'application/json' } }
+      {
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
     );
     return res.data.choices?.[0]?.message?.content ?? 'OpenAI returned no content.';
   } catch (err: any) {
@@ -62,7 +83,7 @@ export async function queryGemini(
 async function queryGeminiWithSystemPrompt(prompt: string): Promise<string> {
   try {
     const res = await axios.post(
-      '/api/gemini',
+      `${API_BASE}/api/gemini`,
       {
         prompt,
         systemPrompt:
@@ -72,7 +93,10 @@ async function queryGeminiWithSystemPrompt(prompt: string): Promise<string> {
     );
     return res.data.result ?? 'Gemini App-Creators returned no content.';
   } catch (err: any) {
-    console.error('[Gemini (App-Creators) Error]', err.response?.data || err.message);
+    console.error(
+      '[Gemini (App-Creators) Error]',
+      err.response?.data || err.message
+    );
     return 'Gemini App-Creators response failed.';
   }
 }
@@ -80,9 +104,12 @@ async function queryGeminiWithSystemPrompt(prompt: string): Promise<string> {
 async function queryStability(prompt: string): Promise<string> {
   try {
     await axios.post(
-      '/api/hf-image',
+      `${API_BASE}/api/hf-image`,
       { inputs: prompt },
-      { headers: { 'Content-Type': 'application/json' }, responseType: 'arraybuffer' }
+      {
+        headers: { 'Content-Type': 'application/json' },
+        responseType: 'arraybuffer',
+      }
     );
     return 'Image generated.';
   } catch (err: any) {
@@ -94,7 +121,7 @@ async function queryStability(prompt: string): Promise<string> {
 async function queryDeepseek(prompt: string): Promise<string> {
   try {
     const res = await axios.post(
-      '/api/deepseek',
+      `${API_BASE}/api/deepseek`,
       { prompt },
       { headers: { 'Content-Type': 'application/json' } }
     );
@@ -125,13 +152,52 @@ async function queryGrok(prompt: string): Promise<string> {
   try {
     const GROK2_API_KEY = import.meta.env.VITE_GROK2_API_KEY;
     const res = await axios.post(
-      '/api/grok2',
+      `${API_BASE}/api/grok2`,
       { prompt },
-      { headers: { Authorization: `Bearer ${GROK2_API_KEY}`, 'Content-Type': 'application/json' } }
+      {
+        headers: {
+          Authorization: `Bearer ${GROK2_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
     );
     return res.data.result ?? 'Grok-2 returned no content.';
   } catch (err: any) {
     console.error('[Grok-2 Error]', err.response?.data || err.message);
     return 'Grok-2 request failed.';
+  }
+}
+
+async function queryTokenomics(prompt: string): Promise<string> {
+  try {
+    const res = await axios.post(
+      `${API_BASE}/api/llm`,
+      {
+        slug: 'tokenomics-analys-agent',
+        prompt,
+      }
+    );
+    return res.data.result ?? 'Tokenomics agent returned no content.';
+  } catch (err: any) {
+    console.error('[Tokenomics Error]', err.response?.data || err.message);
+    return 'Tokenomics agent request failed.';
+  }
+}
+
+// --- Audit Analysis Agent ---
+async function queryAudit(prompt: string): Promise<string> {
+  try {
+    // Proxy üzerinden çağırıyoruz, direkt api.io.net kullanılmıyor
+    const res = await axios.post(
+      `${API_BASE}/api/llm`,
+      {
+        slug: 'audit-analys-agent',
+        prompt,
+      }
+    );
+    return res.data.result ?? 'Audit agent returned no content.';
+  } catch (err: any) {
+    console.error('[Audit Error]', err.response?.data || err.message);
+    return 'Audit agent request failed.';
   }
 }
