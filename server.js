@@ -1,4 +1,4 @@
-// server.js
+require('dotenv').config();
 require('dotenv').config();
 
 const express    = require('express');
@@ -11,17 +11,12 @@ const { GoogleAuth }   = require('google-auth-library');
 const app  = express();
 const PORT = 8787;
 
-// ———————————————————————————————
-// Supabase Client (RPC & Logging)
-// ———————————————————————————————
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
 
-// ———————————————————————————————
-// OAuth2 Client (Service Account)
-// ———————————————————————————————
+
 const auth = new GoogleAuth({
   scopes: [
     'https://www.googleapis.com/auth/cloud-platform',
@@ -29,10 +24,7 @@ const auth = new GoogleAuth({
   ]
 });
 
-// ———————————————————————————————
-// Usage Logger Middleware (inline)
-// ———————————————————————————————
-// Path → tool_id eşlemesi; kendi tools tablonuzdaki UUID’leri girin
+
 const TOOL_MAP = {
   '/api/gemini':   'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
   '/api/deepseek': 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
@@ -41,8 +33,63 @@ const TOOL_MAP = {
   '/api/hf-image': '33333333-4444-5555-6666-777777777777'
 };
 
+function reportLogger(req, res, next) {
+  if (req.method !== 'POST') return next();
+  const start = Date.now();
+
+  res.on('finish', async () => {
+    const duration = Date.now() - start;
+    const userId = req.headers['x-user-id'] || null;    
+    const toolId   = TOOL_MAP[req.path] || null;
+    const success  = res.statusCode < 400;
+    const errorMsg = success ? null : res.statusMessage;
+
+    console.log('[reportLogger] fired:', {
+      path:   req.path,
+      status: res.statusCode,
+      output: res.locals.output
+    });
+
+    try {
+      const { data, error } = await supabase
+        .from('tool_reports')
+        .insert([{
+          tool_id:        toolId,
+          user_id:        userId,
+          input_payload:  req.body,
+          output_payload: res.locals.output || {},
+          duration_ms:    duration,
+          success,
+          error_msg:      errorMsg
+        }]);
+
+      if (error) {
+        console.error('[reportLogger] insert error:', error);
+      } else {
+        console.log('[reportLogger] insert OK:', data);
+      }
+
+      const day = new Date().toISOString().split('T')[0];
+      const { error: rpcErr } = await supabase.rpc('upsert_tool_metrics', {
+        p_tool_id:         toolId,
+        p_day:             day,
+        p_calls:           1,
+        p_avg_duration_ms: duration,
+        p_success_count:   success ? 1 : 0,
+        p_error_count:     success ? 0 : 1
+      });
+      if (rpcErr) console.error('[reportLogger] RPC error:', rpcErr);
+    } catch (err) {
+      console.error('[reportLogger] unexpected error:', err);
+    }
+  });
+
+  next();
+}
+
+
+
 function usageLogger(req, res, next) {
-  // Only log POST requests to avoid logging analytics and summary GETs
   if (req.method !== 'POST') {
     return next();
   }
@@ -52,7 +99,7 @@ function usageLogger(req, res, next) {
 
   res.on('finish', async () => {
     const duration = Date.now() - start;
-    const userId = req.headers['x-user-id'] || null;
+    const userId = req.headers['x-user-id'] || null;    
     const toolId = TOOL_MAP[req.path] || null;
     console.log('[usageLogger] finish event:', {
       userId,
@@ -85,16 +132,12 @@ function usageLogger(req, res, next) {
 }
 
 
-// ———————————————————————————————
-// Global Middleware
-// ———————————————————————————————
+app.use(reportLogger);
 app.use(usageLogger);
 app.use(cors());
 app.use(bodyParser.json());
 
-// ———————————————————————————————
-// Env Kontrolleri
-// ———————————————————————————————
+
 const {
   STABILITY_API_KEY,
   GEMINI_API_KEY,
@@ -112,9 +155,7 @@ const {
     }
   });
 
-// ———————————————————————————————
-// Stability Image Proxy
-// ———————————————————————————————
+
 app.post('/api/hf-image', async (req, res) => {
   const prompt = req.body.inputs;
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
@@ -146,9 +187,7 @@ app.post('/api/hf-image', async (req, res) => {
   }
 });
 
-// ———————————————————————————————
-// Gemini Proxy (OAuth2 + Paid Tier Billing)
-// ———————————————————————————————
+
 app.post('/api/gemini', async (req, res) => {
   const { prompt, systemPrompt } = req.body;
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
@@ -170,6 +209,7 @@ app.post('/api/gemini', async (req, res) => {
 
     const result = oauthRes.data.candidates?.[0]?.content?.parts?.[0]?.text;
     res.json({ result: result || 'No response from Gemini.' });
+    res.locals.output = { result };
   } catch (err) {
     const status = err.response?.status;
     const data   = err.response?.data;
@@ -182,9 +222,7 @@ app.post('/api/gemini', async (req, res) => {
   }
 });
 
-// ———————————————————————————————
-// Deepseek Proxy
-// ———————————————————————————————
+
 app.post('/api/deepseek', async (req, res) => {
   const prompt = req.body.prompt;
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
@@ -212,9 +250,7 @@ app.post('/api/deepseek', async (req, res) => {
   }
 });
 
-// ———————————————————————————————
-// Grok-2 Proxy
-// ———————————————————————————————
+
 app.post('/api/grok2', async (req, res) => {
   const prompt = req.body.prompt;
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
@@ -233,18 +269,23 @@ app.post('/api/grok2', async (req, res) => {
       { headers: { Authorization: `Bearer ${GROK2_API_KEY}` } }
     );
 
-    const text = apiRes.data.choices?.[0]?.message?.content;
-    if (text) return res.json({ result: text });
-    res.status(502).json({ error: 'No content', detail: apiRes.data });
+    const text = apiRes.data.choices?.[0]?.message?.content || null;
+    res.locals.output = { result: text };
+
+    if (text) {
+      return res.json({ result: text });
+    } else {
+      return res.status(502).json({ error: 'No content', detail: apiRes.data });
+    }
   } catch (err) {
     console.error('[proxy] Grok-2 error:', err.response?.data || err.message);
-    res.status(err.response?.status || 500).json({ error: 'Grok-2 failed' });
+    res.locals.output = { error: err.message };
+    return res.status(err.response?.status || 500).json({ error: 'Grok-2 failed' });
   }
 });
 
-// ———————————————————————————————
-// Unified LLM Proxy (Tokenomics & Audit)
-// ———————————————————————————————
+
+
 app.post('/api/llm', async (req, res) => {
   const { slug, prompt, systemPrompt } = req.body;
   if (!slug || !prompt) return res.status(400).json({ error: 'Missing slug or prompt.' });
@@ -293,9 +334,7 @@ app.post('/api/llm', async (req, res) => {
   }
 });
 
-// ———————————————————————————————
-// Provider Usage Summary Route (RPC)
-// ———————————————————————————————
+
 app.get('/api/providers/:providerId/tools/:toolId/usage', async (req, res) => {
   const { toolId } = req.params;
   const { from, to } = req.query;
@@ -308,9 +347,7 @@ app.get('/api/providers/:providerId/tools/:toolId/usage', async (req, res) => {
   res.json({ usage: data });
 });
 
-// ———————————————————————————————
-// Start Server
-// ———————————————————————————————
+
 app.listen(PORT, () => {
   console.log(`[proxy] Listening on http://localhost:${PORT}`);
 });
