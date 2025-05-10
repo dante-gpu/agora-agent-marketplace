@@ -18,7 +18,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Case sensitivity fix */
+    "forceConsistentCasingInFileNames": false
   },
   "include": ["src"]
 }
