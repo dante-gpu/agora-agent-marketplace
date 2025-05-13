@@ -8,6 +8,17 @@ const bodyParser = require('body-parser');
 const { createClient } = require('@supabase/supabase-js');
 const { GoogleAuth }   = require('google-auth-library');
 
+// basit admin yetkilendirme middleware'i
+function authorize(requiredRole) {
+  return (req, res, next) => {
+    const userRole = req.headers['x-user-role'];   // ya da JWT'den okuduğunuz alan
+    if (userRole !== requiredRole) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    next();
+  };
+}
+
 const app  = express();
 const PORT = 8787;
 
@@ -16,14 +27,12 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
-
 const auth = new GoogleAuth({
   scopes: [
     'https://www.googleapis.com/auth/cloud-platform',
     'https://www.googleapis.com/auth/generative-language'
   ]
 });
-
 
 const TOOL_MAP = {
   '/api/gemini':   'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
@@ -87,26 +96,16 @@ function reportLogger(req, res, next) {
   next();
 }
 
-
-
 function usageLogger(req, res, next) {
-  if (req.method !== 'POST') {
-    return next();
-  }
+  if (req.method !== 'POST') return next();
 
   const start = Date.now();
   console.log('[usageLogger] registered for path:', req.path);
 
   res.on('finish', async () => {
     const duration = Date.now() - start;
-    const userId = req.headers['x-user-id'] || null;    
-    const toolId = TOOL_MAP[req.path] || null;
-    console.log('[usageLogger] finish event:', {
-      userId,
-      toolId,
-      status: res.statusCode,
-      duration,
-    });
+    const userId  = req.headers['x-user-id'] || null;
+    const toolId  = TOOL_MAP[req.path]      || null;
 
     try {
       const { data, error } = await supabase
@@ -121,22 +120,45 @@ function usageLogger(req, res, next) {
           error_code:  res.statusCode < 400 ? null : `HTTP_${res.statusCode}`,
           source:      'api',
         }]);
-      if (error) console.error('[usageLogger] insert error:', error);
-      else       console.log('[usageLogger] insert OK:', data);
+      if (error) {
+        console.error('[usageLogger] insert error:', error);
+      } else {
+        console.log('[usageLogger] insert OK:', data);
+      }
     } catch (err) {
-      console.error('[usageLogger] unexpected error:', err);
+      console.error('[usageLogger] unexpected error (insert):', err);
+    }
+
+    try {
+      const { error } = await supabase
+        .from('user_agent_history')
+        .upsert(
+          {
+            user_id:            userId,
+            agent_id:           toolId,
+            total_interactions: 1,
+            total_tokens:       duration,
+            last_interaction:   new Date().toISOString(),
+          },
+          { onConflict: ['user_id','agent_id'] }
+        );
+      if (error) {
+        console.error('[usageLogger] upsert error:', error);
+      } else {
+        console.log('[usageLogger] upsert OK:', { userId, agentId: toolId });
+      }
+    } catch (err) {
+      console.error('[usageLogger] unexpected error (upsert):', err);
     }
   });
 
   next();
 }
 
-
 app.use(reportLogger);
 app.use(usageLogger);
 app.use(cors());
 app.use(bodyParser.json());
-
 
 const {
   STABILITY_API_KEY,
@@ -154,7 +176,6 @@ const {
       process.exit(1);
     }
   });
-
 
 app.post('/api/hf-image', async (req, res) => {
   const prompt = req.body.inputs;
@@ -186,7 +207,6 @@ app.post('/api/hf-image', async (req, res) => {
     res.status(500).json({ error: 'Image generation failed' });
   }
 });
-
 
 app.post('/api/gemini', async (req, res) => {
   const { prompt, systemPrompt } = req.body;
@@ -222,7 +242,6 @@ app.post('/api/gemini', async (req, res) => {
   }
 });
 
-
 app.post('/api/deepseek', async (req, res) => {
   const prompt = req.body.prompt;
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
@@ -249,7 +268,6 @@ app.post('/api/deepseek', async (req, res) => {
     res.status(err.response?.status || 500).json({ error: 'Deepseek failed' });
   }
 });
-
 
 app.post('/api/grok2', async (req, res) => {
   const prompt = req.body.prompt;
@@ -283,8 +301,6 @@ app.post('/api/grok2', async (req, res) => {
     return res.status(err.response?.status || 500).json({ error: 'Grok-2 failed' });
   }
 });
-
-
 
 app.post('/api/llm', async (req, res) => {
   const { slug, prompt, systemPrompt } = req.body;
@@ -334,7 +350,6 @@ app.post('/api/llm', async (req, res) => {
   }
 });
 
-
 app.get('/api/providers/:providerId/tools/:toolId/usage', async (req, res) => {
   const { toolId } = req.params;
   const { from, to } = req.query;
@@ -347,6 +362,15 @@ app.get('/api/providers/:providerId/tools/:toolId/usage', async (req, res) => {
   res.json({ usage: data });
 });
 
+app.get('/api/usage-history', authorize('admin'), async (req, res) => {
+  const { data, error } = await supabase
+    .from('user_agent_history')
+    .select('*')
+    .order('last_interaction', { ascending: false });
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
 
 app.listen(PORT, () => {
   console.log(`[proxy] Listening on http://localhost:${PORT}`);
