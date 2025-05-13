@@ -3,43 +3,24 @@ import { GEMINI_API_KEY } from './env';
 
 const API_BASE = 'http://localhost:8787';
 
+// src/lib/llm.ts
+
 export async function queryLLM(slug: string, prompt: string): Promise<string> {
-  switch (slug) {
-    case 'gpt-4o':
-    case 'gpt_4_0':
-      return await queryOpenAI(prompt, 'gpt-4o');
+  const res = await fetch('/api/llm', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ slug, prompt })
+  });
 
-    case 'gpt_3_5_turbo':
-      return await queryOpenAI(prompt, 'gpt-3.5-turbo');
-
-    case 'gemini-1-5-pro':
-      return await queryGemini(prompt);
-
-    case 'app-creators':
-      return await queryGeminiWithSystemPrompt(prompt);
-
-    case 'stablelm-2':
-      return await queryStability(prompt);
-
-    case 'gemini-2-0-flash':
-      return await queryGemini(prompt);
-
-    case 'deepseek-v3-fw':
-      return await queryDeepseek(prompt);
-
-    case 'grok-2':
-      return await queryGrok(prompt);
-
-    case 'tokenomics-analys-agent':
-      return await queryTokenomics(prompt);
-
-    case 'audit-analys-agent':
-      return await queryAudit(prompt);
-
-    default:
-      throw new Error(`No handler for slug: ${slug}`);
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || 'LLM proxy error');
   }
+
+  const { result } = await res.json();
+  return result;
 }
+
 
 async function queryOpenAI(prompt: string, model: string): Promise<string> {
   try {

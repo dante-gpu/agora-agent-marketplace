@@ -124,31 +124,8 @@ export const useChatStore = create<ChatState>((set) => ({
   },
 
   fetchMessages: async (agentId?: string) => {
-    try {
-      set({ loading: true, error: null });
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      let query = supabase
-        .from('chat_messages')
-        .select('*')
-        .eq('user_id', user.id);
-
-      if (agentId) {
-        query = query.eq('agent_id', agentId);
-      }
-
-      const { data, error } = await query.order('created_at', { ascending: true });
-      if (error) throw error;
-
-      set({ messages: data || [] });
-    } catch (error) {
-      set({ error: (error as Error).message });
-    } finally {
-      set({ loading: false });
-    }
+    // Always clear messages when loading a new agent
+    set({ messages: [], loading: false, error: null });
   },
 
   clearMessages: async (agentId?: string) => {
