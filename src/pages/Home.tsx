@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, MessageSquare, Zap, ChevronRight, ToggleLeft as Google, Bot, Brain, Code, Star } from 'lucide-react';
+import {
+  Sparkles,
+  MessageSquare,
+  Zap,
+  ChevronRight,
+  ToggleLeft as Google,
+  Bot,
+  Brain,
+  Code,
+  Star,
+  HelpCircle,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { supabase } from '../lib/supabase';
@@ -9,7 +20,6 @@ import Card from '../components/Card';
 import Badge from '../components/Badge';
 import LoadingSpinner from '../components/LoadingSpinner';
 import QuickChat from '../components/QuickChat';
-import * as Icons from 'lucide-react';
 
 interface Agent {
   id: string;
@@ -65,15 +75,13 @@ function Home() {
     async function fetchData() {
       try {
         setLoading(true);
-        
-        // Fetch categories with agent counts
+
         const { data: categoryData, error: categoryError } = await supabase
           .from('categories')
           .select('name, description, icon');
 
         if (categoryError) throw categoryError;
 
-        // Fetch agent counts for each category
         const categoryCounts = await Promise.all(
           categoryData.map(async (category) => {
             const { count } = await supabase
@@ -91,7 +99,6 @@ function Home() {
 
         setCategories(categoryCounts);
 
-        // Fetch popular agents
         const { data: agentData, error: agentError } = await supabase
           .from('agents')
           .select('*')
@@ -103,7 +110,6 @@ function Home() {
         if (agentError) throw agentError;
         setPopularAgents(agentData || []);
 
-        // Fetch stats
         const { count: agentCount } = await supabase
           .from('agents')
           .select('*', { count: 'exact', head: true })
@@ -118,15 +124,14 @@ function Home() {
           .select('rating')
           .eq('status', 'active');
 
-        const avgRating = ratingData?.reduce((sum, agent) => sum + agent.rating, 0) || 0;
-        const totalRating = avgRating / (ratingData?.length || 1);
+        const totalRatings = ratingData?.reduce((sum, agent) => sum + agent.rating, 0) || 0;
+        const avgRating = totalRatings / (ratingData?.length || 1);
 
         setStats({
           totalAgents: agentCount || 0,
           totalUsers: userCount || 0,
-          avgRating: totalRating
+          avgRating: avgRating
         });
-
       } catch (err) {
         setError((err as Error).message);
       } finally {
@@ -137,16 +142,19 @@ function Home() {
     fetchData();
   }, []);
 
-  // Dynamic icon component lookup
+  const iconMap: Record<string, React.ComponentType<any>> = {
+    Bot,
+    Brain,
+    Code,
+  };
+
   const getIconComponent = (iconName: string) => {
-    return (Icons as Record<string, Icons.LucideIcon>)[iconName] || Icons.HelpCircle;
+    return iconMap[iconName] || HelpCircle;
   };
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
-        {/* Background Effects */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[#e1ffa6]/5 to-transparent" />
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#e1ffa6]/10 rounded-full blur-3xl animate-pulse" />
@@ -198,7 +206,6 @@ function Home() {
               </Button>
             </div>
 
-            {/* Stats */}
             <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div className="text-center">
                 <div className="text-3xl font-bold mb-2">{stats.totalAgents}</div>
@@ -220,7 +227,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Features Grid */}
       <section className="py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-[#e1ffa6]/5" />
         <div className="max-w-6xl mx-auto px-4 relative">
@@ -236,10 +242,8 @@ function Home() {
         </div>
       </section>
 
-      {/* Quick Chat Section */}
       <QuickChat />
 
-      {/* Categories Section */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
@@ -286,7 +290,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Popular Agents Section */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
@@ -314,24 +317,23 @@ function Home() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {popularAgents.map((agent) => (
-                <Link to={`/agent/${agent.slug}`} key={agent.id}>
-                  <AgentCard
-                    name={agent.name}
-                    description={agent.description}
-                    uses={agent.deployments.toString()}
-                    rating={agent.rating}
-                    category={agent.category}
-                    price={agent.price}
-                    imageUrl={agent.image_url}
-                  />
-                </Link>
+                <AgentCard
+                  key={agent.id}
+                  name={agent.name}
+                  description={agent.description}
+                  uses={agent.deployments.toString()}
+                  rating={agent.rating}
+                  category={agent.category}
+                  price={agent.price}
+                  imageUrl={agent.image_url}
+                  slug={agent.slug}
+                />
               ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-16 bg-black/50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="bg-gray-900 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">

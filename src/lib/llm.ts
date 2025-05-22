@@ -3,8 +3,6 @@ import { GEMINI_API_KEY } from './env';
 
 const API_BASE = 'http://localhost:8787';
 
-// src/lib/llm.ts
-
 export async function queryLLM(slug: string, prompt: string): Promise<string> {
   const res = await fetch('/api/llm', {
     method: 'POST',

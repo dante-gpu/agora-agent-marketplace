@@ -372,6 +372,17 @@ app.get('/api/usage-history', authorize('admin'), async (req, res) => {
   res.json(data);
 });
 
+app.get('/coingecko/dgpu-price', async (req, res) => {
+  try {
+    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=dante&vs_currencies=usd');
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    console.error('[Proxy Error] CoinGecko fetch failed:', err);
+    res.status(500).json({ error: 'Failed to fetch CoinGecko price' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`[proxy] Listening on http://localhost:${PORT}`);
 });

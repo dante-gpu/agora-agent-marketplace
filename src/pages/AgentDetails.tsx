@@ -9,6 +9,9 @@ import Badge from '../components/Badge';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ChatWindow from '../components/ChatWindow';
 import { supabase } from '../lib/supabase';
+import dayjs from "dayjs";
+import { useWallet } from "@solana/wallet-adapter-react";
+
 
 interface Review {
   id: string;
@@ -34,18 +37,119 @@ function AgentDetails() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [userReview, setUserReview] = useState({ rating: 5, comment: '' });
   const [submitting, setSubmitting] = useState(false);
+  const [rentalInfo, setRentalInfo] = useState<any>(null);
+  const [timeLeft, setTimeLeft] = useState<string | null>(null);
+  const [expired, setExpired] = useState(false);
+  const { publicKey } = useWallet();
+  const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!slug) return;
-      const agentData = await getAgentBySlug(slug);
-      if (agentData) {
-        setAgent(agentData);
-        fetchReviews(agentData.id);
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    if (!slug) return;
+
+    const agentData = await getAgentBySlug(slug);
+    if (agentData) {
+      setAgent(agentData);
+      fetchReviews(agentData.id);
+    }
+
+    await fetchRentalInfo();
+  };
+
+  fetchData();
+}, [slug, publicKey]);
+
+useEffect(() => {
+  if (remainingSeconds === null) return;
+
+  const interval = setInterval(() => {
+    setRemainingSeconds((prev) => {
+      if (prev === null || prev <= 1) {
+        clearInterval(interval);
+        return 0;
       }
-    };
-    fetchData();
-  }, [slug, getAgentBySlug]);
+      return prev - 1;
+    });
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [remainingSeconds]);
+
+useEffect(() => {
+  if (remainingSeconds !== null) {
+    const hrs = Math.floor(remainingSeconds / 3600);
+    const mins = Math.floor((remainingSeconds % 3600) / 60);
+    const secs = remainingSeconds % 60;
+
+    setTimeLeft(
+      `${hrs.toString().padStart(2, "0")}:${mins
+        .toString()
+        .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`
+    );
+
+    setExpired(remainingSeconds <= 0);
+  }
+}, [remainingSeconds]);
+
+const fetchRentalInfo = async () => {
+  console.log("📥 [fetchRentalInfo] called");
+
+  if (!publicKey || !slug) {
+    console.warn("🚫 Missing publicKey or slug:", { publicKey, slug });
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("rentals")
+    .select("end_time")
+    .eq("user_wallet", publicKey.toBase58())
+    .eq("agent_slug", slug)
+    .order("end_time", { ascending: false })
+    .limit(1);
+
+  console.log("🔍 Supabase rental query result:", data);
+
+  if (error || !data || data.length === 0) {
+    console.warn("⚠️ No rental data or error:", error);
+    setRemainingSeconds(null);
+    return;
+  }
+
+  const endTime = new Date(data[0].end_time).getTime();
+  const now = Date.now();
+
+  if (endTime > now) {
+    const seconds = Math.floor((endTime - now) / 1000);
+    console.log("✅ [fetchRentalInfo] Rental is active. Seconds left:", seconds);
+    setRemainingSeconds(seconds);
+  } else {
+    console.log("⛔ [fetchRentalInfo] Rental expired");
+    setRemainingSeconds(0);
+  }
+};
+
+  const startCountdown = (expiresAt: string) => {
+    const interval = setInterval(() => {
+      const diff = dayjs(expiresAt).diff(dayjs(), "second");
+  
+      if (diff <= 0) {
+        setTimeLeft(null);
+        setExpired(true);
+        clearInterval(interval);
+      } else {
+        const hours = Math.floor(diff / 3600);
+        const minutes = Math.floor((diff % 3600) / 60);
+        const seconds = diff % 60;
+        setTimeLeft(
+          `${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+        );
+      }
+    }, 1000);
+  };
 
   const fetchReviews = async (agentId: string) => {
     try {
@@ -61,7 +165,6 @@ function AgentDetails() {
         return;
       }
 
-      // Then get the usernames for all user_ids
       const userIds = reviewsData.map(review => review.user_id);
       const { data: profilesData, error: profilesError } = await supabase
         .from('user_profiles')
@@ -72,14 +175,12 @@ function AgentDetails() {
         console.error('Error fetching user profiles:', profilesError);
         return;
       }
-
-      // Create a map of user_id to username
+      
       const userMap = profilesData.reduce((acc: Record<string, string>, profile) => {
         acc[profile.user_id] = profile.username;
         return acc;
       }, {});
 
-      // Combine the data
       const reviewsWithUsernames = reviewsData.map(review => ({
         ...review,
         username: userMap[review.user_id] || 'Unknown User'
@@ -292,8 +393,24 @@ function AgentDetails() {
 
         {/* Chat Section */}
         <div className="sticky top-24">
-          <ChatWindow agentId={agent.id} agentName={agent.name} />
-        </div>
+  {expired ? (
+    <div className="bg-red-500/10 border border-red-500 text-red-500 rounded-lg p-4 text-center">
+      ⏰ Süreniz doldu. Bu agent'ı tekrar kiralamanız gerekiyor.
+    </div>
+  ) : !timeLeft ? (
+    <div className="bg-yellow-500/10 border border-yellow-500 text-yellow-400 rounded-lg p-4 text-center">
+      Bu agent için geçerli bir kiralama bulunamadı.
+    </div>
+  ) : (
+    <>
+      <div className="text-sm text-gray-400 mb-2 text-center">
+        ⏳ Kalan Süre: <span className="text-white font-medium">{timeLeft}</span>
+      </div>
+      <ChatWindow agentId={agent.id} agentName={agent.name} />
+    </>
+  )}
+</div>
+
       </div>
     </div>
   );

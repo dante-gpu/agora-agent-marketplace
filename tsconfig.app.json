@@ -21,7 +21,13 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Case sensitivity fix */
-    "forceConsistentCasingInFileNames": false
+    "forceConsistentCasingInFileNames": false,
+
+    /* Path alias */
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
   "include": ["src"]
 }
