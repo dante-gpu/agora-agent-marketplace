@@ -315,40 +315,78 @@ app.post('/api/llm', async (req, res) => {
           systemPrompt: 'You are a tokenomics analysis expert...'
         })).data.result;
         break;
+
       case 'audit-analys-agent':
         try {
+          console.time('[AUDIT_AGENT_REQUEST]');
           result = (await axios.post(
             'https://api.io/v1/chat/completions',
-            { model:'audit-analys-agent', messages:[{ role:'user', content:prompt }] },
-            { headers:{ Authorization:`Bearer ${IO_API_KEY}` }}
+            {
+              model: 'audit-analys-agent',
+              messages: [{ role: 'user', content: prompt }]
+            },
+            {
+              headers: { Authorization: `Bearer ${IO_API_KEY}` },
+              timeout: 4000
+            }
           )).data.choices[0].message.content;
-        } catch {
+          console.timeEnd('[AUDIT_AGENT_REQUEST]');
+        } catch (err) {
+          console.warn('[AUDIT FALLBACK] Primary failed, using Gemini.', err.message);
+          console.time('[AUDIT_AGENT_GEMINI_FALLBACK]');
           result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
             prompt,
-            systemPrompt:'You are a security auditor for smart contracts...'
+            systemPrompt: 'You are a security auditor for smart contracts...'
           })).data.result;
+          console.timeEnd('[AUDIT_AGENT_GEMINI_FALLBACK]');
         }
         break;
+
+      case 'article-writer-agent':
+        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+          prompt,
+          systemPrompt: 'You are a professional article writer. Write structured and informative articles.'
+        })).data.result;
+        break;
+
+      case 'assistant':
+        console.time('[ASSISTANT_AGENT]');
+        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+          prompt,
+          systemPrompt: 'You are a helpful assistant who provides clear, concise, and useful answers.'
+        })).data.result;
+        console.timeEnd('[ASSISTANT_AGENT]');
+        break;
+
       case 'gemini-1-5-pro':
       case 'gemini-2-0-flash':
       case 'app-creators':
-        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, { prompt, systemPrompt })).data.result;
+        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+          prompt,
+          systemPrompt
+        })).data.result;
         break;
+
       case 'deepseek-v3-fw':
         result = (await axios.post(`http://localhost:${PORT}/api/deepseek`, { prompt })).data.result;
         break;
+
       case 'grok-2':
         result = (await axios.post(`http://localhost:${PORT}/api/grok2`, { prompt })).data.result;
         break;
+
       default:
-        return res.status(400).json({ error:`Unknown slug: ${slug}` });
+        return res.status(400).json({ error: `Unknown slug: ${slug}` });
     }
+
     res.json({ result });
   } catch (err) {
     console.error('[LLM Unified Error]', err.response?.data || err.message);
-    res.status(500).json({ error:'LLM proxy failed', detail: err.response?.data || err.message });
+    res.status(500).json({ error: 'LLM proxy failed', detail: err.response?.data || err.message });
   }
 });
+
+
 
 app.get('/api/providers/:providerId/tools/:toolId/usage', async (req, res) => {
   const { toolId } = req.params;
@@ -370,17 +408,6 @@ app.get('/api/usage-history', authorize('admin'), async (req, res) => {
 
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
-});
-
-app.get('/coingecko/dgpu-price', async (req, res) => {
-  try {
-    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=dante&vs_currencies=usd');
-    const data = await response.json();
-    res.json(data);
-  } catch (err) {
-    console.error('[Proxy Error] CoinGecko fetch failed:', err);
-    res.status(500).json({ error: 'Failed to fetch CoinGecko price' });
-  }
 });
 
 app.listen(PORT, () => {

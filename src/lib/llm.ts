@@ -180,3 +180,19 @@ async function queryAudit(prompt: string): Promise<string> {
     return 'Audit agent request failed.';
   }
 }
+
+async function queryArticleWriter(prompt: string): Promise<string> {
+  try {
+    const res = await axios.post(
+      `${API_BASE}/api/llm`,
+      {
+        slug: 'article-writer-agent',
+        prompt,
+      }
+    );
+    return res.data.result ?? 'Article Writer returned no content.';
+  } catch (err: any) {
+    console.error('[Article Writer Error]', err.response?.data || err.message);
+    return 'Article Writer request failed.';
+  }
+}
