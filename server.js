@@ -38,6 +38,7 @@ const TOOL_MAP = {
   '/api/gemini':   'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
   '/api/deepseek': 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
   '/api/grok2':    '99999999-8888-7777-6666-555555555555',
+  '/api/claude':   '77777777-6666-5555-4444-333333333333',
   '/api/llm':      '22222222-3333-4444-5555-666666666666',
   '/api/hf-image': '33333333-4444-5555-6666-777777777777'
 };
@@ -48,7 +49,7 @@ function reportLogger(req, res, next) {
 
   res.on('finish', async () => {
     const duration = Date.now() - start;
-    const userId = req.headers['x-user-id'] || null;    
+    const userId = req.headers['x-user-id'] || 'anonymous-user';
     const toolId   = TOOL_MAP[req.path] || null;
     const success  = res.statusCode < 400;
     const errorMsg = success ? null : res.statusMessage;
@@ -301,6 +302,54 @@ app.post('/api/grok2', async (req, res) => {
     return res.status(err.response?.status || 500).json({ error: 'Grok-2 failed' });
   }
 });
+
+app.post('/api/claude', async (req, res) => {
+  const { prompt } = req.body;
+  if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
+
+  const apiKeys = [
+    process.env.VITE_ANTHROPIC_KEY_1,
+    process.env.VITE_ANTHROPIC_KEY_2,
+    process.env.VITE_ANTHROPIC_KEY_3,
+  ].filter(Boolean);
+
+  for (const key of apiKeys) {
+    try {
+      const response = await axios.post(
+        'https://api.anthropic.com/v1/chat/completions',
+        {
+          model: 'claude-3-opus-20240229',
+          max_tokens_to_sample: 1024,
+          stop_sequences: ["\n\nHuman:"],
+          messages: [
+            { role: "system", content: "You are a helpful assistant." },
+            { role: "user", content: prompt }
+          ],
+        },
+        {
+          headers: {
+            'x-api-key': key,
+            'anthropic-version': '2023-06-01',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const reply = response.data.completions?.[0]?.data?.text;
+      if (reply) {
+        res.locals.output = { result: reply };
+        return res.json({ result: reply });
+      }
+    } catch (err) {
+      console.warn('[Claude Fallback]', err.response?.status, err.message);
+      continue;
+    }
+  }
+
+  res.status(500).json({ error: 'Claude request failed on all keys' });
+});
+
+
 
 app.post('/api/llm', async (req, res) => {
   const { slug, prompt, systemPrompt } = req.body;
