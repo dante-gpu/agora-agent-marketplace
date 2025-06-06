@@ -38,6 +38,7 @@ const TOOL_MAP = {
   '/api/gemini':   'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
   '/api/deepseek': 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
   '/api/grok2':    '99999999-8888-7777-6666-555555555555',
+  '/api/claude':   '77777777-6666-5555-4444-333333333333',
   '/api/llm':      '22222222-3333-4444-5555-666666666666',
   '/api/hf-image': '33333333-4444-5555-6666-777777777777'
 };
@@ -48,7 +49,7 @@ function reportLogger(req, res, next) {
 
   res.on('finish', async () => {
     const duration = Date.now() - start;
-    const userId = req.headers['x-user-id'] || null;    
+    const userId = req.headers['x-user-id'] || 'anonymous-user';
     const toolId   = TOOL_MAP[req.path] || null;
     const success  = res.statusCode < 400;
     const errorMsg = success ? null : res.statusMessage;
@@ -302,6 +303,54 @@ app.post('/api/grok2', async (req, res) => {
   }
 });
 
+app.post('/api/claude', async (req, res) => {
+  const { prompt } = req.body;
+  if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
+
+  const apiKeys = [
+    process.env.VITE_ANTHROPIC_KEY_1,
+    process.env.VITE_ANTHROPIC_KEY_2,
+    process.env.VITE_ANTHROPIC_KEY_3,
+  ].filter(Boolean);
+
+  for (const key of apiKeys) {
+    try {
+      const response = await axios.post(
+        'https://api.anthropic.com/v1/chat/completions',
+        {
+          model: 'claude-3-opus-20240229',
+          max_tokens_to_sample: 1024,
+          stop_sequences: ["\n\nHuman:"],
+          messages: [
+            { role: "system", content: "You are a helpful assistant." },
+            { role: "user", content: prompt }
+          ],
+        },
+        {
+          headers: {
+            'x-api-key': key,
+            'anthropic-version': '2023-06-01',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const reply = response.data.completions?.[0]?.data?.text;
+      if (reply) {
+        res.locals.output = { result: reply };
+        return res.json({ result: reply });
+      }
+    } catch (err) {
+      console.warn('[Claude Fallback]', err.response?.status, err.message);
+      continue;
+    }
+  }
+
+  res.status(500).json({ error: 'Claude request failed on all keys' });
+});
+
+
+
 app.post('/api/llm', async (req, res) => {
   const { slug, prompt, systemPrompt } = req.body;
   if (!slug || !prompt) return res.status(400).json({ error: 'Missing slug or prompt.' });
@@ -315,40 +364,78 @@ app.post('/api/llm', async (req, res) => {
           systemPrompt: 'You are a tokenomics analysis expert...'
         })).data.result;
         break;
+
       case 'audit-analys-agent':
         try {
+          console.time('[AUDIT_AGENT_REQUEST]');
           result = (await axios.post(
             'https://api.io/v1/chat/completions',
-            { model:'audit-analys-agent', messages:[{ role:'user', content:prompt }] },
-            { headers:{ Authorization:`Bearer ${IO_API_KEY}` }}
+            {
+              model: 'audit-analys-agent',
+              messages: [{ role: 'user', content: prompt }]
+            },
+            {
+              headers: { Authorization: `Bearer ${IO_API_KEY}` },
+              timeout: 4000
+            }
           )).data.choices[0].message.content;
-        } catch {
+          console.timeEnd('[AUDIT_AGENT_REQUEST]');
+        } catch (err) {
+          console.warn('[AUDIT FALLBACK] Primary failed, using Gemini.', err.message);
+          console.time('[AUDIT_AGENT_GEMINI_FALLBACK]');
           result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
             prompt,
-            systemPrompt:'You are a security auditor for smart contracts...'
+            systemPrompt: 'You are a security auditor for smart contracts...'
           })).data.result;
+          console.timeEnd('[AUDIT_AGENT_GEMINI_FALLBACK]');
         }
         break;
+
+      case 'article-writer-agent':
+        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+          prompt,
+          systemPrompt: 'You are a professional article writer. Write structured and informative articles.'
+        })).data.result;
+        break;
+
+      case 'assistant':
+        console.time('[ASSISTANT_AGENT]');
+        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+          prompt,
+          systemPrompt: 'You are a helpful assistant who provides clear, concise, and useful answers.'
+        })).data.result;
+        console.timeEnd('[ASSISTANT_AGENT]');
+        break;
+
       case 'gemini-1-5-pro':
       case 'gemini-2-0-flash':
       case 'app-creators':
-        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, { prompt, systemPrompt })).data.result;
+        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+          prompt,
+          systemPrompt
+        })).data.result;
         break;
+
       case 'deepseek-v3-fw':
         result = (await axios.post(`http://localhost:${PORT}/api/deepseek`, { prompt })).data.result;
         break;
+
       case 'grok-2':
         result = (await axios.post(`http://localhost:${PORT}/api/grok2`, { prompt })).data.result;
         break;
+
       default:
-        return res.status(400).json({ error:`Unknown slug: ${slug}` });
+        return res.status(400).json({ error: `Unknown slug: ${slug}` });
     }
+
     res.json({ result });
   } catch (err) {
     console.error('[LLM Unified Error]', err.response?.data || err.message);
-    res.status(500).json({ error:'LLM proxy failed', detail: err.response?.data || err.message });
+    res.status(500).json({ error: 'LLM proxy failed', detail: err.response?.data || err.message });
   }
 });
+
+
 
 app.get('/api/providers/:providerId/tools/:toolId/usage', async (req, res) => {
   const { toolId } = req.params;
@@ -370,17 +457,6 @@ app.get('/api/usage-history', authorize('admin'), async (req, res) => {
 
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
-});
-
-app.get('/coingecko/dgpu-price', async (req, res) => {
-  try {
-    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=dante&vs_currencies=usd');
-    const data = await response.json();
-    res.json(data);
-  } catch (err) {
-    console.error('[Proxy Error] CoinGecko fetch failed:', err);
-    res.status(500).json({ error: 'Failed to fetch CoinGecko price' });
-  }
 });
 
 app.listen(PORT, () => {

@@ -85,6 +85,8 @@ export const useChatStore = create<ChatState>((set) => ({
           slug === 'stablelm-2' ||
           slug === 'app-creators' ||
           slug === 'deepseek-v3-fw' ||
+          slug === 'article-writer-agent' ||
+          slug === 'assistant' ||
           slug === 'grok-2'
         ) {
           botResponse = await queryLLM(slug, content);
