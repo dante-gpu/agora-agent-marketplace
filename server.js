@@ -20,7 +20,7 @@ const axiosInstance = axios.create({ httpsAgent, httpAgent });
 // basit admin yetkilendirme middleware'i
 function authorize(requiredRole) {
   return (req, res, next) => {
-    const userRole = req.headers['x-user-role'];   // ya da JWT'den okuduğunuz alan
+    const userRole = req.headers['x-user-role'];  
     if (userRole !== requiredRole) {
       return res.status(403).json({ error: 'Forbidden' });
     }
