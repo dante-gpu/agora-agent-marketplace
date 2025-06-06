@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { User } from '@supabase/supabase-js';
-import { supabase } from '../lib/supabase';
+import { create } from "zustand";
+import { User } from "@supabase/supabase-js";
+import { supabase } from "../lib/supabase";
 
 interface AuthState {
   user: User | null;
@@ -25,7 +25,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         email,
         password,
       });
-      
+
       if (error) throw error;
       set({ user: data.user });
     } catch (error) {
@@ -39,16 +39,16 @@ export const useAuthStore = create<AuthState>((set) => ({
   signInWithGoogle: async () => {
     try {
       set({ loading: true, error: null });
-      
+
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+        provider: "google",
         options: {
           redirectTo: window.location.origin,
           queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
+            access_type: "offline",
+            prompt: "consent",
           },
-        }
+        },
       });
 
       if (error) throw error;
@@ -66,13 +66,13 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       // Check if username is already taken
       const { data: existingUser, error: checkError } = await supabase
-        .from('user_profiles')
-        .select('username')
-        .eq('username', username)
+        .from("user_profiles")
+        .select("username")
+        .eq("username", username)
         .single();
 
       if (existingUser) {
-        throw new Error('Username is already taken');
+        throw new Error("Username is already taken");
       }
 
       // Sign up the user
@@ -80,22 +80,22 @@ export const useAuthStore = create<AuthState>((set) => ({
         email,
         password,
       });
-      
+
       if (authError) throw authError;
-      
+
       if (authData.user) {
         try {
           // Create user profile
           const { error: profileError } = await supabase
-            .from('user_profiles')
+            .from("user_profiles")
             .insert([
               {
                 user_id: authData.user.id,
                 username,
-              }
+              },
             ])
             .single();
-          
+
           if (profileError) {
             // If profile creation fails, delete the auth user
             await supabase.auth.admin.deleteUser(authData.user.id);
@@ -104,14 +104,14 @@ export const useAuthStore = create<AuthState>((set) => ({
 
           // Create default user settings
           const { error: settingsError } = await supabase
-            .from('user_settings')
+            .from("user_settings")
             .insert([
               {
                 user_id: authData.user.id,
-              }
+              },
             ])
             .single();
-          
+
           if (settingsError) {
             // If settings creation fails, clean up
             await supabase.auth.admin.deleteUser(authData.user.id);
@@ -150,54 +150,122 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   initialize: async () => {
-    try {
-      set({ loading: true, error: null });
-      
-      // Get initial session
-      const { data: { user } } = await supabase.auth.getUser();
-      set({ user });
-      
-      // Listen for auth changes
-      supabase.auth.onAuthStateChange(async (event, session) => {
-        if (event === 'SIGNED_IN' && session?.user) {
-          // Check if user profile exists
-          const { data: profile } = await supabase
-            .from('user_profiles')
-            .select('*')
-            .eq('user_id', session.user.id)
-            .single();
+    // Added async here
+    set({ loading: true, error: null }); // Set initial loading state
 
-          // If no profile exists, create one with a generated username
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      // Set loading true at the start of handling an auth event,
+      // especially for INITIAL_SESSION or SIGNED_IN which involve async operations.
+      if (event === "INITIAL_SESSION" || event === "SIGNED_IN") {
+        set({ loading: true });
+      }
+
+      if (
+        (event === "SIGNED_IN" || event === "INITIAL_SESSION") &&
+        session?.user
+      ) {
+        try {
+          const { data: profile, error: profileError } = await supabase
+            .from("user_profiles")
+            .select("user_id") // Check for existence
+            .eq("user_id", session.user.id)
+            .maybeSingle(); // Avoids error if profile not found (expected for new user)
+
+          if (profileError) {
+            throw new Error(`Error fetching profile: ${profileError.message}`);
+          }
+
           if (!profile) {
-            const baseUsername = session.user.email?.split('@')[0] || 'user';
-            const timestamp = Date.now().toString().slice(-4);
-            const username = `${baseUsername}${timestamp}`;
+            // New user: create profile and settings
+            const emailParts = session.user.email?.split("@");
+            const baseUsername = (emailParts ? emailParts[0] : "user").replace(
+              /[^a-zA-Z0-9_-]/g,
+              ""
+            );
+            let username = `${baseUsername}${Date.now().toString().slice(-5)}`; // Use 5 digits for more uniqueness
+            let usernameAttempt = 0;
+            let usernameIsUnique = false;
 
-            await supabase
-              .from('user_profiles')
+            // Attempt to generate a unique username
+            while (!usernameIsUnique && usernameAttempt < 10) {
+              const { data: existingUser, error: checkError } = await supabase
+                .from("user_profiles")
+                .select("username")
+                .eq("username", username)
+                .maybeSingle();
+
+              if (checkError) {
+                throw new Error(
+                  `Error checking username uniqueness: ${checkError.message}`
+                );
+              }
+              if (!existingUser) {
+                usernameIsUnique = true;
+              } else {
+                username = `${baseUsername}${Date.now()
+                  .toString()
+                  .slice(-5)}${usernameAttempt}`;
+                usernameAttempt++;
+              }
+            }
+
+            if (!usernameIsUnique) {
+              throw new Error(
+                "Could not generate a unique username after multiple attempts."
+              );
+            }
+
+            // Insert new profile
+            const { error: insertProfileError } = await supabase
+              .from("user_profiles")
               .insert([
                 {
                   user_id: session.user.id,
                   username,
-                }
+                  email: session.user.email, // Store email in profile
+                },
               ]);
 
-            // Create default user settings
-            await supabase
-              .from('user_settings')
-              .insert([
-                {
-                  user_id: session.user.id,
-                }
-              ]);
+            if (insertProfileError) {
+              throw new Error(
+                `Error creating profile: ${insertProfileError.message}`
+              );
+            }
+
+            // Insert default settings
+            const { error: insertSettingsError } = await supabase
+              .from("user_settings")
+              .insert([{ user_id: session.user.id }]);
+
+            if (insertSettingsError) {
+              // If settings creation fails, we might want to clean up the created profile,
+              // but for now, just throw, which will lead to sign out.
+              throw new Error(
+                `Error creating user settings: ${insertSettingsError.message}`
+              );
+            }
+          }
+          // Successfully signed in (or profile already existed)
+          set({ user: session.user, error: null, loading: false });
+        } catch (e) {
+          // Handle errors during profile/settings creation
+          set({ user: null, error: (e as Error).message, loading: false });
+          if (session?.user) {
+            // Ensure we only sign out if there was a user session we failed to process
+            await supabase.auth.signOut(); // Sign out to prevent inconsistent state
           }
         }
-        set({ user: session?.user ?? null });
-      });
-    } catch (error) {
-      set({ error: (error as Error).message });
-    } finally {
-      set({ loading: false });
-    }
+      } else if (event === "SIGNED_OUT") {
+        set({ user: null, error: null, loading: false });
+      } else if (event === "USER_UPDATED") {
+        set({ user: session?.user ?? null, error: null, loading: false });
+      } else if (event === "INITIAL_SESSION" && !session?.user) {
+        // Initial session resolved, but no user logged in
+        set({ user: null, error: null, loading: false });
+      }
+      // Other events like TOKEN_REFRESHED, PASSWORD_RECOVERY might not need explicit state changes here
+      // unless they affect the user object or loading status.
+      // The loading: false is critical for paths that complete an auth flow.
+    });
   },
 }));
