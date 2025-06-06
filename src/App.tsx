@@ -5,6 +5,8 @@ import { SolanaWalletProvider } from './providers/WalletProvider';
 import Navbar from './components/Navbar';
 import QuickChat from './components/QuickChat';
 import TokenPrice from './components/TokenPrice';
+import Footer from './components/Footer';
+
 import Home from './pages/Home';
 import Explore from './pages/Explore';
 import Categories from './pages/Categories';
@@ -16,6 +18,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Discussions from './pages/Discussions';
 import Chat from './pages/Chat';
+
 import AdminDashboard from './pages/admin/Dashboard';
 import Users from './pages/admin/Users';
 import Bots from './pages/admin/Bots';
@@ -29,7 +32,6 @@ function App() {
     initialize();
   }, [initialize]);
 
-  // Don't show navbar and other components in chat window
   const isChatWindow = window.location.pathname === '/chat';
 
   if (isChatWindow) {
@@ -38,32 +40,37 @@ function App() {
 
   return (
     <SolanaWalletProvider>
-      <div className="min-h-screen bg-black">
+      <div className="flex flex-col min-h-screen bg-black">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/rankings" element={<Rankings />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/agent/:slug" element={<AgentDetails />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/:username" element={<Profile />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/discussions" element={<Discussions />} />
-          <Route path="/chat" element={<Chat />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminDashboard />}>
-            <Route path="users" element={<Users />} />
-            <Route path="bots" element={<Bots />} />
-            <Route path="moderation" element={<Moderation />} />
-            <Route path="analytics" element={<Analytics />} />
-          </Route>
-        </Routes>
+
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/rankings" element={<Rankings />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="/agent/:slug" element={<AgentDetails />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/discussions" element={<Discussions />} />
+            <Route path="/chat" element={<Chat />} />
+
+            <Route path="/admin" element={<AdminDashboard />}>
+              <Route path="users" element={<Users />} />
+              <Route path="bots" element={<Bots />} />
+              <Route path="moderation" element={<Moderation />} />
+              <Route path="analytics" element={<Analytics />} />
+            </Route>
+          </Routes>
+        </main>
+
         <QuickChat />
         <TokenPrice />
+
+        <Footer />
       </div>
     </SolanaWalletProvider>
   );

@@ -362,19 +362,22 @@ function Explore() {
         </div>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {agents.map((agent) => (
-            <Link to={`/agent/${agent.slug}`} key={agent.id}>
-              <AgentCard
-                name={agent.name}
-                description={agent.description}
-                uses={agent.deployments.toString()}
-                rating={agent.rating}
-                category={agent.category}
-                price={agent.price}
-                imageUrl={agent.image_url}
-              />
-            </Link>
-          ))}
+          {agents.map((agent) => {
+          console.log("🔍 Agent slug check:", agent.slug); // ← BURAYA KOY
+          return (
+            <AgentCard
+              key={agent.id}
+              name={agent.name}
+              description={agent.description}
+              uses={agent.deployments.toString()}
+              rating={agent.rating}
+              category={agent.category}
+              price={agent.price}
+              imageUrl={agent.image_url}
+              slug={agent.slug}
+            />
+          );
+        })}
         </div>
       )}
     </div>

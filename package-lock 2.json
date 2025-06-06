@@ -8,33 +8,24 @@
       "name": "vite-react-typescript-starter",
       "version": "0.0.0",
       "dependencies": {
-        "@ai-sdk/deepseek": "^0.2.13",
         "@huggingface/inference": "^2.6.4",
-        "@solana-mobile/wallet-adapter-mobile": "^2.1.5",
-        "@solana/spl-token": "^0.4.13",
         "@solana/wallet-adapter-base": "^0.9.23",
         "@solana/wallet-adapter-react": "^0.15.16",
         "@solana/wallet-adapter-react-ui": "^0.9.35",
         "@solana/wallet-adapter-wallets": "^0.19.32",
         "@solana/web3.js": "^1.91.1",
-        "@supabase/supabase-js": "^2.49.8",
+        "@supabase/supabase-js": "^2.39.7",
         "@uiw/react-markdown-preview": "^5.0.7",
         "abort-controller": "^3.0.0",
-        "abso": "^1.0.0",
-        "abso-ai": "^0.0.9",
-        "ai": "^4.3.11",
-        "axios": "^1.9.0",
+        "axios": "^1.8.4",
         "body-parser": "^2.2.0",
         "combined-stream": "^1.0.8",
         "cors": "^2.8.5",
         "date-fns": "^3.3.1",
-        "dayjs": "^1.11.13",
         "dotenv": "^16.5.0",
         "express": "^5.1.0",
         "extend": "^3.0.2",
         "form-data": "^4.0.2",
-        "google-auth-library": "^9.15.1",
-        "jsonwebtoken": "^9.0.2",
         "lucide-react": "^0.344.0",
         "marked": "^15.0.8",
         "react": "^18.3.1",
@@ -47,7 +38,6 @@
       },
       "devDependencies": {
         "@eslint/js": "^9.9.1",
-        "@types/express": "^5.0.1",
         "@types/react": "^18.3.5",
         "@types/react-dom": "^18.3.0",
         "@types/react-syntax-highlighter": "^15.5.11",
@@ -59,8 +49,6 @@
         "globals": "^15.9.0",
         "postcss": "^8.4.35",
         "tailwindcss": "^3.4.1",
-        "ts-node": "^10.9.2",
-        "tsconfig-paths": "^4.2.0",
         "typescript": "^5.5.3",
         "typescript-eslint": "^8.3.0",
         "vite": "^5.4.18"
@@ -71,109 +59,6 @@
       "resolved": "https://registry.npmjs.org/@adraffy/ens-normalize/-/ens-normalize-1.11.0.tgz",
       "integrity": "sha512-/3DDPKHqqIqxUULp8yP4zODUY1i+2xvVWsv8A79xGWdCAG+8sb0hRh0Rk2QyOJUnnbyPUAZYcpBuRe3nS2OIUg==",
       "license": "MIT"
-    },
-    "node_modules/@ai-sdk/deepseek": {
-      "version": "0.2.13",
-      "resolved": "https://registry.npmjs.org/@ai-sdk/deepseek/-/deepseek-0.2.13.tgz",
-      "integrity": "sha512-+Vw+nMdypupRfQb37wT1YmNNAROhCBqVRhHule3dk8A26N/W8GlAfVwLiae1/fK275UddbQWpUTMzvrx7n9HDg==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@ai-sdk/openai-compatible": "0.2.13",
-        "@ai-sdk/provider": "1.1.3",
-        "@ai-sdk/provider-utils": "2.2.7"
-      },
-      "engines": {
-        "node": ">=18"
-      },
-      "peerDependencies": {
-        "zod": "^3.0.0"
-      }
-    },
-    "node_modules/@ai-sdk/openai-compatible": {
-      "version": "0.2.13",
-      "resolved": "https://registry.npmjs.org/@ai-sdk/openai-compatible/-/openai-compatible-0.2.13.tgz",
-      "integrity": "sha512-tB+lL8Z3j0qDod/mvxwjrPhbLUHp/aQW+NvMoJaqeTtP+Vmv5qR800pncGczxn5WN0pllQm+7aIRDnm69XeSbg==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@ai-sdk/provider": "1.1.3",
-        "@ai-sdk/provider-utils": "2.2.7"
-      },
-      "engines": {
-        "node": ">=18"
-      },
-      "peerDependencies": {
-        "zod": "^3.0.0"
-      }
-    },
-    "node_modules/@ai-sdk/provider": {
-      "version": "1.1.3",
-      "resolved": "https://registry.npmjs.org/@ai-sdk/provider/-/provider-1.1.3.tgz",
-      "integrity": "sha512-qZMxYJ0qqX/RfnuIaab+zp8UAeJn/ygXXAffR5I4N0n1IrvA6qBsjc8hXLmBiMV2zoXlifkacF7sEFnYnjBcqg==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "json-schema": "^0.4.0"
-      },
-      "engines": {
-        "node": ">=18"
-      }
-    },
-    "node_modules/@ai-sdk/provider-utils": {
-      "version": "2.2.7",
-      "resolved": "https://registry.npmjs.org/@ai-sdk/provider-utils/-/provider-utils-2.2.7.tgz",
-      "integrity": "sha512-kM0xS3GWg3aMChh9zfeM+80vEZfXzR3JEUBdycZLtbRZ2TRT8xOj3WodGHPb06sUK5yD7pAXC/P7ctsi2fvUGQ==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@ai-sdk/provider": "1.1.3",
-        "nanoid": "^3.3.8",
-        "secure-json-parse": "^2.7.0"
-      },
-      "engines": {
-        "node": ">=18"
-      },
-      "peerDependencies": {
-        "zod": "^3.23.8"
-      }
-    },
-    "node_modules/@ai-sdk/react": {
-      "version": "1.2.10",
-      "resolved": "https://registry.npmjs.org/@ai-sdk/react/-/react-1.2.10.tgz",
-      "integrity": "sha512-iUZfApc6aftVT7f41y9b1NPk0dZFt9vRR0/gkZsKdP56ShcKtuTu44BkjtWdrBs7fcTbN2BQZtDao1AY1GxzsQ==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@ai-sdk/provider-utils": "2.2.7",
-        "@ai-sdk/ui-utils": "1.2.9",
-        "swr": "^2.2.5",
-        "throttleit": "2.1.0"
-      },
-      "engines": {
-        "node": ">=18"
-      },
-      "peerDependencies": {
-        "react": "^18 || ^19 || ^19.0.0-rc",
-        "zod": "^3.23.8"
-      },
-      "peerDependenciesMeta": {
-        "zod": {
-          "optional": true
-        }
-      }
-    },
-    "node_modules/@ai-sdk/ui-utils": {
-      "version": "1.2.9",
-      "resolved": "https://registry.npmjs.org/@ai-sdk/ui-utils/-/ui-utils-1.2.9.tgz",
-      "integrity": "sha512-cbiLzgXDv3+460f61UVSykn3XdKOS+SHs/EANw+pdOQKwn8JN7rZJL/ggPyMuZ7D9lO3oWOfOJ1QS+9uClfVug==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@ai-sdk/provider": "1.1.3",
-        "@ai-sdk/provider-utils": "2.2.7",
-        "zod-to-json-schema": "^3.24.1"
-      },
-      "engines": {
-        "node": ">=18"
-      },
-      "peerDependencies": {
-        "zod": "^3.23.8"
-      }
     },
     "node_modules/@alloc/quick-lru": {
       "version": "5.2.0",
@@ -200,36 +85,6 @@
       "engines": {
         "node": ">=6.0.0"
       }
-    },
-    "node_modules/@anthropic-ai/sdk": {
-      "version": "0.36.3",
-      "resolved": "https://registry.npmjs.org/@anthropic-ai/sdk/-/sdk-0.36.3.tgz",
-      "integrity": "sha512-+c0mMLxL/17yFZ4P5+U6bTWiCSFZUKJddrv01ud2aFBWnTPLdRncYV76D3q1tqfnL7aCnhRtykFnoCFzvr4U3Q==",
-      "license": "MIT",
-      "dependencies": {
-        "@types/node": "^18.11.18",
-        "@types/node-fetch": "^2.6.4",
-        "abort-controller": "^3.0.0",
-        "agentkeepalive": "^4.2.1",
-        "form-data-encoder": "1.7.2",
-        "formdata-node": "^4.3.2",
-        "node-fetch": "^2.6.7"
-      }
-    },
-    "node_modules/@anthropic-ai/sdk/node_modules/@types/node": {
-      "version": "18.19.87",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-18.19.87.tgz",
-      "integrity": "sha512-OIAAu6ypnVZHmsHCeJ+7CCSub38QNBS9uceMQeg7K5Ur0Jr+wG9wEOEvvMbhp09pxD5czIUy/jND7s7Tb6Nw7A==",
-      "license": "MIT",
-      "dependencies": {
-        "undici-types": "~5.26.4"
-      }
-    },
-    "node_modules/@anthropic-ai/sdk/node_modules/undici-types": {
-      "version": "5.26.5",
-      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz",
-      "integrity": "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==",
-      "license": "MIT"
     },
     "node_modules/@babel/code-frame": {
       "version": "7.26.2",
@@ -761,30 +616,6 @@
       },
       "engines": {
         "node": ">=6.9.0"
-      }
-    },
-    "node_modules/@cspotcode/source-map-support": {
-      "version": "0.8.1",
-      "resolved": "https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz",
-      "integrity": "sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@jridgewell/trace-mapping": "0.3.9"
-      },
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@cspotcode/source-map-support/node_modules/@jridgewell/trace-mapping": {
-      "version": "0.3.9",
-      "resolved": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.9.tgz",
-      "integrity": "sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@jridgewell/resolve-uri": "^3.0.3",
-        "@jridgewell/sourcemap-codec": "^1.4.10"
       }
     },
     "node_modules/@emurgo/cardano-serialization-lib-browser": {
@@ -1419,15 +1250,6 @@
         "@fractalwagmi/popup-connection": "^1.0.18",
         "@solana/wallet-adapter-base": "^0.9.17",
         "bs58": "^5.0.0"
-      }
-    },
-    "node_modules/@google/generative-ai": {
-      "version": "0.21.0",
-      "resolved": "https://registry.npmjs.org/@google/generative-ai/-/generative-ai-0.21.0.tgz",
-      "integrity": "sha512-7XhUbtnlkSEZK15kN3t+tzIMxsbKm/dSkKBFalj+20NvPKe1kBY7mR2P7vuijEn+f06z5+A8bVGKO0v39cr6Wg==",
-      "license": "Apache-2.0",
-      "engines": {
-        "node": ">=18.0.0"
       }
     },
     "node_modules/@huggingface/inference": {
@@ -2137,12 +1959,12 @@
       }
     },
     "node_modules/@noble/curves": {
-      "version": "1.9.0",
-      "resolved": "https://registry.npmjs.org/@noble/curves/-/curves-1.9.0.tgz",
-      "integrity": "sha512-7YDlXiNMdO1YZeH6t/kvopHHbIZzlxrCV9WLqCY6QhcXOoXiNCMDqJIglZ9Yjx5+w7Dz30TITFrlTjnRg7sKEg==",
+      "version": "1.8.2",
+      "resolved": "https://registry.npmjs.org/@noble/curves/-/curves-1.8.2.tgz",
+      "integrity": "sha512-vnI7V6lFNe0tLAuJMu+2sX+FcL14TaCWy1qiczg1VwRmPrpQCdq5ESXQMqUc2tluRNf6irBXrWbl1mGN8uaU/g==",
       "license": "MIT",
       "dependencies": {
-        "@noble/hashes": "1.8.0"
+        "@noble/hashes": "1.7.2"
       },
       "engines": {
         "node": "^14.21.3 || >=16"
@@ -2152,9 +1974,9 @@
       }
     },
     "node_modules/@noble/hashes": {
-      "version": "1.8.0",
-      "resolved": "https://registry.npmjs.org/@noble/hashes/-/hashes-1.8.0.tgz",
-      "integrity": "sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==",
+      "version": "1.7.2",
+      "resolved": "https://registry.npmjs.org/@noble/hashes/-/hashes-1.7.2.tgz",
+      "integrity": "sha512-biZ0NUSxyjLLqo6KxEJ1b+C2NAx0wtDoFvCaXHGgUkeHzf3Xc1xKumFKREuT7f7DARNZ/slvYUwFG6B0f2b6hQ==",
       "license": "MIT",
       "engines": {
         "node": "^14.21.3 || >=16"
@@ -2199,15 +2021,6 @@
       },
       "engines": {
         "node": ">= 8"
-      }
-    },
-    "node_modules/@opentelemetry/api": {
-      "version": "1.9.0",
-      "resolved": "https://registry.npmjs.org/@opentelemetry/api/-/api-1.9.0.tgz",
-      "integrity": "sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==",
-      "license": "Apache-2.0",
-      "engines": {
-        "node": ">=8.0.0"
       }
     },
     "node_modules/@particle-network/analytics": {
@@ -3677,15 +3490,6 @@
         "zod": "3.22.4"
       }
     },
-    "node_modules/@reown/appkit-wallet/node_modules/zod": {
-      "version": "3.22.4",
-      "resolved": "https://registry.npmjs.org/zod/-/zod-3.22.4.tgz",
-      "integrity": "sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==",
-      "license": "MIT",
-      "funding": {
-        "url": "https://github.com/sponsors/colinhacks"
-      }
-    },
     "node_modules/@reown/appkit/node_modules/@noble/curves": {
       "version": "1.8.1",
       "resolved": "https://registry.npmjs.org/@noble/curves/-/curves-1.8.1.tgz",
@@ -4407,18 +4211,6 @@
         "url": "https://paulmillr.com/funding/"
       }
     },
-    "node_modules/@scure/bip39/node_modules/@noble/hashes": {
-      "version": "1.7.2",
-      "resolved": "https://registry.npmjs.org/@noble/hashes/-/hashes-1.7.2.tgz",
-      "integrity": "sha512-biZ0NUSxyjLLqo6KxEJ1b+C2NAx0wtDoFvCaXHGgUkeHzf3Xc1xKumFKREuT7f7DARNZ/slvYUwFG6B0f2b6hQ==",
-      "license": "MIT",
-      "engines": {
-        "node": "^14.21.3 || >=16"
-      },
-      "funding": {
-        "url": "https://paulmillr.com/funding/"
-      }
-    },
     "node_modules/@sinclair/typebox": {
       "version": "0.33.22",
       "resolved": "https://registry.npmjs.org/@sinclair/typebox/-/typebox-0.33.22.tgz",
@@ -4452,12 +4244,12 @@
       "license": "MIT"
     },
     "node_modules/@solana-mobile/mobile-wallet-adapter-protocol-web3js": {
-      "version": "2.1.8",
-      "resolved": "https://registry.npmjs.org/@solana-mobile/mobile-wallet-adapter-protocol-web3js/-/mobile-wallet-adapter-protocol-web3js-2.1.8.tgz",
-      "integrity": "sha512-iwZNue5nGQGKPpKSLcwW7stHH198BidgzfLjEypIwb7fEpjMSPND9co4jMLdH5+ykGDPwb2GPMMRTWWQq8mdgA==",
+      "version": "2.1.7",
+      "resolved": "https://registry.npmjs.org/@solana-mobile/mobile-wallet-adapter-protocol-web3js/-/mobile-wallet-adapter-protocol-web3js-2.1.7.tgz",
+      "integrity": "sha512-wDqKNY/AJH6MMG379bOa9jhPD8Jxqh5pI6Q2PDfgJ+6oV/pp+j9acwrdVelOXnxnbaswhfndwrrttQXcwLjATw==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana-mobile/mobile-wallet-adapter-protocol": "^2.1.8",
+        "@solana-mobile/mobile-wallet-adapter-protocol": "^2.1.7",
         "bs58": "^5.0.0",
         "js-base64": "^3.7.5"
       },
@@ -4490,9 +4282,9 @@
       }
     },
     "node_modules/@solana-mobile/mobile-wallet-adapter-protocol-web3js/node_modules/@solana-mobile/mobile-wallet-adapter-protocol": {
-      "version": "2.1.8",
-      "resolved": "https://registry.npmjs.org/@solana-mobile/mobile-wallet-adapter-protocol/-/mobile-wallet-adapter-protocol-2.1.8.tgz",
-      "integrity": "sha512-m3mhMNQgug5KGekVdtH5etGPqwYZqXMQvKOjSd52gC5IoOtqHWCJXWZB2zfUfBfaKE9M0R09x0+uqqUI0cn3Ow==",
+      "version": "2.1.7",
+      "resolved": "https://registry.npmjs.org/@solana-mobile/mobile-wallet-adapter-protocol/-/mobile-wallet-adapter-protocol-2.1.7.tgz",
+      "integrity": "sha512-pUYG+bteNxQQBeK2dHU7akm/SFjmEH5As4Ayt9BnByVEyJPKFDPPPzSA/d4d5lEtGLSjxu5oVD9o0Q6IJE9RHw==",
       "license": "Apache-2.0",
       "dependencies": {
         "@solana/wallet-standard": "^1.1.2",
@@ -5313,21 +5105,6 @@
         "node": ">=5.10"
       }
     },
-    "node_modules/@solana/buffer-layout-utils": {
-      "version": "0.2.0",
-      "resolved": "https://registry.npmjs.org/@solana/buffer-layout-utils/-/buffer-layout-utils-0.2.0.tgz",
-      "integrity": "sha512-szG4sxgJGktbuZYDg2FfNmkMi0DYQoVjN2h7ta1W1hPrwzarcFLBq9UpX1UjNXsNpT9dn+chgprtWGioUAr4/g==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@solana/buffer-layout": "^4.0.0",
-        "@solana/web3.js": "^1.32.0",
-        "bigint-buffer": "^1.1.5",
-        "bignumber.js": "^9.0.1"
-      },
-      "engines": {
-        "node": ">= 10"
-      }
-    },
     "node_modules/@solana/codecs": {
       "version": "2.1.0",
       "resolved": "https://registry.npmjs.org/@solana/codecs/-/codecs-2.1.0.tgz",
@@ -5816,277 +5593,6 @@
         "typescript": ">=5"
       }
     },
-    "node_modules/@solana/spl-token": {
-      "version": "0.4.13",
-      "resolved": "https://registry.npmjs.org/@solana/spl-token/-/spl-token-0.4.13.tgz",
-      "integrity": "sha512-cite/pYWQZZVvLbg5lsodSovbetK/eA24gaR0eeUeMuBAMNrT8XFCwaygKy0N2WSg3gSyjjNpIeAGBAKZaY/1w==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@solana/buffer-layout": "^4.0.0",
-        "@solana/buffer-layout-utils": "^0.2.0",
-        "@solana/spl-token-group": "^0.0.7",
-        "@solana/spl-token-metadata": "^0.1.6",
-        "buffer": "^6.0.3"
-      },
-      "engines": {
-        "node": ">=16"
-      },
-      "peerDependencies": {
-        "@solana/web3.js": "^1.95.5"
-      }
-    },
-    "node_modules/@solana/spl-token-group": {
-      "version": "0.0.7",
-      "resolved": "https://registry.npmjs.org/@solana/spl-token-group/-/spl-token-group-0.0.7.tgz",
-      "integrity": "sha512-V1N/iX7Cr7H0uazWUT2uk27TMqlqedpXHRqqAbVO2gvmJyT0E0ummMEAVQeXZ05ZhQ/xF39DLSdBp90XebWEug==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@solana/codecs": "2.0.0-rc.1"
-      },
-      "engines": {
-        "node": ">=16"
-      },
-      "peerDependencies": {
-        "@solana/web3.js": "^1.95.3"
-      }
-    },
-    "node_modules/@solana/spl-token-group/node_modules/@solana/codecs": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs/-/codecs-2.0.0-rc.1.tgz",
-      "integrity": "sha512-qxoR7VybNJixV51L0G1RD2boZTcxmwUWnKCaJJExQ5qNKwbpSyDdWfFJfM5JhGyKe9DnPVOZB+JHWXnpbZBqrQ==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/codecs-data-structures": "2.0.0-rc.1",
-        "@solana/codecs-numbers": "2.0.0-rc.1",
-        "@solana/codecs-strings": "2.0.0-rc.1",
-        "@solana/options": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-group/node_modules/@solana/codecs-core": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs-core/-/codecs-core-2.0.0-rc.1.tgz",
-      "integrity": "sha512-bauxqMfSs8EHD0JKESaNmNuNvkvHSuN3bbWAF5RjOfDu2PugxHrvRebmYauvSumZ3cTfQ4HJJX6PG5rN852qyQ==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-group/node_modules/@solana/codecs-data-structures": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs-data-structures/-/codecs-data-structures-2.0.0-rc.1.tgz",
-      "integrity": "sha512-rinCv0RrAVJ9rE/rmaibWJQxMwC5lSaORSZuwjopSUE6T0nb/MVg6Z1siNCXhh/HFTOg0l8bNvZHgBcN/yvXog==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/codecs-numbers": "2.0.0-rc.1",
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-group/node_modules/@solana/codecs-numbers": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs-numbers/-/codecs-numbers-2.0.0-rc.1.tgz",
-      "integrity": "sha512-J5i5mOkvukXn8E3Z7sGIPxsThRCgSdgTWJDQeZvucQ9PT6Y3HiVXJ0pcWiOWAoQ3RX8e/f4I3IC+wE6pZiJzDQ==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-group/node_modules/@solana/codecs-strings": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs-strings/-/codecs-strings-2.0.0-rc.1.tgz",
-      "integrity": "sha512-9/wPhw8TbGRTt6mHC4Zz1RqOnuPTqq1Nb4EyuvpZ39GW6O2t2Q7Q0XxiB3+BdoEjwA2XgPw6e2iRfvYgqty44g==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/codecs-numbers": "2.0.0-rc.1",
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "fastestsmallesttextencoderdecoder": "^1.0.22",
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-group/node_modules/@solana/errors": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/errors/-/errors-2.0.0-rc.1.tgz",
-      "integrity": "sha512-ejNvQ2oJ7+bcFAYWj225lyRkHnixuAeb7RQCixm+5mH4n1IA4Qya/9Bmfy5RAAHQzxK43clu3kZmL5eF9VGtYQ==",
-      "license": "MIT",
-      "dependencies": {
-        "chalk": "^5.3.0",
-        "commander": "^12.1.0"
-      },
-      "bin": {
-        "errors": "bin/cli.mjs"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-group/node_modules/@solana/options": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/options/-/options-2.0.0-rc.1.tgz",
-      "integrity": "sha512-mLUcR9mZ3qfHlmMnREdIFPf9dpMc/Bl66tLSOOWxw4ml5xMT2ohFn7WGqoKcu/UHkT9CrC6+amEdqCNvUqI7AA==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/codecs-data-structures": "2.0.0-rc.1",
-        "@solana/codecs-numbers": "2.0.0-rc.1",
-        "@solana/codecs-strings": "2.0.0-rc.1",
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-group/node_modules/commander": {
-      "version": "12.1.0",
-      "resolved": "https://registry.npmjs.org/commander/-/commander-12.1.0.tgz",
-      "integrity": "sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==",
-      "license": "MIT",
-      "engines": {
-        "node": ">=18"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata": {
-      "version": "0.1.6",
-      "resolved": "https://registry.npmjs.org/@solana/spl-token-metadata/-/spl-token-metadata-0.1.6.tgz",
-      "integrity": "sha512-7sMt1rsm/zQOQcUWllQX9mD2O6KhSAtY1hFR2hfFwgqfFWzSY9E9GDvFVNYUI1F0iQKcm6HmePU9QbKRXTEBiA==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@solana/codecs": "2.0.0-rc.1"
-      },
-      "engines": {
-        "node": ">=16"
-      },
-      "peerDependencies": {
-        "@solana/web3.js": "^1.95.3"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata/node_modules/@solana/codecs": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs/-/codecs-2.0.0-rc.1.tgz",
-      "integrity": "sha512-qxoR7VybNJixV51L0G1RD2boZTcxmwUWnKCaJJExQ5qNKwbpSyDdWfFJfM5JhGyKe9DnPVOZB+JHWXnpbZBqrQ==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/codecs-data-structures": "2.0.0-rc.1",
-        "@solana/codecs-numbers": "2.0.0-rc.1",
-        "@solana/codecs-strings": "2.0.0-rc.1",
-        "@solana/options": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata/node_modules/@solana/codecs-core": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs-core/-/codecs-core-2.0.0-rc.1.tgz",
-      "integrity": "sha512-bauxqMfSs8EHD0JKESaNmNuNvkvHSuN3bbWAF5RjOfDu2PugxHrvRebmYauvSumZ3cTfQ4HJJX6PG5rN852qyQ==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata/node_modules/@solana/codecs-data-structures": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs-data-structures/-/codecs-data-structures-2.0.0-rc.1.tgz",
-      "integrity": "sha512-rinCv0RrAVJ9rE/rmaibWJQxMwC5lSaORSZuwjopSUE6T0nb/MVg6Z1siNCXhh/HFTOg0l8bNvZHgBcN/yvXog==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/codecs-numbers": "2.0.0-rc.1",
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata/node_modules/@solana/codecs-numbers": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs-numbers/-/codecs-numbers-2.0.0-rc.1.tgz",
-      "integrity": "sha512-J5i5mOkvukXn8E3Z7sGIPxsThRCgSdgTWJDQeZvucQ9PT6Y3HiVXJ0pcWiOWAoQ3RX8e/f4I3IC+wE6pZiJzDQ==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata/node_modules/@solana/codecs-strings": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/codecs-strings/-/codecs-strings-2.0.0-rc.1.tgz",
-      "integrity": "sha512-9/wPhw8TbGRTt6mHC4Zz1RqOnuPTqq1Nb4EyuvpZ39GW6O2t2Q7Q0XxiB3+BdoEjwA2XgPw6e2iRfvYgqty44g==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/codecs-numbers": "2.0.0-rc.1",
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "fastestsmallesttextencoderdecoder": "^1.0.22",
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata/node_modules/@solana/errors": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/errors/-/errors-2.0.0-rc.1.tgz",
-      "integrity": "sha512-ejNvQ2oJ7+bcFAYWj225lyRkHnixuAeb7RQCixm+5mH4n1IA4Qya/9Bmfy5RAAHQzxK43clu3kZmL5eF9VGtYQ==",
-      "license": "MIT",
-      "dependencies": {
-        "chalk": "^5.3.0",
-        "commander": "^12.1.0"
-      },
-      "bin": {
-        "errors": "bin/cli.mjs"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata/node_modules/@solana/options": {
-      "version": "2.0.0-rc.1",
-      "resolved": "https://registry.npmjs.org/@solana/options/-/options-2.0.0-rc.1.tgz",
-      "integrity": "sha512-mLUcR9mZ3qfHlmMnREdIFPf9dpMc/Bl66tLSOOWxw4ml5xMT2ohFn7WGqoKcu/UHkT9CrC6+amEdqCNvUqI7AA==",
-      "license": "MIT",
-      "dependencies": {
-        "@solana/codecs-core": "2.0.0-rc.1",
-        "@solana/codecs-data-structures": "2.0.0-rc.1",
-        "@solana/codecs-numbers": "2.0.0-rc.1",
-        "@solana/codecs-strings": "2.0.0-rc.1",
-        "@solana/errors": "2.0.0-rc.1"
-      },
-      "peerDependencies": {
-        "typescript": ">=5"
-      }
-    },
-    "node_modules/@solana/spl-token-metadata/node_modules/commander": {
-      "version": "12.1.0",
-      "resolved": "https://registry.npmjs.org/commander/-/commander-12.1.0.tgz",
-      "integrity": "sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==",
-      "license": "MIT",
-      "engines": {
-        "node": ">=18"
-      }
-    },
     "node_modules/@solana/subscribable": {
       "version": "2.1.0",
       "resolved": "https://registry.npmjs.org/@solana/subscribable/-/subscribable-2.1.0.tgz",
@@ -6192,39 +5698,39 @@
       }
     },
     "node_modules/@solana/wallet-adapter-alpha": {
-      "version": "0.1.13",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-alpha/-/wallet-adapter-alpha-0.1.13.tgz",
-      "integrity": "sha512-LYekz41uF40FtL0C38yIN36GqEV2iJe4JlVtha2WE4osrEzmKUyXgo1mqTxcDnWZkcFWBvI3mzfn17zW+iskew==",
+      "version": "0.1.12",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-alpha/-/wallet-adapter-alpha-0.1.12.tgz",
+      "integrity": "sha512-kSMMmbz2J/CalT+yxqszxZrbLZ3DH5c3U1fACRonyMHxtGHi0a2y61/IdYHhmrccMyS9IEKC8nxc7PCOObF98g==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-avana": {
-      "version": "0.1.16",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-avana/-/wallet-adapter-avana-0.1.16.tgz",
-      "integrity": "sha512-GMEbEygfgdcXHqwpfnkFiPBxfEIJ7F6/cYglPoCRFWNF0UWELE8eLhvu7Bd/i7z7lubPR0jEqTI/sk8mip+23A==",
+      "version": "0.1.15",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-avana/-/wallet-adapter-avana-0.1.15.tgz",
+      "integrity": "sha512-0ruF4MxX2M3Fe4ApG7rQ/EmEBr2M/9zAvoN/+CtuXjO2gfcgyqc34RSRpdRljQkWgSrzUCZIvVxgNhm9PuKFog==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-base": {
-      "version": "0.9.26",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-base/-/wallet-adapter-base-0.9.26.tgz",
-      "integrity": "sha512-1RcmfesJ8bTT+zfg4w+Z+wisj11HR+vWwl/pS6v/zwQPe0LSzWDpkXRv9JuDSCuTcmlglEfjEqFAW+5EubK/Jg==",
+      "version": "0.9.25",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-base/-/wallet-adapter-base-0.9.25.tgz",
+      "integrity": "sha512-QZRjxhFK4e296ufUg4ntOPh3GmVANTwC/M9HmwEqMSoowq3cRXSZ53R6d6YJAPldCa7smC8cKG8OzkbLHBKG9w==",
       "license": "Apache-2.0",
       "dependencies": {
         "@solana/wallet-standard-features": "^1.3.0",
@@ -6233,22 +5739,22 @@
         "eventemitter3": "^5.0.1"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-base-ui": {
-      "version": "0.1.5",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-base-ui/-/wallet-adapter-base-ui-0.1.5.tgz",
-      "integrity": "sha512-ho9YrZyMypFMq7o0mceaJZHwH9drj1Gvh+xFeictzhaEU8IVKx8mp5LqlQklHDjzwh8GfbLiZsGh9Om/uJ/YBg==",
+      "version": "0.1.4",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-base-ui/-/wallet-adapter-base-ui-0.1.4.tgz",
+      "integrity": "sha512-lI+lfwPypqxanZJBvSd4ryPng0UfP9fxbD4Yj0KKLyUu0Pfl2HkDg+eMWC32Tz5qKTaQjExD3kuXiopRzF8ZvQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-react": "^0.15.38"
+        "@solana/wallet-adapter-react": "^0.15.37"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0",
@@ -6256,62 +5762,62 @@
       }
     },
     "node_modules/@solana/wallet-adapter-bitkeep": {
-      "version": "0.3.23",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-bitkeep/-/wallet-adapter-bitkeep-0.3.23.tgz",
-      "integrity": "sha512-rGH6XP288H3/uTU6ancgcZfuhtWlOnb/AcWCEcQiM1AjhO8sI9wHkgfPOMCJtiNK36DZrBA3gxBXvP1d7XOpZg==",
+      "version": "0.3.22",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-bitkeep/-/wallet-adapter-bitkeep-0.3.22.tgz",
+      "integrity": "sha512-ov537O8zcK2LgknfWXpaoh2r76dc6YeeHdF+3l+JIuGXYfDzYdB7N1hRabPEIUhOfDTKyXbdqFRWmCQYdiQa2Q==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-bitpie": {
-      "version": "0.5.21",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-bitpie/-/wallet-adapter-bitpie-0.5.21.tgz",
-      "integrity": "sha512-lH+mxM1Tw1Yw1EG3JIoXvm/vGeaWa+uVtUz7W0zv39O6PnrnlZkFDoaxtVCE6Ch8xrjif29SAZJPNIg9I8zD2A==",
+      "version": "0.5.20",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-bitpie/-/wallet-adapter-bitpie-0.5.20.tgz",
+      "integrity": "sha512-8Fvr14Ij2VHJnCTsbvlsQPIwVQTbAOrxGY6rYWg8ge+wVIe+syvK/YhIxsCYWskPOnXjKIlAgouiiJNTSSH2vg==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-clover": {
-      "version": "0.4.22",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-clover/-/wallet-adapter-clover-0.4.22.tgz",
-      "integrity": "sha512-9DJ742eWCfral0BtOHE1UPypaSs2wrq1b89iqD2OxHsnpMKvzEMB0KJAmARvO1azOHnoAHu2FV+tWfZN2buS8w==",
+      "version": "0.4.21",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-clover/-/wallet-adapter-clover-0.4.21.tgz",
+      "integrity": "sha512-YXOzkyf+7AdRW837D//oMtrJ8VWQE0dvATMLzU7+kE45DofTscdpxoqhnKgahk5MEVdPxorSN9e8/brGJu3m2g==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-coin98": {
-      "version": "0.5.23",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-coin98/-/wallet-adapter-coin98-0.5.23.tgz",
-      "integrity": "sha512-PkUhE3+hLVMSfekm3dSGw1q5byPDKiBFCx16JQGk7hg1dhTItgQy8VpsLMyYiNnLVahFH1W2srqthm6KpT6/+A==",
+      "version": "0.5.22",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-coin98/-/wallet-adapter-coin98-0.5.22.tgz",
+      "integrity": "sha512-x0ugOXsUc5HVFz0MR+q1oRQVN3oZq9l14u70BhuWK5GaKnXF4n8bmCAZyISJY9l5Y+qjGfz9DJCwc069iC8I3g==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "bs58": "^6.0.0",
         "buffer": "^6.0.3"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
@@ -6333,218 +5839,218 @@
       }
     },
     "node_modules/@solana/wallet-adapter-coinbase": {
-      "version": "0.1.22",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-coinbase/-/wallet-adapter-coinbase-0.1.22.tgz",
-      "integrity": "sha512-BHnD4KCAorihHw+ywe04V6C9ixLhMiIK34R8r3pEJBmFoAcSYqxWyZZGw2OXkp09PgjuHfMTx6X/uNPEZMY/lA==",
+      "version": "0.1.21",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-coinbase/-/wallet-adapter-coinbase-0.1.21.tgz",
+      "integrity": "sha512-DUXbFsGueIsRawyXiyhY04YPEuLXzFoPLct1GjZWLG5/ZGcI2OBT0iZNIeq51V9I6xPhPDKfBQt/o83e1JC28w==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-coinhub": {
-      "version": "0.3.21",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-coinhub/-/wallet-adapter-coinhub-0.3.21.tgz",
-      "integrity": "sha512-F4mBSmm2nJnGxs1pdv+jnPCGCxXyHje+3vN4F6WllzxoHG42Ziyqv4frRa+N28rRYJT0z0aI3mUpp6CG0L9IMA==",
+      "version": "0.3.20",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-coinhub/-/wallet-adapter-coinhub-0.3.20.tgz",
+      "integrity": "sha512-fBX8ZxWYA28qhan85cfj3iBbqGAqTWdLRNu/ZcAvKMGpQcIhQQhpmvTDn1dT6zrS0L8pA9ZrwhOSA36+Na+eBA==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-fractal": {
-      "version": "0.1.11",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-fractal/-/wallet-adapter-fractal-0.1.11.tgz",
-      "integrity": "sha512-BNWcqlsnqiMEiq9NXPXURBJBe9hFgSUquyAPa7SsliTm+g2/JVYefz3+uM8XZS2zg9tDPJ//Fg6m2pz/cFrKNw==",
+      "version": "0.1.10",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-fractal/-/wallet-adapter-fractal-0.1.10.tgz",
+      "integrity": "sha512-RP6POQtcAte4OPdydBpgDe1gOEABLOJd0K/BhLxww4oPOGId4+PaAHAGeaRHVhWjwBnENNpj0ARiQ+ApXxBUuA==",
       "license": "Apache-2.0",
       "dependencies": {
         "@fractalwagmi/solana-wallet-adapter": "^0.1.1",
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-huobi": {
-      "version": "0.1.18",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-huobi/-/wallet-adapter-huobi-0.1.18.tgz",
-      "integrity": "sha512-V5dB3udH+/yr5Ui7y+HcPU/H9f4GukLzhLtDDFLkWp4GQjz+dokutbfpUhhuesmsvPDe2oJES2/1kfFVriOyxg==",
+      "version": "0.1.17",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-huobi/-/wallet-adapter-huobi-0.1.17.tgz",
+      "integrity": "sha512-6WggaqiJ47cUwU2U85p13OuTGF8yyS1nGjisYZqR9KG26aRVxMQMmqvXezB89ZRZ+0NONy9tdeXR2RtqHE0xGw==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-hyperpay": {
-      "version": "0.1.17",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-hyperpay/-/wallet-adapter-hyperpay-0.1.17.tgz",
-      "integrity": "sha512-JNZgJTkwJsWzJslnfHOqNnd3l0w7NybXFhg2FUgfu1i3ePduxobEHfa0JjO31bhri4YwuBCMWu6fJ4HZ5Io4eg==",
+      "version": "0.1.16",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-hyperpay/-/wallet-adapter-hyperpay-0.1.16.tgz",
+      "integrity": "sha512-JnrX6zCUervFC6o15DlmaXhohwz89+SCz9L5DnSW910yGUNDhcDMq/p7HUyEIS9vPTAcP66o/RWippOto3dDBQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-keystone": {
-      "version": "0.1.18",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-keystone/-/wallet-adapter-keystone-0.1.18.tgz",
-      "integrity": "sha512-fB2t71dHMzU+6LD1OOPptolZjXAzLHm8U19h6KTRYVjWTX/K3jWz/YEMkajBAc8H5hFyQ5sl1/no+rfwvCuUcg==",
+      "version": "0.1.17",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-keystone/-/wallet-adapter-keystone-0.1.17.tgz",
+      "integrity": "sha512-bjpKnx/zEpYmvjav3GTLpQJhf11TKK+lcS8M9MRUHz1U8S2EcOxnofaboAOBrOlt7rtQOeZtgOIJX7b06C0TWw==",
       "license": "Apache-2.0",
       "dependencies": {
         "@keystonehq/sol-keyring": "^0.20.0",
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "buffer": "^6.0.3"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-krystal": {
-      "version": "0.1.15",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-krystal/-/wallet-adapter-krystal-0.1.15.tgz",
-      "integrity": "sha512-2nFOl7VSPCYoSIGwc1mMKj4Geer7d7hqov4ZxpBpIGe7qWItRSkVFbM/jd+BtX3IeABUhn0cxKuxEUo0oF3JlA==",
+      "version": "0.1.14",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-krystal/-/wallet-adapter-krystal-0.1.14.tgz",
+      "integrity": "sha512-6wD1VkMPOTR5n1/Qn8Ztiss6eRxssfk5TlRSxFV3x8qu4Dsn9hxSTOszI4bXmsN73rrzc3ZEGPj3phVAYe5GKw==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-ledger": {
-      "version": "0.9.28",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-ledger/-/wallet-adapter-ledger-0.9.28.tgz",
-      "integrity": "sha512-0Etw52wL/hKb+3UvYHTdkJpGZpY+JTInZdlX8dt99AdTZhGAUSO5PBjiO08Havs616q9EQu5MoQieKRS//TspQ==",
+      "version": "0.9.27",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-ledger/-/wallet-adapter-ledger-0.9.27.tgz",
+      "integrity": "sha512-uGVR8vihPbB+sGX85n21I4d7H89dv8VX2DVqV5L3WIBOggrevoQK1ng0B097FPB9t1Y0bkQUpCh2H9NMKzR2Cw==",
       "license": "Apache-2.0",
       "dependencies": {
         "@ledgerhq/devices": "^8.4.4",
         "@ledgerhq/hw-transport": "^6.31.4",
         "@ledgerhq/hw-transport-webhid": "^6.30.0",
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "buffer": "^6.0.3"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-mathwallet": {
-      "version": "0.9.21",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-mathwallet/-/wallet-adapter-mathwallet-0.9.21.tgz",
-      "integrity": "sha512-D0EOOaa2Eibl3VSAbGUHFdjhYO2hbKOCBvOo75g6180EB3znLzqVLH5ByqAQnU16QRZmAgpzyHywswypB6BlhQ==",
+      "version": "0.9.20",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-mathwallet/-/wallet-adapter-mathwallet-0.9.20.tgz",
+      "integrity": "sha512-E18zqWpSAeY3RlZFw2Yo43sfkGJ4qZSFsmffD+jdyD9F/RedSDFUL0TTvL00DJfS8LLHmK8Ufin7jhYUBsR3nQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-neko": {
-      "version": "0.2.15",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-neko/-/wallet-adapter-neko-0.2.15.tgz",
-      "integrity": "sha512-4JycOsuKIV9RFOtIkZVmJDhjupOpNnd7DLPR21HLjAGYpM39FHQOLc55wT2gKeaLfupnuLlGZbE0cTzNsLEIbA==",
+      "version": "0.2.14",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-neko/-/wallet-adapter-neko-0.2.14.tgz",
+      "integrity": "sha512-4gvwn3d7enb2HRKqAgRGepxudxkmHkcJp5C7JBsblPtcrsuZ9Mg6tl0I98Btyp4tzqk3wPxpAyLnoAAC/0cP1w==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-nightly": {
-      "version": "0.1.19",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-nightly/-/wallet-adapter-nightly-0.1.19.tgz",
-      "integrity": "sha512-tL14hgJ5YG43sJX56E5pwLB6G8ajRhd2SV/LJUwBD+xqGHFOFJ5QNlvJ1K0xsudOclU0ahJ7/PONVSJwqLypdQ==",
+      "version": "0.1.18",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-nightly/-/wallet-adapter-nightly-0.1.18.tgz",
+      "integrity": "sha512-zEMsRB2LAe/0RF2uNgGMUWkxOgEUzqnxU++XoGTawx5O4HNWj2HfX4nMXI2vxa9FatWiq+uEn5oS1pdtImUOZQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-nufi": {
-      "version": "0.1.20",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-nufi/-/wallet-adapter-nufi-0.1.20.tgz",
-      "integrity": "sha512-rIdgSyrvOXLIpqJ9FOKp7LXwUZqQEoZN2ed5lD0hx4/cvFqdxHIh3uxGUG4rXOX82SVHdbOj2qHCgJTb7LvbDg==",
+      "version": "0.1.19",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-nufi/-/wallet-adapter-nufi-0.1.19.tgz",
+      "integrity": "sha512-cEp8sUPRj7JuDXOr4txNZpgkzBm9PoYL1/SzugzupsTC5c9Wdh9TdG0NBYxrInAtWr9PxL5v4C4Unpi4o7G/9w==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-onto": {
-      "version": "0.1.10",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-onto/-/wallet-adapter-onto-0.1.10.tgz",
-      "integrity": "sha512-+aUi05TMlCHc80/k8+vB15OCWFqyh23H/W7HTngVDRL2lviuJGwMLoSD52q13Qzal85gRB+Rm7OMCpwwbsK9Ww==",
+      "version": "0.1.9",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-onto/-/wallet-adapter-onto-0.1.9.tgz",
+      "integrity": "sha512-gr8Pb5ASjI92hOu+X9ILFfyjidhXUxaCZ/JCCL7stfINt7OqozCqyU+191lvm5eHRy77Ln6VDgUYX+njXI1BDQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-particle": {
-      "version": "0.1.15",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-particle/-/wallet-adapter-particle-0.1.15.tgz",
-      "integrity": "sha512-/pr32ZHqPJZq0G06a7q3+7JraqcYQl1tOcQl4a9B+D3VA+OseLKk7FlUHdXFejiw07CDR5xxkFeKzcreDIS3EA==",
+      "version": "0.1.14",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-particle/-/wallet-adapter-particle-0.1.14.tgz",
+      "integrity": "sha512-XcDm3ZAJ3VQHix73lzOhhQoXVaaTWKdX+oXkEzAmb1ZRGhK64jznew7D7WmYZNjfxhvPH2NA391aAIQ/WiUJyQ==",
       "license": "Apache-2.0",
       "dependencies": {
         "@particle-network/solana-wallet": "^1.3.2",
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
@@ -6584,32 +6090,32 @@
       }
     },
     "node_modules/@solana/wallet-adapter-phantom": {
-      "version": "0.9.27",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-phantom/-/wallet-adapter-phantom-0.9.27.tgz",
-      "integrity": "sha512-tJDVhzcBubIFHJpugZqVAwISTx52JxtTXE/vWhqUZVtwBQSsGkKoR5l7uoFHLgYa7shJTKk326Y9ZzlN5DKpWg==",
+      "version": "0.9.26",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-phantom/-/wallet-adapter-phantom-0.9.26.tgz",
+      "integrity": "sha512-KjWMDRFcTjfkiOK8A5XDXbOWj3sHzuFA0Hyxl+VNGMv+AlzZ8vnuSViwP8DBhdeR1wdZ12fTyri82+RzR3f8cg==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-react": {
-      "version": "0.15.38",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-react/-/wallet-adapter-react-0.15.38.tgz",
-      "integrity": "sha512-BFyYigdnEb45+HNoqNHh2GNIsUJyLBnD76SXW7KXt+lheCkh2wzRqWYnRtG1yTVrLbf09fs/z3eWOc0RYCO5aA==",
+      "version": "0.15.37",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-react/-/wallet-adapter-react-0.15.37.tgz",
+      "integrity": "sha512-lWlvA4I5aAJgcd7gyq+xlz4KIjxnMWept1DabKumQmBARaUiROnN8Ib/qp0MlrSov+zsHCSHSJzSzUtgNjvyXA==",
       "license": "Apache-2.0",
       "dependencies": {
         "@solana-mobile/wallet-adapter-mobile": "^2.1.5",
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "@solana/wallet-standard-wallet-adapter-react": "^1.1.4"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0",
@@ -6617,17 +6123,17 @@
       }
     },
     "node_modules/@solana/wallet-adapter-react-ui": {
-      "version": "0.9.38",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-react-ui/-/wallet-adapter-react-ui-0.9.38.tgz",
-      "integrity": "sha512-TqdXhyD4SxN1vi/hEVILfyEvDWisrs0JP3fDFUTSH+4gVdqBxKAixhpa/ZFkZGtHhKQd4S13MnY7Exh745Mzgw==",
+      "version": "0.9.37",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-react-ui/-/wallet-adapter-react-ui-0.9.37.tgz",
+      "integrity": "sha512-oEX/lU0Fdb6oWyU4sQ/UqIxqpHIcgb/zeNrtwPMX/6vrrc9V4Ur7wf0zTGr7tlP4hLD3Uk/cLvgwBds1WrDZrQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26",
-        "@solana/wallet-adapter-base-ui": "^0.1.5",
-        "@solana/wallet-adapter-react": "^0.15.38"
+        "@solana/wallet-adapter-base": "^0.9.25",
+        "@solana/wallet-adapter-base-ui": "^0.1.4",
+        "@solana/wallet-adapter-react": "^0.15.37"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0",
@@ -6636,152 +6142,152 @@
       }
     },
     "node_modules/@solana/wallet-adapter-safepal": {
-      "version": "0.5.21",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-safepal/-/wallet-adapter-safepal-0.5.21.tgz",
-      "integrity": "sha512-H2fzsly2grNWb3rJHZJr5nm0tI4znbpAoycs3sU73uUAr5TR4Vauk1F+Sy4FYzfMTcPWHWCG+DRVKcDZi+vTgQ==",
+      "version": "0.5.20",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-safepal/-/wallet-adapter-safepal-0.5.20.tgz",
+      "integrity": "sha512-d71DFi3+4jwNDXHEqNtSq13LKHyVgaoNCcxfEgR7CvtYrENu+bGoJGFfUnJcgVIf/EwOPJd6LTIZpvQBKY0sCA==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-saifu": {
-      "version": "0.1.18",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-saifu/-/wallet-adapter-saifu-0.1.18.tgz",
-      "integrity": "sha512-fa+O6F0JcFGx//Vpq1hC/imViSNYp3Vd4dAlFf10lixRqoj+Z/LuOpjNIc2qPYtpjhrCamqi2mnUTkrBz1UCZA==",
+      "version": "0.1.17",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-saifu/-/wallet-adapter-saifu-0.1.17.tgz",
+      "integrity": "sha512-36o+sbWAthcJMqYPOSs5XhYsLSchpD9UJS58bpB8+4pAqy0Yora1c3SWjD+J6nL5n96ev8N6waszXlJ9io8BNQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-salmon": {
-      "version": "0.1.17",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-salmon/-/wallet-adapter-salmon-0.1.17.tgz",
-      "integrity": "sha512-PjrB+3dKA1SfAl7IdtR4xIT6zmzI/ZSHM6DwAqiGaY+4wNw+66gV/WmiYuTqlmC9hTaTgWdZSXdBboFkal7csA==",
+      "version": "0.1.16",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-salmon/-/wallet-adapter-salmon-0.1.16.tgz",
+      "integrity": "sha512-1BbnV3FQO2C37pvvj67tvf12pXruNIxjkIH5QhLg0kvEs64LbyxAf15kYozrmAzSBP8+cc7j4hdvzm8qJIAxPQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "salmon-adapter-sdk": "^1.1.1"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-sky": {
-      "version": "0.1.18",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-sky/-/wallet-adapter-sky-0.1.18.tgz",
-      "integrity": "sha512-QtE407XUu2yJsgF1/Rt8elckAIVkOjar1Zt9UKdJFdxFB19WpJubGW+oHP7BNcYUUrLdpHBMWwhBO0zd/dMzVg==",
+      "version": "0.1.17",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-sky/-/wallet-adapter-sky-0.1.17.tgz",
+      "integrity": "sha512-nuSwIpZ5KMEDlmRg2rFnEtQ7qf4Jq1zzY6DhvOWngkHUoWGD1syQYdtDWLgBHAylmmqvhY9IsnHFvumstAia7A==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-solflare": {
-      "version": "0.6.31",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-solflare/-/wallet-adapter-solflare-0.6.31.tgz",
-      "integrity": "sha512-upP0GGLKPz2fmdisy/mAJfexe0VrO6EVK6XF41xP83wBD/kM0LuRWMG7oOxzuD4Wc6bQOMVysW+PseZHphK6RQ==",
+      "version": "0.6.30",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-solflare/-/wallet-adapter-solflare-0.6.30.tgz",
+      "integrity": "sha512-XGWVCEpYd79LbABDIeVRPOTCZ7+4O/JLzz2EM1nFLAn+e30UYGxSqgOY38yf+vDCFY9Ir6Jh7L0jZ9oNoJNGHQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "@solana/wallet-standard-chains": "^1.1.1",
         "@solflare-wallet/metamask-sdk": "^1.0.3",
         "@solflare-wallet/sdk": "^1.4.2",
         "@wallet-standard/wallet": "^1.1.0"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-solong": {
-      "version": "0.9.21",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-solong/-/wallet-adapter-solong-0.9.21.tgz",
-      "integrity": "sha512-J+sseVVil0oe0FFWEXit/6nzmHISKSfA0/72hIk2hDKNNjj7q0xExhBIejN8tpGwUYWcHdGYaqDVNkxdWxeXZg==",
+      "version": "0.9.20",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-solong/-/wallet-adapter-solong-0.9.20.tgz",
+      "integrity": "sha512-tzFLiZoPA1U4r4kgMoXoIdt8y00dsFxCEFUFIWohKCbJaIDzMHaIg9bI8F1janB+BoL6M2soJRSuo9VQY27WZg==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-spot": {
-      "version": "0.1.18",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-spot/-/wallet-adapter-spot-0.1.18.tgz",
-      "integrity": "sha512-c882REN9b4PKL8B80MS8+3Fdd7HRJj8OOQiYg6X5NN5qqtmW5MbIEkYVO+Fc2OYe+IhKjnr4oY7LytmPu0eAbQ==",
+      "version": "0.1.17",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-spot/-/wallet-adapter-spot-0.1.17.tgz",
+      "integrity": "sha512-uZUuhwIu5km+L2kCegKD60S7xBgtiOUJu/A2O6/jLQbDBIjWGLa5jh2e6c9u1ROGSdKxYUzLmJSyOrPB1W8GQw==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-tokenary": {
-      "version": "0.1.15",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-tokenary/-/wallet-adapter-tokenary-0.1.15.tgz",
-      "integrity": "sha512-iq8+Le/n2G35N+wNLUWq13hYSjsulxswb1vC7lNT3gpIhl4JLR7BI6jCdeCKfNSDamzLXv6FMt8S0q/DYR0A5A==",
+      "version": "0.1.14",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-tokenary/-/wallet-adapter-tokenary-0.1.14.tgz",
+      "integrity": "sha512-lQDTi1SPppEyg4bWUMfoE+G2Rr07T0HJgGlT6A+v9pZTO2yrdzm8BzDB1rYDDhkRPdrbbtO+AunR24DJnlQQrg==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-tokenpocket": {
-      "version": "0.4.22",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-tokenpocket/-/wallet-adapter-tokenpocket-0.4.22.tgz",
-      "integrity": "sha512-u61lhRb9E37y/KbvhSMJWJWH4TdwR8yQf0JC+N9lFy8lvPXvaC7dpguXcgTlGOHTl7vhkv0/rn0X6XLBVFq85A==",
+      "version": "0.4.21",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-tokenpocket/-/wallet-adapter-tokenpocket-0.4.21.tgz",
+      "integrity": "sha512-CLuq6qoAP71+ggNVBW3isZ066aXtibcnXOYHu2t1HMFEcpJD6YAWFbwwPmCt7uH8Xrt2Cbq+jJENa2O3ZYFlHQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-torus": {
-      "version": "0.11.31",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-torus/-/wallet-adapter-torus-0.11.31.tgz",
-      "integrity": "sha512-HgAgdTz6rUWVIg7kGJNwxV0HtN/O3V347D4VGOJPp++WIEbApz5kqrWU2PaygFTK8lG4FrpwguTIVcPh0jU9KQ==",
+      "version": "0.11.30",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-torus/-/wallet-adapter-torus-0.11.30.tgz",
+      "integrity": "sha512-Y9Dk3lQQdBx48qR22ehWxpTdtpcAjTtUztjBrgmX5HpaX1m76g122U4pOg/TH9jI3GNVqDptIByoSmET/UrQ5w==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "@toruslabs/solana-embed": "^2.1.0",
         "assert": "^2.1.0",
         "crypto-browserify": "^3.12.1",
@@ -6789,138 +6295,138 @@
         "stream-browserify": "^3.0.0"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-trezor": {
-      "version": "0.1.5",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-trezor/-/wallet-adapter-trezor-0.1.5.tgz",
-      "integrity": "sha512-DV4IJX06zth1uQ+6dUh5di8pC+uhRDd87cZo//bYiE3vQ6+CRJEJgkeFS5hoiEdj/119BtOegtSBqtLc77rWcg==",
+      "version": "0.1.4",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-trezor/-/wallet-adapter-trezor-0.1.4.tgz",
+      "integrity": "sha512-n4WSK5f2J+CON92Ebu8896YWmV9bcCscCHcXrHvwuPGpJM6IWxHpxVG7l47EKCo0k+sUr6+3sd4O1hG6whhwTw==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "@trezor/connect-web": "^9.5.4",
         "buffer": "^6.0.3"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-trust": {
-      "version": "0.1.16",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-trust/-/wallet-adapter-trust-0.1.16.tgz",
-      "integrity": "sha512-pTdq6fycCSq94jsCjCatjyHMwIpUTOjwL/77/BiorLWT+1dTnxty/coCWMVqBi7IBE2rBDo5Zeaz67I3dMaOjg==",
+      "version": "0.1.15",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-trust/-/wallet-adapter-trust-0.1.15.tgz",
+      "integrity": "sha512-muuHMrz5vpZGnqMoG2w7DhOygYaWJOtezCIQNgDuZMMCCDLCrVQibzGWh4aq94wG/pvvtVIbj1hgmu/Unp6NfA==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-unsafe-burner": {
-      "version": "0.1.10",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-unsafe-burner/-/wallet-adapter-unsafe-burner-0.1.10.tgz",
-      "integrity": "sha512-I5ZTBManDZN1rrffTv6PaKEIOqqzuVlR09svKhnRbmGlOlp/532N/I/vEPnjVlhNKbjLqgkY2Cof6w7RNhjRLQ==",
+      "version": "0.1.9",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-unsafe-burner/-/wallet-adapter-unsafe-burner-0.1.9.tgz",
+      "integrity": "sha512-Uj06TvCGnZ39/QFJbrZU1gQ4lpiZ4A9aUPKJOOkgYCcqnJmmQztM2nkMOh87ewmDx9mt2+orVvz8rlOW8zkRcA==",
       "license": "Apache-2.0",
       "dependencies": {
         "@noble/curves": "^1.1.0",
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "@solana/wallet-standard-features": "^1.3.0",
         "@solana/wallet-standard-util": "^1.1.2"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-walletconnect": {
-      "version": "0.1.20",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-walletconnect/-/wallet-adapter-walletconnect-0.1.20.tgz",
-      "integrity": "sha512-qix8jOWkTCGpZIDb8iDqriUWcDWjgy3Nw7K1XUpO4lTGU9qv7DxNBsvSZ6HzZEvfa1fKbvyeICIZa+HO7MFERA==",
+      "version": "0.1.19",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-walletconnect/-/wallet-adapter-walletconnect-0.1.19.tgz",
+      "integrity": "sha512-bGp1cuBB/q+9k/JDA6fPVW96U6EObKWtE47aG5DT/S4XToILFbOp6cfvLS1Ekuf8V8QxlzDUqujzwcp/Zc9I7g==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26",
+        "@solana/wallet-adapter-base": "^0.9.25",
         "@walletconnect/solana-adapter": "^0.0.8"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-wallets": {
-      "version": "0.19.36",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-wallets/-/wallet-adapter-wallets-0.19.36.tgz",
-      "integrity": "sha512-c5MbrRvJF+N27GFfyba/AwWksXEa/N7FTwYBQrsVInRsnBsyuXLzEHd/OPSzmZFcsjafCfAY5wFi40ZNSBA0bA==",
+      "version": "0.19.35",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-wallets/-/wallet-adapter-wallets-0.19.35.tgz",
+      "integrity": "sha512-lu/hi+s3cmRVbGrNR55PDiTVWZNIUr1se33zPpbRJNJ3CmWx2Wl02PQsWcOyN3RGV4B11412tz1+GGVu2Csb0w==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-alpha": "^0.1.13",
-        "@solana/wallet-adapter-avana": "^0.1.16",
-        "@solana/wallet-adapter-bitkeep": "^0.3.23",
-        "@solana/wallet-adapter-bitpie": "^0.5.21",
-        "@solana/wallet-adapter-clover": "^0.4.22",
-        "@solana/wallet-adapter-coin98": "^0.5.23",
-        "@solana/wallet-adapter-coinbase": "^0.1.22",
-        "@solana/wallet-adapter-coinhub": "^0.3.21",
-        "@solana/wallet-adapter-fractal": "^0.1.11",
-        "@solana/wallet-adapter-huobi": "^0.1.18",
-        "@solana/wallet-adapter-hyperpay": "^0.1.17",
-        "@solana/wallet-adapter-keystone": "^0.1.18",
-        "@solana/wallet-adapter-krystal": "^0.1.15",
-        "@solana/wallet-adapter-ledger": "^0.9.28",
-        "@solana/wallet-adapter-mathwallet": "^0.9.21",
-        "@solana/wallet-adapter-neko": "^0.2.15",
-        "@solana/wallet-adapter-nightly": "^0.1.19",
-        "@solana/wallet-adapter-nufi": "^0.1.20",
-        "@solana/wallet-adapter-onto": "^0.1.10",
-        "@solana/wallet-adapter-particle": "^0.1.15",
-        "@solana/wallet-adapter-phantom": "^0.9.27",
-        "@solana/wallet-adapter-safepal": "^0.5.21",
-        "@solana/wallet-adapter-saifu": "^0.1.18",
-        "@solana/wallet-adapter-salmon": "^0.1.17",
-        "@solana/wallet-adapter-sky": "^0.1.18",
-        "@solana/wallet-adapter-solflare": "^0.6.31",
-        "@solana/wallet-adapter-solong": "^0.9.21",
-        "@solana/wallet-adapter-spot": "^0.1.18",
-        "@solana/wallet-adapter-tokenary": "^0.1.15",
-        "@solana/wallet-adapter-tokenpocket": "^0.4.22",
-        "@solana/wallet-adapter-torus": "^0.11.31",
-        "@solana/wallet-adapter-trezor": "^0.1.5",
-        "@solana/wallet-adapter-trust": "^0.1.16",
-        "@solana/wallet-adapter-unsafe-burner": "^0.1.10",
-        "@solana/wallet-adapter-walletconnect": "^0.1.20",
-        "@solana/wallet-adapter-xdefi": "^0.1.10"
+        "@solana/wallet-adapter-alpha": "^0.1.12",
+        "@solana/wallet-adapter-avana": "^0.1.15",
+        "@solana/wallet-adapter-bitkeep": "^0.3.22",
+        "@solana/wallet-adapter-bitpie": "^0.5.20",
+        "@solana/wallet-adapter-clover": "^0.4.21",
+        "@solana/wallet-adapter-coin98": "^0.5.22",
+        "@solana/wallet-adapter-coinbase": "^0.1.21",
+        "@solana/wallet-adapter-coinhub": "^0.3.20",
+        "@solana/wallet-adapter-fractal": "^0.1.10",
+        "@solana/wallet-adapter-huobi": "^0.1.17",
+        "@solana/wallet-adapter-hyperpay": "^0.1.16",
+        "@solana/wallet-adapter-keystone": "^0.1.17",
+        "@solana/wallet-adapter-krystal": "^0.1.14",
+        "@solana/wallet-adapter-ledger": "^0.9.27",
+        "@solana/wallet-adapter-mathwallet": "^0.9.20",
+        "@solana/wallet-adapter-neko": "^0.2.14",
+        "@solana/wallet-adapter-nightly": "^0.1.18",
+        "@solana/wallet-adapter-nufi": "^0.1.19",
+        "@solana/wallet-adapter-onto": "^0.1.9",
+        "@solana/wallet-adapter-particle": "^0.1.14",
+        "@solana/wallet-adapter-phantom": "^0.9.26",
+        "@solana/wallet-adapter-safepal": "^0.5.20",
+        "@solana/wallet-adapter-saifu": "^0.1.17",
+        "@solana/wallet-adapter-salmon": "^0.1.16",
+        "@solana/wallet-adapter-sky": "^0.1.17",
+        "@solana/wallet-adapter-solflare": "^0.6.30",
+        "@solana/wallet-adapter-solong": "^0.9.20",
+        "@solana/wallet-adapter-spot": "^0.1.17",
+        "@solana/wallet-adapter-tokenary": "^0.1.14",
+        "@solana/wallet-adapter-tokenpocket": "^0.4.21",
+        "@solana/wallet-adapter-torus": "^0.11.30",
+        "@solana/wallet-adapter-trezor": "^0.1.4",
+        "@solana/wallet-adapter-trust": "^0.1.15",
+        "@solana/wallet-adapter-unsafe-burner": "^0.1.9",
+        "@solana/wallet-adapter-walletconnect": "^0.1.19",
+        "@solana/wallet-adapter-xdefi": "^0.1.9"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
       }
     },
     "node_modules/@solana/wallet-adapter-xdefi": {
-      "version": "0.1.10",
-      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-xdefi/-/wallet-adapter-xdefi-0.1.10.tgz",
-      "integrity": "sha512-QpHY/fU7CKaXR9B1tHCuE1N+hgpAC76qM+3pTVtuiDe01vTjKR2A2eijCgyC6dOR94xaymF/MflfzdY3kAVxkQ==",
+      "version": "0.1.9",
+      "resolved": "https://registry.npmjs.org/@solana/wallet-adapter-xdefi/-/wallet-adapter-xdefi-0.1.9.tgz",
+      "integrity": "sha512-/fD+sMGdDx8RzcYHt8ERdiZ1iTsH7u0IdoxGuay835c/nR2kDL4qRbkMNhCS2i6oeHHQoigxU0bPb101stDNuQ==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@solana/wallet-adapter-base": "^0.9.26"
+        "@solana/wallet-adapter-base": "^0.9.25"
       },
       "engines": {
-        "node": ">=20"
+        "node": "22"
       },
       "peerDependencies": {
         "@solana/web3.js": "^1.98.0"
@@ -7104,17 +6610,17 @@
       }
     },
     "node_modules/@solana/web3.js": {
-      "version": "1.98.1",
-      "resolved": "https://registry.npmjs.org/@solana/web3.js/-/web3.js-1.98.1.tgz",
-      "integrity": "sha512-gRAq1YPbfSDAbmho4kY7P/8iLIjMWXAzBJdP9iENFR+dFQSBSueHzjK/ou8fxhqHP9j+J4Msl4p/oDemFcIjlg==",
+      "version": "1.98.0",
+      "resolved": "https://registry.npmjs.org/@solana/web3.js/-/web3.js-1.98.0.tgz",
+      "integrity": "sha512-nz3Q5OeyGFpFCR+erX2f6JPt3sKhzhYcSycBCSPkWjzSVDh/Rr1FqTVMRe58FKO16/ivTUcuJjeS5MyBvpkbzA==",
       "license": "MIT",
       "dependencies": {
         "@babel/runtime": "^7.25.0",
         "@noble/curves": "^1.4.2",
         "@noble/hashes": "^1.4.0",
         "@solana/buffer-layout": "^4.0.1",
-        "@solana/codecs-numbers": "^2.1.0",
         "agentkeepalive": "^4.5.0",
+        "bigint-buffer": "^1.1.5",
         "bn.js": "^5.2.1",
         "borsh": "^0.7.0",
         "bs58": "^4.0.1",
@@ -7261,9 +6767,9 @@
       }
     },
     "node_modules/@supabase/supabase-js": {
-      "version": "2.49.8",
-      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.49.8.tgz",
-      "integrity": "sha512-zzBQLgS/jZs7btWcIAc7V5yfB+juG7h0AXxKowMJuySsO5vK+F7Vp+HCa07Z+tu9lZtr3sT9fofkc86bdylmtw==",
+      "version": "2.49.4",
+      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.49.4.tgz",
+      "integrity": "sha512-jUF0uRUmS8BKt37t01qaZ88H9yV1mbGYnqLeuFWLcdV+x1P4fl0yP9DGtaEhFPZcwSom7u16GkLEH9QJZOqOkw==",
       "license": "MIT",
       "dependencies": {
         "@supabase/auth-js": "2.69.1",
@@ -7994,34 +7500,6 @@
         "tslib": "^2.6.2"
       }
     },
-    "node_modules/@tsconfig/node10": {
-      "version": "1.0.11",
-      "resolved": "https://registry.npmjs.org/@tsconfig/node10/-/node10-1.0.11.tgz",
-      "integrity": "sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==",
-      "dev": true,
-      "license": "MIT"
-    },
-    "node_modules/@tsconfig/node12": {
-      "version": "1.0.11",
-      "resolved": "https://registry.npmjs.org/@tsconfig/node12/-/node12-1.0.11.tgz",
-      "integrity": "sha512-cqefuRsh12pWyGsIoBKJA9luFu3mRxCA+ORZvA4ktLSzIuCUtWVxGIuXigEwO5/ywWFMZ2QEGKWvkZG1zDMTag==",
-      "dev": true,
-      "license": "MIT"
-    },
-    "node_modules/@tsconfig/node14": {
-      "version": "1.0.3",
-      "resolved": "https://registry.npmjs.org/@tsconfig/node14/-/node14-1.0.3.tgz",
-      "integrity": "sha512-ysT8mhdixWK6Hw3i1V2AeRqZ5WfXg1G43mqoYlM2nc6388Fq5jcXyr5mRsqViLx/GJYdoL0bfXD8nmF+Zn/Iow==",
-      "dev": true,
-      "license": "MIT"
-    },
-    "node_modules/@tsconfig/node16": {
-      "version": "1.0.4",
-      "resolved": "https://registry.npmjs.org/@tsconfig/node16/-/node16-1.0.4.tgz",
-      "integrity": "sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==",
-      "dev": true,
-      "license": "MIT"
-    },
     "node_modules/@types/babel__core": {
       "version": "7.20.5",
       "resolved": "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.20.5.tgz",
@@ -8063,17 +7541,6 @@
         "@babel/types": "^7.20.7"
       }
     },
-    "node_modules/@types/body-parser": {
-      "version": "1.19.5",
-      "resolved": "https://registry.npmjs.org/@types/body-parser/-/body-parser-1.19.5.tgz",
-      "integrity": "sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/connect": "*",
-        "@types/node": "*"
-      }
-    },
     "node_modules/@types/connect": {
       "version": "3.4.38",
       "resolved": "https://registry.npmjs.org/@types/connect/-/connect-3.4.38.tgz",
@@ -8092,12 +7559,6 @@
         "@types/ms": "*"
       }
     },
-    "node_modules/@types/diff-match-patch": {
-      "version": "1.0.36",
-      "resolved": "https://registry.npmjs.org/@types/diff-match-patch/-/diff-match-patch-1.0.36.tgz",
-      "integrity": "sha512-xFdR6tkm0MWvBfO8xXCSsinYxHcqkQUlcHeSpMC2ukzOb6lwQAfDmW+Qt0AvlGd8HpsS28qKsB+oPeJn9I39jg==",
-      "license": "MIT"
-    },
     "node_modules/@types/estree": {
       "version": "1.0.7",
       "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.7.tgz",
@@ -8111,31 +7572,6 @@
       "license": "MIT",
       "dependencies": {
         "@types/estree": "*"
-      }
-    },
-    "node_modules/@types/express": {
-      "version": "5.0.1",
-      "resolved": "https://registry.npmjs.org/@types/express/-/express-5.0.1.tgz",
-      "integrity": "sha512-UZUw8vjpWFXuDnjFTh7/5c2TWDlQqeXHi6hcN7F2XSVT5P+WmUnnbFS3KA6Jnc6IsEqI2qCVu2bK0R0J4A8ZQQ==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/body-parser": "*",
-        "@types/express-serve-static-core": "^5.0.0",
-        "@types/serve-static": "*"
-      }
-    },
-    "node_modules/@types/express-serve-static-core": {
-      "version": "5.0.6",
-      "resolved": "https://registry.npmjs.org/@types/express-serve-static-core/-/express-serve-static-core-5.0.6.tgz",
-      "integrity": "sha512-3xhRnjJPkULekpSzgtoNYYcTWgEZkp4myc+Saevii5JPnHNvHMRlBSHDbs7Bh1iPPoVTERHEZXyhyLbMEsExsA==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/node": "*",
-        "@types/qs": "*",
-        "@types/range-parser": "*",
-        "@types/send": "*"
       }
     },
     "node_modules/@types/graceful-fs": {
@@ -8156,13 +7592,6 @@
       "dependencies": {
         "@types/unist": "*"
       }
-    },
-    "node_modules/@types/http-errors": {
-      "version": "2.0.4",
-      "resolved": "https://registry.npmjs.org/@types/http-errors/-/http-errors-2.0.4.tgz",
-      "integrity": "sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==",
-      "dev": true,
-      "license": "MIT"
     },
     "node_modules/@types/istanbul-lib-coverage": {
       "version": "2.0.6",
@@ -8206,13 +7635,6 @@
       "dependencies": {
         "@types/unist": "*"
       }
-    },
-    "node_modules/@types/mime": {
-      "version": "1.3.5",
-      "resolved": "https://registry.npmjs.org/@types/mime/-/mime-1.3.5.tgz",
-      "integrity": "sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==",
-      "dev": true,
-      "license": "MIT"
     },
     "node_modules/@types/ms": {
       "version": "2.1.0",
@@ -8263,20 +7685,6 @@
       "integrity": "sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==",
       "license": "MIT"
     },
-    "node_modules/@types/qs": {
-      "version": "6.9.18",
-      "resolved": "https://registry.npmjs.org/@types/qs/-/qs-6.9.18.tgz",
-      "integrity": "sha512-kK7dgTYDyGqS+e2Q4aK9X3D7q234CIZ1Bv0q/7Z5IwRDoADNU81xXJK/YVyLbLTZCoIwUoDoffFeF+p/eIklAA==",
-      "dev": true,
-      "license": "MIT"
-    },
-    "node_modules/@types/range-parser": {
-      "version": "1.2.7",
-      "resolved": "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.7.tgz",
-      "integrity": "sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==",
-      "dev": true,
-      "license": "MIT"
-    },
     "node_modules/@types/react": {
       "version": "18.3.20",
       "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.20.tgz",
@@ -8305,29 +7713,6 @@
       "license": "MIT",
       "dependencies": {
         "@types/react": "*"
-      }
-    },
-    "node_modules/@types/send": {
-      "version": "0.17.4",
-      "resolved": "https://registry.npmjs.org/@types/send/-/send-0.17.4.tgz",
-      "integrity": "sha512-x2EM6TJOybec7c52BX0ZspPodMsQUd5L6PRwOunVyVUhXiBSKf3AezDL8Dgvgt5o0UfKNfuA0eMLr2wLT4AiBA==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/mime": "^1",
-        "@types/node": "*"
-      }
-    },
-    "node_modules/@types/serve-static": {
-      "version": "1.15.7",
-      "resolved": "https://registry.npmjs.org/@types/serve-static/-/serve-static-1.15.7.tgz",
-      "integrity": "sha512-W8Ym+h8nhuRwaKPaDw34QUkwsGi6Rc4yYqvKFo5rm2FUEhCFbzVWrxXUxuKK8TASjWsysJY0nsmNCGhCOIsrOw==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/http-errors": "*",
-        "@types/node": "*",
-        "@types/send": "*"
       }
     },
     "node_modules/@types/stack-utils": {
@@ -10113,36 +9498,6 @@
         "node": ">=6.5"
       }
     },
-    "node_modules/abso": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/abso/-/abso-1.0.0.tgz",
-      "integrity": "sha512-nZ5VAvYkKeRtWYGcwbdQpfk221wlaKv1oEekcZg/pRETNjyNDxjqKm4cWPSlX17+bidbss8rFtURniNxIf1SsQ==",
-      "deprecated": "Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.",
-      "license": "MIT"
-    },
-    "node_modules/abso-ai": {
-      "version": "0.0.9",
-      "resolved": "https://registry.npmjs.org/abso-ai/-/abso-ai-0.0.9.tgz",
-      "integrity": "sha512-GqLLqGhtslyWLyoU/hbKbY/zLYEuSRXRmi0UuQQRwv6+CrslpPu/qI/J38BTB9K22nn2VQ38NxJL8qR290FThg==",
-      "dependencies": {
-        "@anthropic-ai/sdk": "^0.36.3",
-        "@google/generative-ai": "^0.21.0",
-        "abso-ai": "^0.0.4",
-        "lunary": "^0.8.8",
-        "openai": "^4.83.0"
-      }
-    },
-    "node_modules/abso-ai/node_modules/abso-ai": {
-      "version": "0.0.4",
-      "resolved": "https://registry.npmjs.org/abso-ai/-/abso-ai-0.0.4.tgz",
-      "integrity": "sha512-ErErYABRELU2mZ/9gSgnVkYfwarSEMFjPGS0QxHU3Oj5FayiHY6iO06Az+/Veh+nmiiuOAF3Kdbvi/OiICMbwg==",
-      "dependencies": {
-        "@anthropic-ai/sdk": "^0.36.3",
-        "@google/generative-ai": "^0.21.0",
-        "lunary": "^0.8.8",
-        "openai": "^4.83.0"
-      }
-    },
     "node_modules/accepts": {
       "version": "2.0.0",
       "resolved": "https://registry.npmjs.org/accepts/-/accepts-2.0.0.tgz",
@@ -10178,19 +9533,6 @@
         "acorn": "^6.0.0 || ^7.0.0 || ^8.0.0"
       }
     },
-    "node_modules/acorn-walk": {
-      "version": "8.3.4",
-      "resolved": "https://registry.npmjs.org/acorn-walk/-/acorn-walk-8.3.4.tgz",
-      "integrity": "sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "acorn": "^8.11.0"
-      },
-      "engines": {
-        "node": ">=0.4.0"
-      }
-    },
     "node_modules/agent-base": {
       "version": "7.1.3",
       "resolved": "https://registry.npmjs.org/agent-base/-/agent-base-7.1.3.tgz",
@@ -10210,32 +9552,6 @@
       },
       "engines": {
         "node": ">= 8.0.0"
-      }
-    },
-    "node_modules/ai": {
-      "version": "4.3.11",
-      "resolved": "https://registry.npmjs.org/ai/-/ai-4.3.11.tgz",
-      "integrity": "sha512-5korDAKCsDXE5HwglOJ7NxJ32TEj2NmKGQPefcMJMKkjxeJJjC6NfM8qLtPCCk8FoAVtYdIMYPy8dzux423QLg==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@ai-sdk/provider": "1.1.3",
-        "@ai-sdk/provider-utils": "2.2.7",
-        "@ai-sdk/react": "1.2.10",
-        "@ai-sdk/ui-utils": "1.2.9",
-        "@opentelemetry/api": "1.9.0",
-        "jsondiffpatch": "0.6.0"
-      },
-      "engines": {
-        "node": ">=18"
-      },
-      "peerDependencies": {
-        "react": "^18 || ^19 || ^19.0.0-rc",
-        "zod": "^3.23.8"
-      },
-      "peerDependenciesMeta": {
-        "react": {
-          "optional": true
-        }
       }
     },
     "node_modules/ajv": {
@@ -10444,9 +9760,9 @@
       }
     },
     "node_modules/axios": {
-      "version": "1.9.0",
-      "resolved": "https://registry.npmjs.org/axios/-/axios-1.9.0.tgz",
-      "integrity": "sha512-re4CqKTJaURpzbLHtIi6XpDv20/CnpXOtjRY5/CU32L8gU8ek9UIivcfvSWvmKEngmVbrUtPpdDwWDWL7DNHvg==",
+      "version": "1.8.4",
+      "resolved": "https://registry.npmjs.org/axios/-/axios-1.8.4.tgz",
+      "integrity": "sha512-eBSYY4Y68NNlHbHBMdeDmKNtDgXWhQsJcGqzO3iLUM0GraQFSS9cVgPX5I9b3lbdFKyYoAEGAZF1DwhTaljNAw==",
       "license": "MIT",
       "dependencies": {
         "follow-redirects": "^1.15.6",
@@ -11116,12 +10432,6 @@
         "base64-js": "^1.3.1",
         "ieee754": "^1.2.1"
       }
-    },
-    "node_modules/buffer-equal-constant-time": {
-      "version": "1.0.1",
-      "resolved": "https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz",
-      "integrity": "sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==",
-      "license": "BSD-3-Clause"
     },
     "node_modules/buffer-from": {
       "version": "1.1.2",
@@ -11930,13 +11240,6 @@
         "sha.js": "^2.4.8"
       }
     },
-    "node_modules/create-require": {
-      "version": "1.1.1",
-      "resolved": "https://registry.npmjs.org/create-require/-/create-require-1.1.1.tgz",
-      "integrity": "sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==",
-      "dev": true,
-      "license": "MIT"
-    },
     "node_modules/cross-fetch": {
       "version": "4.1.0",
       "resolved": "https://registry.npmjs.org/cross-fetch/-/cross-fetch-4.1.0.tgz",
@@ -12269,22 +11572,6 @@
       "dev": true,
       "license": "Apache-2.0"
     },
-    "node_modules/diff": {
-      "version": "4.0.2",
-      "resolved": "https://registry.npmjs.org/diff/-/diff-4.0.2.tgz",
-      "integrity": "sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==",
-      "dev": true,
-      "license": "BSD-3-Clause",
-      "engines": {
-        "node": ">=0.3.1"
-      }
-    },
-    "node_modules/diff-match-patch": {
-      "version": "1.0.5",
-      "resolved": "https://registry.npmjs.org/diff-match-patch/-/diff-match-patch-1.0.5.tgz",
-      "integrity": "sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==",
-      "license": "Apache-2.0"
-    },
     "node_modules/diffie-hellman": {
       "version": "5.0.3",
       "resolved": "https://registry.npmjs.org/diffie-hellman/-/diffie-hellman-5.0.3.tgz",
@@ -12396,15 +11683,6 @@
       "integrity": "sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==",
       "dev": true,
       "license": "MIT"
-    },
-    "node_modules/ecdsa-sig-formatter": {
-      "version": "1.0.11",
-      "resolved": "https://registry.npmjs.org/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.11.tgz",
-      "integrity": "sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "safe-buffer": "^5.0.1"
-      }
     },
     "node_modules/ee-first": {
       "version": "1.1.1",
@@ -12531,9 +11809,9 @@
       }
     },
     "node_modules/entities": {
-      "version": "6.0.0",
-      "resolved": "https://registry.npmjs.org/entities/-/entities-6.0.0.tgz",
-      "integrity": "sha512-aKstq2TDOndCn4diEyp9Uq/Flu2i1GlLkc6XIDQSDMuaFE3OPW5OphLCyQ5SpSJZTb4reN+kTcYru5yIfXoRPw==",
+      "version": "4.5.0",
+      "resolved": "https://registry.npmjs.org/entities/-/entities-4.5.0.tgz",
+      "integrity": "sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==",
       "license": "BSD-2-Clause",
       "engines": {
         "node": ">=0.12"
@@ -12941,15 +12219,6 @@
       "funding": {
         "type": "opencollective",
         "url": "https://opencollective.com/unified"
-      }
-    },
-    "node_modules/estree-walker": {
-      "version": "3.0.3",
-      "resolved": "https://registry.npmjs.org/estree-walker/-/estree-walker-3.0.3.tgz",
-      "integrity": "sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==",
-      "license": "MIT",
-      "dependencies": {
-        "@types/estree": "^1.0.0"
       }
     },
     "node_modules/esutils": {
@@ -13426,12 +12695,6 @@
         "node": ">= 6"
       }
     },
-    "node_modules/form-data-encoder": {
-      "version": "1.7.2",
-      "resolved": "https://registry.npmjs.org/form-data-encoder/-/form-data-encoder-1.7.2.tgz",
-      "integrity": "sha512-qfqtYan3rxrnCk1VYaA4H+Ms9xdpPqvLZa6xmMgFvhO32x7/3J/ExcTd6qpxM0vH2GdMI+poehyBZvqfMTto8A==",
-      "license": "MIT"
-    },
     "node_modules/form-data/node_modules/mime-db": {
       "version": "1.52.0",
       "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz",
@@ -13459,19 +12722,6 @@
       "integrity": "sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==",
       "engines": {
         "node": ">=0.4.x"
-      }
-    },
-    "node_modules/formdata-node": {
-      "version": "4.4.1",
-      "resolved": "https://registry.npmjs.org/formdata-node/-/formdata-node-4.4.1.tgz",
-      "integrity": "sha512-0iirZp3uVDjVGt9p49aTaqjk84TrglENEDuqfdlZQ1roC9CWlPk6Avf8EEnZNcAqPonwkG35x4n3ww/1THYAeQ==",
-      "license": "MIT",
-      "dependencies": {
-        "node-domexception": "1.0.0",
-        "web-streams-polyfill": "4.0.0-beta.3"
-      },
-      "engines": {
-        "node": ">= 12.20"
       }
     },
     "node_modules/forwarded": {
@@ -13534,49 +12784,6 @@
       "license": "MIT",
       "funding": {
         "url": "https://github.com/sponsors/ljharb"
-      }
-    },
-    "node_modules/gaxios": {
-      "version": "6.7.1",
-      "resolved": "https://registry.npmjs.org/gaxios/-/gaxios-6.7.1.tgz",
-      "integrity": "sha512-LDODD4TMYx7XXdpwxAVRAIAuB0bzv0s+ywFonY46k126qzQHT9ygyoa9tncmOiQmmDrik65UYsEkv3lbfqQ3yQ==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "extend": "^3.0.2",
-        "https-proxy-agent": "^7.0.1",
-        "is-stream": "^2.0.0",
-        "node-fetch": "^2.6.9",
-        "uuid": "^9.0.1"
-      },
-      "engines": {
-        "node": ">=14"
-      }
-    },
-    "node_modules/gaxios/node_modules/uuid": {
-      "version": "9.0.1",
-      "resolved": "https://registry.npmjs.org/uuid/-/uuid-9.0.1.tgz",
-      "integrity": "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==",
-      "funding": [
-        "https://github.com/sponsors/broofa",
-        "https://github.com/sponsors/ctavan"
-      ],
-      "license": "MIT",
-      "bin": {
-        "uuid": "dist/bin/uuid"
-      }
-    },
-    "node_modules/gcp-metadata": {
-      "version": "6.1.1",
-      "resolved": "https://registry.npmjs.org/gcp-metadata/-/gcp-metadata-6.1.1.tgz",
-      "integrity": "sha512-a4tiq7E0/5fTjxPAaH4jpjkSv/uCaU2p5KC6HVGrvl0cDjA8iBZv4vv1gyzlmK0ZUKqwpOyQMKzZQe3lTit77A==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "gaxios": "^6.1.1",
-        "google-logging-utils": "^0.0.2",
-        "json-bigint": "^1.0.0"
-      },
-      "engines": {
-        "node": ">=14"
       }
     },
     "node_modules/gensync": {
@@ -13729,32 +12936,6 @@
         "url": "https://github.com/sponsors/sindresorhus"
       }
     },
-    "node_modules/google-auth-library": {
-      "version": "9.15.1",
-      "resolved": "https://registry.npmjs.org/google-auth-library/-/google-auth-library-9.15.1.tgz",
-      "integrity": "sha512-Jb6Z0+nvECVz+2lzSMt9u98UsoakXxA2HGHMCxh+so3n90XgYWkq5dur19JAJV7ONiJY22yBTyJB1TSkvPq9Ng==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "base64-js": "^1.3.0",
-        "ecdsa-sig-formatter": "^1.0.11",
-        "gaxios": "^6.1.1",
-        "gcp-metadata": "^6.1.0",
-        "gtoken": "^7.0.0",
-        "jws": "^4.0.0"
-      },
-      "engines": {
-        "node": ">=14"
-      }
-    },
-    "node_modules/google-logging-utils": {
-      "version": "0.0.2",
-      "resolved": "https://registry.npmjs.org/google-logging-utils/-/google-logging-utils-0.0.2.tgz",
-      "integrity": "sha512-NEgUnEcBiP5HrPzufUkBzJOD/Sxsco3rLNo1F1TNf7ieU8ryUzBhqba8r756CjLX7rn3fHl6iLEwPYuqpoKgQQ==",
-      "license": "Apache-2.0",
-      "engines": {
-        "node": ">=14"
-      }
-    },
     "node_modules/gopd": {
       "version": "1.2.0",
       "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
@@ -13780,19 +12961,6 @@
       "integrity": "sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==",
       "dev": true,
       "license": "MIT"
-    },
-    "node_modules/gtoken": {
-      "version": "7.1.0",
-      "resolved": "https://registry.npmjs.org/gtoken/-/gtoken-7.1.0.tgz",
-      "integrity": "sha512-pCcEwRi+TKpMlxAQObHDQ56KawURgyAf6jtIY046fJ5tIv3zDe/LEIubckAO8fj6JnAxLdmWkUfNyulQ2iKdEw==",
-      "license": "MIT",
-      "dependencies": {
-        "gaxios": "^6.0.0",
-        "jws": "^4.0.0"
-      },
-      "engines": {
-        "node": ">=14.0.0"
-      }
     },
     "node_modules/h3": {
       "version": "1.15.1",
@@ -14289,19 +13457,6 @@
         "node": ">= 0.8"
       }
     },
-    "node_modules/https-proxy-agent": {
-      "version": "7.0.6",
-      "resolved": "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-7.0.6.tgz",
-      "integrity": "sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==",
-      "license": "MIT",
-      "dependencies": {
-        "agent-base": "^7.1.2",
-        "debug": "4"
-      },
-      "engines": {
-        "node": ">= 14"
-      }
-    },
     "node_modules/humanize-ms": {
       "version": "1.2.1",
       "resolved": "https://registry.npmjs.org/humanize-ms/-/humanize-ms-1.2.1.tgz",
@@ -14735,18 +13890,6 @@
         }
       ],
       "license": "MIT"
-    },
-    "node_modules/is-stream": {
-      "version": "2.0.1",
-      "resolved": "https://registry.npmjs.org/is-stream/-/is-stream-2.0.1.tgz",
-      "integrity": "sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==",
-      "license": "MIT",
-      "engines": {
-        "node": ">=8"
-      },
-      "funding": {
-        "url": "https://github.com/sponsors/sindresorhus"
-      }
     },
     "node_modules/is-typed-array": {
       "version": "1.1.15",
@@ -15303,15 +14446,6 @@
         "node": ">=6"
       }
     },
-    "node_modules/json-bigint": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/json-bigint/-/json-bigint-1.0.0.tgz",
-      "integrity": "sha512-SiPv/8VpZuWbvLSMtTDU8hEfrZWg/mH/nV/b4o0CYbSxu1UIQPLdwKOCIyLQX+VIPO5vrLX3i8qtqFyhdPSUSQ==",
-      "license": "MIT",
-      "dependencies": {
-        "bignumber.js": "^9.0.0"
-      }
-    },
     "node_modules/json-buffer": {
       "version": "3.0.1",
       "resolved": "https://registry.npmjs.org/json-buffer/-/json-buffer-3.0.1.tgz",
@@ -15326,12 +14460,6 @@
       "license": "MIT",
       "peer": true
     },
-    "node_modules/json-schema": {
-      "version": "0.4.0",
-      "resolved": "https://registry.npmjs.org/json-schema/-/json-schema-0.4.0.tgz",
-      "integrity": "sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==",
-      "license": "(AFL-2.1 OR BSD-3-Clause)"
-    },
     "node_modules/json-schema-traverse": {
       "version": "0.4.1",
       "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz",
@@ -15340,13 +14468,13 @@
       "license": "MIT"
     },
     "node_modules/json-stable-stringify": {
-      "version": "1.3.0",
-      "resolved": "https://registry.npmjs.org/json-stable-stringify/-/json-stable-stringify-1.3.0.tgz",
-      "integrity": "sha512-qtYiSSFlwot9XHtF9bD9c7rwKjr+RecWT//ZnPvSmEjpV5mmPOCN4j8UjY5hbjNkOwZ/jQv3J6R1/pL7RwgMsg==",
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/json-stable-stringify/-/json-stable-stringify-1.2.1.tgz",
+      "integrity": "sha512-Lp6HbbBgosLmJbjx0pBLbgvx68FaFU1sdkmBuckmhhJ88kL13OA51CDtR2yJB50eCNMH9wRqtQNNiAqQH4YXnA==",
       "license": "MIT",
       "dependencies": {
         "call-bind": "^1.0.8",
-        "call-bound": "^1.0.4",
+        "call-bound": "^1.0.3",
         "isarray": "^2.0.5",
         "jsonify": "^0.0.1",
         "object-keys": "^1.1.1"
@@ -15383,23 +14511,6 @@
         "node": ">=6"
       }
     },
-    "node_modules/jsondiffpatch": {
-      "version": "0.6.0",
-      "resolved": "https://registry.npmjs.org/jsondiffpatch/-/jsondiffpatch-0.6.0.tgz",
-      "integrity": "sha512-3QItJOXp2AP1uv7waBkao5nCvhEv+QmJAd38Ybq7wNI74Q+BBmnLn4EDKz6yI9xGAIQoUF87qHt+kc1IVxB4zQ==",
-      "license": "MIT",
-      "dependencies": {
-        "@types/diff-match-patch": "^1.0.36",
-        "chalk": "^5.3.0",
-        "diff-match-patch": "^1.0.5"
-      },
-      "bin": {
-        "jsondiffpatch": "bin/jsondiffpatch.js"
-      },
-      "engines": {
-        "node": "^18.0.0 || >=20.0.0"
-      }
-    },
     "node_modules/jsonify": {
       "version": "0.0.1",
       "resolved": "https://registry.npmjs.org/jsonify/-/jsonify-0.0.1.tgz",
@@ -15409,75 +14520,11 @@
         "url": "https://github.com/sponsors/ljharb"
       }
     },
-    "node_modules/jsonwebtoken": {
-      "version": "9.0.2",
-      "resolved": "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.2.tgz",
-      "integrity": "sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==",
-      "license": "MIT",
-      "dependencies": {
-        "jws": "^3.2.2",
-        "lodash.includes": "^4.3.0",
-        "lodash.isboolean": "^3.0.3",
-        "lodash.isinteger": "^4.0.4",
-        "lodash.isnumber": "^3.0.3",
-        "lodash.isplainobject": "^4.0.6",
-        "lodash.isstring": "^4.0.1",
-        "lodash.once": "^4.0.0",
-        "ms": "^2.1.1",
-        "semver": "^7.5.4"
-      },
-      "engines": {
-        "node": ">=12",
-        "npm": ">=6"
-      }
-    },
-    "node_modules/jsonwebtoken/node_modules/jwa": {
-      "version": "1.4.2",
-      "resolved": "https://registry.npmjs.org/jwa/-/jwa-1.4.2.tgz",
-      "integrity": "sha512-eeH5JO+21J78qMvTIDdBXidBd6nG2kZjg5Ohz/1fpa28Z4CcsWUzJ1ZZyFq/3z3N17aZy+ZuBoHljASbL1WfOw==",
-      "license": "MIT",
-      "dependencies": {
-        "buffer-equal-constant-time": "^1.0.1",
-        "ecdsa-sig-formatter": "1.0.11",
-        "safe-buffer": "^5.0.1"
-      }
-    },
-    "node_modules/jsonwebtoken/node_modules/jws": {
-      "version": "3.2.2",
-      "resolved": "https://registry.npmjs.org/jws/-/jws-3.2.2.tgz",
-      "integrity": "sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==",
-      "license": "MIT",
-      "dependencies": {
-        "jwa": "^1.4.1",
-        "safe-buffer": "^5.0.1"
-      }
-    },
     "node_modules/jsqr": {
       "version": "1.4.0",
       "resolved": "https://registry.npmjs.org/jsqr/-/jsqr-1.4.0.tgz",
       "integrity": "sha512-dxLob7q65Xg2DvstYkRpkYtmKm2sPJ9oFhrhmudT1dZvNFFTlroai3AWSpLey/w5vMcLBXRgOJsbXpdN9HzU/A==",
       "license": "Apache-2.0"
-    },
-    "node_modules/jwa": {
-      "version": "2.0.1",
-      "resolved": "https://registry.npmjs.org/jwa/-/jwa-2.0.1.tgz",
-      "integrity": "sha512-hRF04fqJIP8Abbkq5NKGN0Bbr3JxlQ+qhZufXVr0DvujKy93ZCbXZMHDL4EOtodSbCWxOqR8MS1tXA5hwqCXDg==",
-      "license": "MIT",
-      "dependencies": {
-        "buffer-equal-constant-time": "^1.0.1",
-        "ecdsa-sig-formatter": "1.0.11",
-        "safe-buffer": "^5.0.1"
-      }
-    },
-    "node_modules/jws": {
-      "version": "4.0.0",
-      "resolved": "https://registry.npmjs.org/jws/-/jws-4.0.0.tgz",
-      "integrity": "sha512-KDncfTmOZoOMTFG4mBlG0qUIOlc03fmzH+ru6RgYVZhPkyiy/92Owlt/8UEN+a4TXR1FQetfIpJE8ApdvdVxTg==",
-      "license": "MIT",
-      "dependencies": {
-        "jwa": "^2.0.0",
-        "safe-buffer": "^5.0.1"
-      }
     },
     "node_modules/jwt-decode": {
       "version": "4.0.0",
@@ -15635,18 +14682,6 @@
       "integrity": "sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==",
       "license": "MIT"
     },
-    "node_modules/lodash.includes": {
-      "version": "4.3.0",
-      "resolved": "https://registry.npmjs.org/lodash.includes/-/lodash.includes-4.3.0.tgz",
-      "integrity": "sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==",
-      "license": "MIT"
-    },
-    "node_modules/lodash.isboolean": {
-      "version": "3.0.3",
-      "resolved": "https://registry.npmjs.org/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz",
-      "integrity": "sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==",
-      "license": "MIT"
-    },
     "node_modules/lodash.isequal": {
       "version": "4.5.0",
       "resolved": "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz",
@@ -15654,40 +14689,10 @@
       "deprecated": "This package is deprecated. Use require('node:util').isDeepStrictEqual instead.",
       "license": "MIT"
     },
-    "node_modules/lodash.isinteger": {
-      "version": "4.0.4",
-      "resolved": "https://registry.npmjs.org/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz",
-      "integrity": "sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==",
-      "license": "MIT"
-    },
-    "node_modules/lodash.isnumber": {
-      "version": "3.0.3",
-      "resolved": "https://registry.npmjs.org/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz",
-      "integrity": "sha512-QYqzpfwO3/CWf3XP+Z+tkQsfaLL/EnUlXWVkIk5FUPc4sBdTehEqZONuyRt2P67PXAk+NXmTBcc97zw9t1FQrw==",
-      "license": "MIT"
-    },
-    "node_modules/lodash.isplainobject": {
-      "version": "4.0.6",
-      "resolved": "https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz",
-      "integrity": "sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==",
-      "license": "MIT"
-    },
-    "node_modules/lodash.isstring": {
-      "version": "4.0.1",
-      "resolved": "https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz",
-      "integrity": "sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==",
-      "license": "MIT"
-    },
     "node_modules/lodash.merge": {
       "version": "4.6.2",
       "resolved": "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz",
       "integrity": "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==",
-      "license": "MIT"
-    },
-    "node_modules/lodash.once": {
-      "version": "4.1.1",
-      "resolved": "https://registry.npmjs.org/lodash.once/-/lodash.once-4.1.1.tgz",
-      "integrity": "sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==",
       "license": "MIT"
     },
     "node_modules/lodash.throttle": {
@@ -15770,47 +14775,6 @@
         "react": "^16.5.1 || ^17.0.0 || ^18.0.0"
       }
     },
-    "node_modules/lunary": {
-      "version": "0.8.8",
-      "resolved": "https://registry.npmjs.org/lunary/-/lunary-0.8.8.tgz",
-      "integrity": "sha512-/7jel44BCOURynPdGvxoOeZkUb8DKJv2dlay4A0f0addEnhqGyyOjglZHEJaiKU21lK6TyQxJS5SnfGp4owWyw==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "unctx": "^2.3.1"
-      },
-      "peerDependencies": {
-        "@anthropic-ai/sdk": ">=0.31.0",
-        "openai": "^4.0.0",
-        "react": ">=17.0.0"
-      },
-      "peerDependenciesMeta": {
-        "@anthropic-ai/sdk": {
-          "optional": true
-        },
-        "openai": {
-          "optional": true
-        },
-        "react": {
-          "optional": true
-        }
-      }
-    },
-    "node_modules/magic-string": {
-      "version": "0.30.17",
-      "resolved": "https://registry.npmjs.org/magic-string/-/magic-string-0.30.17.tgz",
-      "integrity": "sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==",
-      "license": "MIT",
-      "dependencies": {
-        "@jridgewell/sourcemap-codec": "^1.5.0"
-      }
-    },
-    "node_modules/make-error": {
-      "version": "1.3.6",
-      "resolved": "https://registry.npmjs.org/make-error/-/make-error-1.3.6.tgz",
-      "integrity": "sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==",
-      "dev": true,
-      "license": "ISC"
-    },
     "node_modules/makeerror": {
       "version": "1.0.12",
       "resolved": "https://registry.npmjs.org/makeerror/-/makeerror-1.0.12.tgz",
@@ -15832,9 +14796,9 @@
       }
     },
     "node_modules/marked": {
-      "version": "15.0.10",
-      "resolved": "https://registry.npmjs.org/marked/-/marked-15.0.10.tgz",
-      "integrity": "sha512-BXzsfFiR2UqXFKRwpugWuCYi9mWd1aX/Yns/X52xWfvfen9lnGEDbJw9ZEjjvLZVqntqT2gX45eYvqb2dIokDw==",
+      "version": "15.0.9",
+      "resolved": "https://registry.npmjs.org/marked/-/marked-15.0.9.tgz",
+      "integrity": "sha512-9AW/bn9DxQeZVjR52l5jsc0W2pwuhP04QaQewPvylil12Cfr2GBfWmgp6mu8i9Jy8UlBjqDZ9uMTDuJ8QOGZJA==",
       "license": "MIT",
       "bin": {
         "marked": "bin/marked.js"
@@ -17394,16 +16358,6 @@
         "node": "*"
       }
     },
-    "node_modules/minimist": {
-      "version": "1.2.8",
-      "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz",
-      "integrity": "sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==",
-      "dev": true,
-      "license": "MIT",
-      "funding": {
-        "url": "https://github.com/sponsors/ljharb"
-      }
-    },
     "node_modules/minipass": {
       "version": "7.1.2",
       "resolved": "https://registry.npmjs.org/minipass/-/minipass-7.1.2.tgz",
@@ -17461,6 +16415,7 @@
       "version": "3.3.11",
       "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.11.tgz",
       "integrity": "sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==",
+      "dev": true,
       "funding": [
         {
           "type": "github",
@@ -17496,26 +16451,6 @@
       "resolved": "https://registry.npmjs.org/node-addon-api/-/node-addon-api-3.2.1.tgz",
       "integrity": "sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==",
       "license": "MIT"
-    },
-    "node_modules/node-domexception": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/node-domexception/-/node-domexception-1.0.0.tgz",
-      "integrity": "sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==",
-      "deprecated": "Use your platform's native DOMException instead",
-      "funding": [
-        {
-          "type": "github",
-          "url": "https://github.com/sponsors/jimmywarting"
-        },
-        {
-          "type": "github",
-          "url": "https://paypal.me/jimmywarting"
-        }
-      ],
-      "license": "MIT",
-      "engines": {
-        "node": ">=10.5.0"
-      }
     },
     "node_modules/node-fetch": {
       "version": "2.7.0",
@@ -17764,51 +16699,6 @@
         "url": "https://github.com/sponsors/sindresorhus"
       }
     },
-    "node_modules/openai": {
-      "version": "4.96.2",
-      "resolved": "https://registry.npmjs.org/openai/-/openai-4.96.2.tgz",
-      "integrity": "sha512-R2XnxvMsizkROr7BV3uNp1q/3skwPZ7fmPjO1bXLnfB4Tu5xKxrT1EVwzjhxn0MZKBKAvOaGWS63jTMN6KrIXA==",
-      "license": "Apache-2.0",
-      "dependencies": {
-        "@types/node": "^18.11.18",
-        "@types/node-fetch": "^2.6.4",
-        "abort-controller": "^3.0.0",
-        "agentkeepalive": "^4.2.1",
-        "form-data-encoder": "1.7.2",
-        "formdata-node": "^4.3.2",
-        "node-fetch": "^2.6.7"
-      },
-      "bin": {
-        "openai": "bin/cli"
-      },
-      "peerDependencies": {
-        "ws": "^8.18.0",
-        "zod": "^3.23.8"
-      },
-      "peerDependenciesMeta": {
-        "ws": {
-          "optional": true
-        },
-        "zod": {
-          "optional": true
-        }
-      }
-    },
-    "node_modules/openai/node_modules/@types/node": {
-      "version": "18.19.87",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-18.19.87.tgz",
-      "integrity": "sha512-OIAAu6ypnVZHmsHCeJ+7CCSub38QNBS9uceMQeg7K5Ur0Jr+wG9wEOEvvMbhp09pxD5czIUy/jND7s7Tb6Nw7A==",
-      "license": "MIT",
-      "dependencies": {
-        "undici-types": "~5.26.4"
-      }
-    },
-    "node_modules/openai/node_modules/undici-types": {
-      "version": "5.26.5",
-      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz",
-      "integrity": "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==",
-      "license": "MIT"
-    },
     "node_modules/optionator": {
       "version": "0.9.4",
       "resolved": "https://registry.npmjs.org/optionator/-/optionator-0.9.4.tgz",
@@ -17854,33 +16744,6 @@
         "typescript": {
           "optional": true
         }
-      }
-    },
-    "node_modules/ox/node_modules/@noble/curves": {
-      "version": "1.8.2",
-      "resolved": "https://registry.npmjs.org/@noble/curves/-/curves-1.8.2.tgz",
-      "integrity": "sha512-vnI7V6lFNe0tLAuJMu+2sX+FcL14TaCWy1qiczg1VwRmPrpQCdq5ESXQMqUc2tluRNf6irBXrWbl1mGN8uaU/g==",
-      "license": "MIT",
-      "dependencies": {
-        "@noble/hashes": "1.7.2"
-      },
-      "engines": {
-        "node": "^14.21.3 || >=16"
-      },
-      "funding": {
-        "url": "https://paulmillr.com/funding/"
-      }
-    },
-    "node_modules/ox/node_modules/@noble/hashes": {
-      "version": "1.7.2",
-      "resolved": "https://registry.npmjs.org/@noble/hashes/-/hashes-1.7.2.tgz",
-      "integrity": "sha512-biZ0NUSxyjLLqo6KxEJ1b+C2NAx0wtDoFvCaXHGgUkeHzf3Xc1xKumFKREuT7f7DARNZ/slvYUwFG6B0f2b6hQ==",
-      "license": "MIT",
-      "engines": {
-        "node": "^14.21.3 || >=16"
-      },
-      "funding": {
-        "url": "https://paulmillr.com/funding/"
       }
     },
     "node_modules/ox/node_modules/@scure/bip32": {
@@ -18021,12 +16884,12 @@
       "license": "ISC"
     },
     "node_modules/parse5": {
-      "version": "7.3.0",
-      "resolved": "https://registry.npmjs.org/parse5/-/parse5-7.3.0.tgz",
-      "integrity": "sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw==",
+      "version": "7.2.1",
+      "resolved": "https://registry.npmjs.org/parse5/-/parse5-7.2.1.tgz",
+      "integrity": "sha512-BuBYQYlv1ckiPdQi/ohiivi9Sagc9JG+Ozs0r7b/0iK3sKmrb0b9FdWdBbOdx6hBCM/F9Ir82ofnBhtZOjCRPQ==",
       "license": "MIT",
       "dependencies": {
-        "entities": "^6.0.0"
+        "entities": "^4.5.0"
       },
       "funding": {
         "url": "https://github.com/inikulin/parse5?sponsor=1"
@@ -19705,12 +18568,6 @@
       "integrity": "sha512-jhXqQAQVM+8Xj5EjJGVweuEzgtGWb3tmEEpl3CLP3cStInSbVHSg0QWOGQzNq8pSID4JkpeV2mPqlMDLrm0/Vw==",
       "license": "MIT"
     },
-    "node_modules/secure-json-parse": {
-      "version": "2.7.0",
-      "resolved": "https://registry.npmjs.org/secure-json-parse/-/secure-json-parse-2.7.0.tgz",
-      "integrity": "sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==",
-      "license": "BSD-3-Clause"
-    },
     "node_modules/semver": {
       "version": "7.7.1",
       "resolved": "https://registry.npmjs.org/semver/-/semver-7.7.1.tgz",
@@ -20369,16 +19226,6 @@
         "node": ">=8"
       }
     },
-    "node_modules/strip-bom": {
-      "version": "3.0.0",
-      "resolved": "https://registry.npmjs.org/strip-bom/-/strip-bom-3.0.0.tgz",
-      "integrity": "sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==",
-      "dev": true,
-      "license": "MIT",
-      "engines": {
-        "node": ">=4"
-      }
-    },
     "node_modules/strip-json-comments": {
       "version": "3.1.1",
       "resolved": "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz",
@@ -20479,28 +19326,6 @@
       },
       "funding": {
         "url": "https://github.com/sponsors/ljharb"
-      }
-    },
-    "node_modules/swr": {
-      "version": "2.3.3",
-      "resolved": "https://registry.npmjs.org/swr/-/swr-2.3.3.tgz",
-      "integrity": "sha512-dshNvs3ExOqtZ6kJBaAsabhPdHyeY4P2cKwRCniDVifBMoG/SVI7tfLWqPXriVspf2Rg4tPzXJTnwaihIeFw2A==",
-      "license": "MIT",
-      "dependencies": {
-        "dequal": "^2.0.3",
-        "use-sync-external-store": "^1.4.0"
-      },
-      "peerDependencies": {
-        "react": "^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
-      }
-    },
-    "node_modules/swr/node_modules/use-sync-external-store": {
-      "version": "1.5.0",
-      "resolved": "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.5.0.tgz",
-      "integrity": "sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==",
-      "license": "MIT",
-      "peerDependencies": {
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
       }
     },
     "node_modules/tailwindcss": {
@@ -20648,18 +19473,6 @@
       "license": "MIT",
       "peer": true
     },
-    "node_modules/throttleit": {
-      "version": "2.1.0",
-      "resolved": "https://registry.npmjs.org/throttleit/-/throttleit-2.1.0.tgz",
-      "integrity": "sha512-nt6AMGKW1p/70DF/hGBdJB57B8Tspmbp5gfJ8ilhLnt7kkr2ye7hzD6NVG8GGErk2HWF34igrL2CXmNIkzKqKw==",
-      "license": "MIT",
-      "engines": {
-        "node": ">=18"
-      },
-      "funding": {
-        "url": "https://github.com/sponsors/sindresorhus"
-      }
-    },
     "node_modules/tiny-secp256k1": {
       "version": "1.1.7",
       "resolved": "https://registry.npmjs.org/tiny-secp256k1/-/tiny-secp256k1-1.1.7.tgz",
@@ -20762,72 +19575,6 @@
       "resolved": "https://registry.npmjs.org/ts-mixer/-/ts-mixer-6.0.4.tgz",
       "integrity": "sha512-ufKpbmrugz5Aou4wcr5Wc1UUFWOLhq+Fm6qa6P0w0K5Qw2yhaUoiWszhCVuNQyNwrlGiscHOmqYoAox1PtvgjA==",
       "license": "MIT"
-    },
-    "node_modules/ts-node": {
-      "version": "10.9.2",
-      "resolved": "https://registry.npmjs.org/ts-node/-/ts-node-10.9.2.tgz",
-      "integrity": "sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@cspotcode/source-map-support": "^0.8.0",
-        "@tsconfig/node10": "^1.0.7",
-        "@tsconfig/node12": "^1.0.7",
-        "@tsconfig/node14": "^1.0.0",
-        "@tsconfig/node16": "^1.0.2",
-        "acorn": "^8.4.1",
-        "acorn-walk": "^8.1.1",
-        "arg": "^4.1.0",
-        "create-require": "^1.1.0",
-        "diff": "^4.0.1",
-        "make-error": "^1.1.1",
-        "v8-compile-cache-lib": "^3.0.1",
-        "yn": "3.1.1"
-      },
-      "bin": {
-        "ts-node": "dist/bin.js",
-        "ts-node-cwd": "dist/bin-cwd.js",
-        "ts-node-esm": "dist/bin-esm.js",
-        "ts-node-script": "dist/bin-script.js",
-        "ts-node-transpile-only": "dist/bin-transpile.js",
-        "ts-script": "dist/bin-script-deprecated.js"
-      },
-      "peerDependencies": {
-        "@swc/core": ">=1.2.50",
-        "@swc/wasm": ">=1.2.50",
-        "@types/node": "*",
-        "typescript": ">=2.7"
-      },
-      "peerDependenciesMeta": {
-        "@swc/core": {
-          "optional": true
-        },
-        "@swc/wasm": {
-          "optional": true
-        }
-      }
-    },
-    "node_modules/ts-node/node_modules/arg": {
-      "version": "4.1.3",
-      "resolved": "https://registry.npmjs.org/arg/-/arg-4.1.3.tgz",
-      "integrity": "sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==",
-      "dev": true,
-      "license": "MIT"
-    },
-    "node_modules/tsconfig-paths": {
-      "version": "4.2.0",
-      "resolved": "https://registry.npmjs.org/tsconfig-paths/-/tsconfig-paths-4.2.0.tgz",
-      "integrity": "sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "json5": "^2.2.2",
-        "minimist": "^1.2.6",
-        "strip-bom": "^3.0.0"
-      },
-      "engines": {
-        "node": ">=6"
-      }
     },
     "node_modules/tslib": {
       "version": "2.8.1",
@@ -21000,18 +19747,6 @@
       "integrity": "sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q==",
       "license": "MIT"
     },
-    "node_modules/unctx": {
-      "version": "2.4.1",
-      "resolved": "https://registry.npmjs.org/unctx/-/unctx-2.4.1.tgz",
-      "integrity": "sha512-AbaYw0Nm4mK4qjhns67C+kgxR2YWiwlDBPzxrN8h8C6VtAdCgditAY5Dezu3IJy4XVqAnbrXt9oQJvsn3fyozg==",
-      "license": "MIT",
-      "dependencies": {
-        "acorn": "^8.14.0",
-        "estree-walker": "^3.0.3",
-        "magic-string": "^0.30.17",
-        "unplugin": "^2.1.0"
-      }
-    },
     "node_modules/undici-types": {
       "version": "7.8.0",
       "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-7.8.0.tgz",
@@ -21141,32 +19876,6 @@
       "license": "MIT",
       "engines": {
         "node": ">= 0.8"
-      }
-    },
-    "node_modules/unplugin": {
-      "version": "2.3.2",
-      "resolved": "https://registry.npmjs.org/unplugin/-/unplugin-2.3.2.tgz",
-      "integrity": "sha512-3n7YA46rROb3zSj8fFxtxC/PqoyvYQ0llwz9wtUPUutr9ig09C8gGo5CWCwHrUzlqC1LLR43kxp5vEIyH1ac1w==",
-      "license": "MIT",
-      "dependencies": {
-        "acorn": "^8.14.1",
-        "picomatch": "^4.0.2",
-        "webpack-virtual-modules": "^0.6.2"
-      },
-      "engines": {
-        "node": ">=18.12.0"
-      }
-    },
-    "node_modules/unplugin/node_modules/picomatch": {
-      "version": "4.0.2",
-      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.2.tgz",
-      "integrity": "sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==",
-      "license": "MIT",
-      "engines": {
-        "node": ">=12"
-      },
-      "funding": {
-        "url": "https://github.com/sponsors/jonschlinkert"
       }
     },
     "node_modules/update-browserslist-db": {
@@ -21305,13 +20014,6 @@
         "uuid": "8.3.2"
       }
     },
-    "node_modules/v8-compile-cache-lib": {
-      "version": "3.0.1",
-      "resolved": "https://registry.npmjs.org/v8-compile-cache-lib/-/v8-compile-cache-lib-3.0.1.tgz",
-      "integrity": "sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==",
-      "dev": true,
-      "license": "MIT"
-    },
     "node_modules/valtio": {
       "version": "1.13.2",
       "resolved": "https://registry.npmjs.org/valtio/-/valtio-1.13.2.tgz",
@@ -21399,9 +20101,9 @@
       }
     },
     "node_modules/viem": {
-      "version": "2.28.0",
-      "resolved": "https://registry.npmjs.org/viem/-/viem-2.28.0.tgz",
-      "integrity": "sha512-Z4W5O1pe+6pirYTFm451FcZmfGAUxUWt2L/eWC+YfTF28j/8rd7q6MBAi05lMN4KhLJjhN0s5YGIPB+kf1L20g==",
+      "version": "2.27.3",
+      "resolved": "https://registry.npmjs.org/viem/-/viem-2.27.3.tgz",
+      "integrity": "sha512-n15nZz143MoXCE3RbmdEBtomQRjuT5sS5Mgo0B2haGd0tZ4nXES+x829a1GrLr8+ApP29I1ASmVQVglGN6Hpzg==",
       "funding": [
         {
           "type": "github",
@@ -21426,33 +20128,6 @@
         "typescript": {
           "optional": true
         }
-      }
-    },
-    "node_modules/viem/node_modules/@noble/curves": {
-      "version": "1.8.2",
-      "resolved": "https://registry.npmjs.org/@noble/curves/-/curves-1.8.2.tgz",
-      "integrity": "sha512-vnI7V6lFNe0tLAuJMu+2sX+FcL14TaCWy1qiczg1VwRmPrpQCdq5ESXQMqUc2tluRNf6irBXrWbl1mGN8uaU/g==",
-      "license": "MIT",
-      "dependencies": {
-        "@noble/hashes": "1.7.2"
-      },
-      "engines": {
-        "node": "^14.21.3 || >=16"
-      },
-      "funding": {
-        "url": "https://paulmillr.com/funding/"
-      }
-    },
-    "node_modules/viem/node_modules/@noble/hashes": {
-      "version": "1.7.2",
-      "resolved": "https://registry.npmjs.org/@noble/hashes/-/hashes-1.7.2.tgz",
-      "integrity": "sha512-biZ0NUSxyjLLqo6KxEJ1b+C2NAx0wtDoFvCaXHGgUkeHzf3Xc1xKumFKREuT7f7DARNZ/slvYUwFG6B0f2b6hQ==",
-      "license": "MIT",
-      "engines": {
-        "node": "^14.21.3 || >=16"
-      },
-      "funding": {
-        "url": "https://paulmillr.com/funding/"
       }
     },
     "node_modules/viem/node_modules/@scure/bip32": {
@@ -21565,26 +20240,11 @@
         "url": "https://github.com/sponsors/wooorm"
       }
     },
-    "node_modules/web-streams-polyfill": {
-      "version": "4.0.0-beta.3",
-      "resolved": "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-4.0.0-beta.3.tgz",
-      "integrity": "sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==",
-      "license": "MIT",
-      "engines": {
-        "node": ">= 14"
-      }
-    },
     "node_modules/webidl-conversions": {
       "version": "3.0.1",
       "resolved": "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-3.0.1.tgz",
       "integrity": "sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==",
       "license": "BSD-2-Clause"
-    },
-    "node_modules/webpack-virtual-modules": {
-      "version": "0.6.2",
-      "resolved": "https://registry.npmjs.org/webpack-virtual-modules/-/webpack-virtual-modules-0.6.2.tgz",
-      "integrity": "sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==",
-      "license": "MIT"
     },
     "node_modules/webrtc-adapter": {
       "version": "7.7.1",
@@ -21859,9 +20519,9 @@
       }
     },
     "node_modules/xrpl": {
-      "version": "4.2.5",
-      "resolved": "https://registry.npmjs.org/xrpl/-/xrpl-4.2.5.tgz",
-      "integrity": "sha512-QIpsqvhaRiVvlq7px7lC+lhrxESDMN1vd8mW0SfTgY5WgzP9RLiDoVywOOvSZqDDjPs0EGfhxzYjREW1gGu0Ng==",
+      "version": "4.2.4",
+      "resolved": "https://registry.npmjs.org/xrpl/-/xrpl-4.2.4.tgz",
+      "integrity": "sha512-F1RvBhg2cmazA3okxWdLNFjCmhTPJFcIfcny/fVI64dUcbw3ibJ4NvUSZqHpwaYTVuqjxdc4rLrwdKfVXG8PmA==",
       "license": "ISC",
       "dependencies": {
         "@scure/bip32": "^1.3.1",
@@ -22040,16 +20700,6 @@
         "node": ">=8"
       }
     },
-    "node_modules/yn": {
-      "version": "3.1.1",
-      "resolved": "https://registry.npmjs.org/yn/-/yn-3.1.1.tgz",
-      "integrity": "sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==",
-      "dev": true,
-      "license": "MIT",
-      "engines": {
-        "node": ">=6"
-      }
-    },
     "node_modules/yocto-queue": {
       "version": "0.1.0",
       "resolved": "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz",
@@ -22064,22 +20714,12 @@
       }
     },
     "node_modules/zod": {
-      "version": "3.24.3",
-      "resolved": "https://registry.npmjs.org/zod/-/zod-3.24.3.tgz",
-      "integrity": "sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==",
+      "version": "3.22.4",
+      "resolved": "https://registry.npmjs.org/zod/-/zod-3.22.4.tgz",
+      "integrity": "sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==",
       "license": "MIT",
-      "peer": true,
       "funding": {
         "url": "https://github.com/sponsors/colinhacks"
-      }
-    },
-    "node_modules/zod-to-json-schema": {
-      "version": "3.24.5",
-      "resolved": "https://registry.npmjs.org/zod-to-json-schema/-/zod-to-json-schema-3.24.5.tgz",
-      "integrity": "sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==",
-      "license": "ISC",
-      "peerDependencies": {
-        "zod": "^3.24.1"
       }
     },
     "node_modules/zustand": {

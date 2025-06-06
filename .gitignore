@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.dantegpu-d9d9ee4cedf3
+.env

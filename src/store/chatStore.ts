@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
-import { generateResponse } from '../lib/chatbot';
+import { generateImage } from '../lib/huggingface';
+import { queryLLM } from '../lib/llm';
 
 export interface Message {
   id: string;
@@ -14,22 +15,32 @@ interface ChatState {
   messages: Message[];
   loading: boolean;
   error: string | null;
-  sendMessage: (content: string, isMarkdown?: boolean) => Promise<void>;
-  fetchMessages: () => Promise<void>;
-  clearMessages: () => Promise<void>;
+  sendMessage: (
+    content: string,
+    isMarkdown?: boolean,
+    agentId?: string
+  ) => Promise<void>;
+  fetchMessages: (agentId?: string) => Promise<void>;
+  clearMessages: (agentId?: string) => Promise<void>;
 }
 
-export const useChatStore = create<ChatState>((set, get) => ({
+export const useChatStore = create<ChatState>((set) => ({
   messages: [],
   loading: false,
   error: null,
 
-  sendMessage: async (content: string, isMarkdown = false) => {
+  sendMessage: async (content, isMarkdown = false, agentId) => {
     try {
       set({ loading: true, error: null });
+      console.log('[sendMessage]', { content, isMarkdown, agentId });
 
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      const {
+        data: { user: supaUser },
+      } = await supabase.auth.getUser();
+
+      const user = supaUser?.id
+        ? { id: supaUser.id }
+        : { id: '00000000-0000-0000-0000-000000000000' };
 
       // Save user message
       const { data: userMessage, error: userError } = await supabase
@@ -37,80 +48,110 @@ export const useChatStore = create<ChatState>((set, get) => ({
         .insert({
           content,
           user_id: user.id,
+          agent_id: agentId,
           is_bot: false,
-          is_markdown: isMarkdown
+          is_markdown: isMarkdown,
         })
         .select()
         .single();
 
       if (userError) throw userError;
 
-      // Generate bot response
-      const botResponse = await generateResponse(content);
-      
+      // Determine bot response
+      let botResponse: string;
+      let botMarkdown = isMarkdown;
+
+      if (agentId) {
+        const { data: agentData, error: agentError } = await supabase
+          .from('agents')
+          .select('slug')
+          .eq('id', agentId)
+          .single();
+
+        if (agentError || !agentData) throw new Error('Agent not found');
+
+        const slug = agentData.slug;
+        if (slug === 'agent' || slug === 'image-generator') {
+          console.log('[HUGGINGFACE] agent match: image-generator');
+          const imageUrl = await generateImage(content);
+          botResponse = `![Generated Image](${imageUrl})`;
+          botMarkdown = true;
+        } else if (
+          slug === 'tokenomics-analys-agent' ||
+          slug === 'audit-analys-agent' ||
+          slug.startsWith('gpt-') ||
+          slug.startsWith('claude-') ||
+          slug.startsWith('gemini-') ||
+          slug === 'stablelm-2' ||
+          slug === 'app-creators' ||
+          slug === 'deepseek-v3-fw' ||
+          slug === 'grok-2'
+        ) {
+          botResponse = await queryLLM(slug, content);
+          botMarkdown = true;
+        } else {
+          botResponse = 'No valid agent configuration found.';
+        }
+      } else {
+        botResponse = 'No agent specified.';
+      }
+
+      // Save bot message
       const { data: botMessage, error: botError } = await supabase
         .from('chat_messages')
         .insert({
           content: botResponse,
           user_id: user.id,
+          agent_id: agentId,
           is_bot: true,
-          is_markdown: isMarkdown
+          is_markdown: botMarkdown,
         })
         .select()
         .single();
 
       if (botError) throw botError;
 
-      set(state => ({
-        messages: [...state.messages, userMessage, botMessage]
+      // Update store
+      set((state) => ({
+        messages: [...state.messages, userMessage, botMessage],
       }));
     } catch (error) {
+      console.error('[ChatStore Error]', error);
       set({ error: (error as Error).message });
     } finally {
       set({ loading: false });
     }
   },
 
-  fetchMessages: async () => {
-    try {
-      set({ loading: true, error: null });
-
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      const { data, error } = await supabase
-        .from('chat_messages')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-      set({ messages: data || [] });
-    } catch (error) {
-      set({ error: (error as Error).message });
-    } finally {
-      set({ loading: false });
-    }
+  fetchMessages: async (agentId?: string) => {
+    // Always clear messages when loading a new agent
+    set({ messages: [], loading: false, error: null });
   },
 
-  clearMessages: async () => {
+  clearMessages: async (agentId?: string) => {
     try {
       set({ loading: true, error: null });
-
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase
+      let del = supabase
         .from('chat_messages')
         .delete()
         .eq('user_id', user.id);
+      if (agentId) {
+        del = del.eq('agent_id', agentId);
+      }
 
+      const { error } = await del;
       if (error) throw error;
+
       set({ messages: [] });
     } catch (error) {
       set({ error: (error as Error).message });
     } finally {
       set({ loading: false });
     }
-  }
+  },
 }));
