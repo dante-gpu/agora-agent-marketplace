@@ -5,8 +5,17 @@ const express    = require('express');
 const axios      = require('axios');
 const cors       = require('cors');
 const bodyParser = require('body-parser');
+const https      = require('https');
+const http       = require('http');
 const { createClient } = require('@supabase/supabase-js');
 const { GoogleAuth }   = require('google-auth-library');
+
+// Create reusable agents for connection pooling
+const httpsAgent = new https.Agent({ keepAlive: true });
+const httpAgent  = new http.Agent({ keepAlive: true });
+
+// Create a configured axios instance to reuse connections
+const axiosInstance = axios.create({ httpsAgent, httpAgent });
 
 // basit admin yetkilendirme middleware'i
 function authorize(requiredRole) {
@@ -188,7 +197,7 @@ app.post('/api/hf-image', async (req, res) => {
     formData.append('prompt', prompt);
     formData.append('output_format', 'png');
 
-    const response = await axios.post(
+    const response = await axiosInstance.post(
       'https://api.stability.ai/v2beta/stable-image/generate/core',
       formData,
       {
@@ -225,7 +234,8 @@ app.post('/api/gemini', async (req, res) => {
       method: 'POST',
       params: { key: GEMINI_API_KEY },
       headers: { 'X-Goog-User-Project': GOOGLE_PROJECT_ID },
-      data: { contents: [{ parts }] }
+      data: { contents: [{ parts }] },
+      agent: httpsAgent
     });
 
     const result = oauthRes.data.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -248,7 +258,7 @@ app.post('/api/deepseek', async (req, res) => {
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
 
   try {
-    const dsResponse = await axios.post(
+    const dsResponse = await axiosInstance.post(
       'https://api.deepseek.ai/v1/chat/completions',
       {
         model: 'deepseek-chat',
@@ -275,7 +285,7 @@ app.post('/api/grok2', async (req, res) => {
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
 
   try {
-    const apiRes = await axios.post(
+    const apiRes = await axiosInstance.post(
       'https://api.x.ai/v1/chat/completions',
       {
         model: 'grok-2-1212',
@@ -315,7 +325,7 @@ app.post('/api/claude', async (req, res) => {
 
   for (const key of apiKeys) {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         'https://api.anthropic.com/v1/chat/completions',
         {
           model: 'claude-3-opus-20240229',
@@ -349,8 +359,6 @@ app.post('/api/claude', async (req, res) => {
   res.status(500).json({ error: 'Claude request failed on all keys' });
 });
 
-
-
 app.post('/api/llm', async (req, res) => {
   const { slug, prompt, systemPrompt } = req.body;
   if (!slug || !prompt) return res.status(400).json({ error: 'Missing slug or prompt.' });
@@ -359,7 +367,7 @@ app.post('/api/llm', async (req, res) => {
     let result;
     switch (slug) {
       case 'tokenomics-analys-agent':
-        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+        result = (await axiosInstance.post(`http://localhost:${PORT}/api/gemini`, {
           prompt,
           systemPrompt: 'You are a tokenomics analysis expert...'
         })).data.result;
@@ -368,7 +376,7 @@ app.post('/api/llm', async (req, res) => {
       case 'audit-analys-agent':
         try {
           console.time('[AUDIT_AGENT_REQUEST]');
-          result = (await axios.post(
+          result = (await axiosInstance.post(
             'https://api.io/v1/chat/completions',
             {
               model: 'audit-analys-agent',
@@ -383,7 +391,7 @@ app.post('/api/llm', async (req, res) => {
         } catch (err) {
           console.warn('[AUDIT FALLBACK] Primary failed, using Gemini.', err.message);
           console.time('[AUDIT_AGENT_GEMINI_FALLBACK]');
-          result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+          result = (await axiosInstance.post(`http://localhost:${PORT}/api/gemini`, {
             prompt,
             systemPrompt: 'You are a security auditor for smart contracts...'
           })).data.result;
@@ -392,7 +400,7 @@ app.post('/api/llm', async (req, res) => {
         break;
 
       case 'article-writer-agent':
-        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+        result = (await axiosInstance.post(`http://localhost:${PORT}/api/gemini`, {
           prompt,
           systemPrompt: 'You are a professional article writer. Write structured and informative articles.'
         })).data.result;
@@ -400,7 +408,7 @@ app.post('/api/llm', async (req, res) => {
 
       case 'assistant':
         console.time('[ASSISTANT_AGENT]');
-        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+        result = (await axiosInstance.post(`http://localhost:${PORT}/api/gemini`, {
           prompt,
           systemPrompt: 'You are a helpful assistant who provides clear, concise, and useful answers.'
         })).data.result;
@@ -410,18 +418,18 @@ app.post('/api/llm', async (req, res) => {
       case 'gemini-1-5-pro':
       case 'gemini-2-0-flash':
       case 'app-creators':
-        result = (await axios.post(`http://localhost:${PORT}/api/gemini`, {
+        result = (await axiosInstance.post(`http://localhost:${PORT}/api/gemini`, {
           prompt,
           systemPrompt
         })).data.result;
         break;
 
       case 'deepseek-v3-fw':
-        result = (await axios.post(`http://localhost:${PORT}/api/deepseek`, { prompt })).data.result;
+        result = (await axiosInstance.post(`http://localhost:${PORT}/api/deepseek`, { prompt })).data.result;
         break;
 
       case 'grok-2':
-        result = (await axios.post(`http://localhost:${PORT}/api/grok2`, { prompt })).data.result;
+        result = (await axiosInstance.post(`http://localhost:${PORT}/api/grok2`, { prompt })).data.result;
         break;
 
       default:
@@ -434,8 +442,6 @@ app.post('/api/llm', async (req, res) => {
     res.status(500).json({ error: 'LLM proxy failed', detail: err.response?.data || err.message });
   }
 });
-
-
 
 app.get('/api/providers/:providerId/tools/:toolId/usage', async (req, res) => {
   const { toolId } = req.params;
